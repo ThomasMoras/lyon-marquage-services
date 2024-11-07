@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lyon marquage services website
+
+## Introduction
+
+Lyon marquage services website is a modern and responsive web application built using Next.js, a popular React framework for building server-rendered React applications. This website showcases the products and services offered by the Lyon marquage services company.
+
+## Features
+
+- **Responsive Design**: The website is optimized for various screen sizes and devices, providing a seamless user experience across desktops, tablets, and mobile phones.
+- **Dynamic Content**: The website fetches product and service data from a content management system (CMS) or API, allowing for easy updates and maintenance.
+- **Fast Performance**: Next.js' server-side rendering and code splitting features ensure fast page loads and optimized asset delivery.
+- **SEO Friendly**: The website is designed with search engine optimization (SEO) in mind, making it easier for users to discover the Acme Company online.
+- **Accessibility**: The website adheres to WCAG accessibility guidelines, ensuring it can be used by people with disabilities.
+- **Analytics**: The website integrates with Google Analytics to track user behavior and site performance.
+
+## Technologies Used
+
+- **Next.js**: A React framework for building server-rendered, static, and dynamic websites and applications.
+- **React**: A JavaScript library for building user interfaces.
+- **Tailwind CSS**: A utility-first CSS framework for rapidly building custom user interfaces.
+- **Typescript**: A superset of JavaScript that adds optional static typing.
+- **Vercel**: A cloud platform for static sites and Serverless Functions.
+- **Shadcn/UI**: A library of components for building modern web applications.
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
+
+```bash
+git clone https://github.com/ThomasMoras/lyon-marquage-services
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open your browser and visit `http://localhost:3000` to see the website.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The Acme Showcase Website is deployed on Vercel, a cloud platform for static sites and Serverless Functions. To deploy your own version, you can follow these steps:
 
-## Learn More
+1. Sign up for a Vercel account (if you haven't already).
+2. Link your GitHub repository to Vercel.
+3. Configure any necessary environment variables in the Vercel dashboard.
+4. Deploy your project.
 
-To learn more about Next.js, take a look at the following resources:
+For detailed deployment instructions, please refer to the [Vercel documentation](https://vercel.com/docs).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+If you'd like to contribute to the Acme Showcase Website, please follow these steps:
 
-## Deploy on Vercel
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your changes to your fork.
+5. Submit a pull request to the original repository.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Please make sure your code adheres to the project's coding standards and includes appropriate tests.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is licensed under the [MIT License](LICENSE).
