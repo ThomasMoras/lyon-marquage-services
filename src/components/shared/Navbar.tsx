@@ -61,7 +61,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center text-center">
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
