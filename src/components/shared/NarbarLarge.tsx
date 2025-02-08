@@ -42,7 +42,6 @@ ListItem.displayName = "ListItem";
 const NavbarLarge = () => {
   return (
     <div className="hidden lg:grid lg:grid-cols-3 lg:items-center">
-      {/* Logo Section */}
       <div className="flex items-center gap-4 ml-8">
         <Link href="/" className="flex items-center gap-4">
           <div className="relative w-16 h-16 m-2">
@@ -58,20 +57,21 @@ const NavbarLarge = () => {
         </Link>
       </div>
 
-      {/* Navigation Section */}
       <div className="flex justify-center text-center">
         <NavigationMenu>
           <NavigationMenuList className="text-xl">
-            {/* Catalogue Menu */}
             <NavigationMenuItem>
               <NavigationMenuTrigger className="text-xl">Catalogue</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className="grid w-[800px] gap-3 p-4 md:grid-cols-2">
-                  {menuCatalogue.map((section) => (
-                    <div key={section.category}>
-                      <h3 className="mb-2 text-lg font-semibold">{section.category}</h3>
+              <NavigationMenuContent className="data-[side=bottom]:animate-slideUpAndFade">
+                <div
+                  className="grid w-[800px] gap-3 p-4 md:grid-cols-2"
+                  style={{ transform: "translateX(-50%)", left: "50%", position: "relative" }}
+                >
+                  {menuCatalogue.map((c) => (
+                    <div key={c.category}>
+                      <h3 className="mb-2 text-lg font-semibold">{c.category}</h3>
                       <ul className="grid gap-1">
-                        {section.items.map((item) => (
+                        {c.items.map((item) => (
                           <ListItem key={item.title} title={item.title} href={item.href} />
                         ))}
                       </ul>
@@ -81,8 +81,7 @@ const NavbarLarge = () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
 
-            {/* Services Menu */}
-            <NavigationMenuItem>
+            <NavigationMenuItem className="relative">
               <NavigationMenuTrigger className="text-xl">Nos prestations</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[600px] md:w-[400px] md:grid-cols-1 lg:w-[300px]">
@@ -95,7 +94,6 @@ const NavbarLarge = () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
 
-            {/* Contact Link */}
             <NavigationMenuItem>
               <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "text-xl")}>
                 Contact

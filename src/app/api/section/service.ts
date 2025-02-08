@@ -1,9 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, SectionType } from "@prisma/client";
 import { Section } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function getSections(type?: string) {
-  return await prisma.section.findMany({
+  console.log(type);
+  const sections = await prisma.section.findMany({
     where: type
       ? {
           type: type.toUpperCase() as SectionType,
@@ -13,6 +14,8 @@ export async function getSections(type?: string) {
       createdAt: "asc",
     },
   });
+  console.log("Sections retrieved:", sections);
+  return sections;
 }
 
 export async function getSection(id: string) {
