@@ -118,8 +118,8 @@ const EditableField: React.FC<EditableFieldProps> = ({
 
   if (!isEditing) {
     return (
-      <div className={`group relative inline-block ${className}`}>
-        <div className="min-w-[100px] p-2">
+      <div className={`group relative flex items-center ${className}`}>
+        <div className="min-w-[100px] p-2 flex-grow">
           {type === "textarea" ? (
             <div className="whitespace-pre-wrap">{value || placeholder}</div>
           ) : (
@@ -129,7 +129,7 @@ const EditableField: React.FC<EditableFieldProps> = ({
         {isAdmin && (
           <button
             onClick={handleEdit}
-            className="absolute -right-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
+            className="ml-2 p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
             title="Modifier"
             type="button"
           >
@@ -141,13 +141,13 @@ const EditableField: React.FC<EditableFieldProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-start gap-2">
+    <div className="flex flex-col gap-2 w-full">
+      <div className="flex items-start gap-2 w-full">
         {type === "textarea" ? (
           <textarea
             value={value}
             onChange={handleChange}
-            className={`w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent
+            className={`flex-grow p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent
               ${error.hasError ? "border-red-500" : "border-gray-300"}`}
             rows={4}
             placeholder={placeholder}
@@ -157,16 +157,16 @@ const EditableField: React.FC<EditableFieldProps> = ({
             type={type}
             value={value}
             onChange={handleChange}
-            className={`w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent
+            className={`flex-grow p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent
               ${error.hasError ? "border-red-500" : "border-gray-300"}`}
             placeholder={placeholder}
           />
         )}
-        <div className="flex gap-1">
+        <div className="flex flex-shrink-0 gap-1">
           <button
             onClick={handleSave}
             disabled={isLoading || error.hasError}
-            className="p-1 text-white bg-green-600 rounded hover:bg-green-700 disabled:opacity-50"
+            className="p-2 text-white bg-green-600 rounded hover:bg-green-700 disabled:opacity-50"
             title="Sauvegarder"
             type="button"
           >
@@ -175,7 +175,7 @@ const EditableField: React.FC<EditableFieldProps> = ({
           <button
             onClick={handleCancel}
             disabled={isLoading}
-            className="p-1 text-white bg-red-600 rounded hover:bg-red-700 disabled:opacity-50"
+            className="p-2 text-white bg-red-600 rounded hover:bg-red-700 disabled:opacity-50"
             title="Annuler"
             type="button"
           >

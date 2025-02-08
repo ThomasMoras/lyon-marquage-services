@@ -1,0 +1,41 @@
+import { PrismaClient } from "@prisma/client";
+import { Section } from "@prisma/client";
+const prisma = new PrismaClient();
+
+export async function getSections(type?: string) {
+  return await prisma.section.findMany({
+    where: type
+      ? {
+          type: type.toUpperCase() as SectionType,
+        }
+      : undefined,
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
+}
+
+export async function getSection(id: string) {
+  return await prisma.section.findUnique({
+    where: { id },
+  });
+}
+
+export async function createSection(data: Omit<Section, "id" | "createdAt" | "updatedAt">) {
+  return await prisma.section.create({
+    data,
+  });
+}
+
+export async function updateSection(id: string, data: Partial<Section>) {
+  return await prisma.section.update({
+    where: { id },
+    data,
+  });
+}
+
+export async function deleteSection(id: string) {
+  return await prisma.section.delete({
+    where: { id },
+  });
+}

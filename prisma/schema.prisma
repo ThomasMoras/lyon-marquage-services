@@ -22,6 +22,31 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Card {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  imageUrl    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Section {
+  id          String      @id @default(cuid())
+  title       String
+  description String      @db.Text
+  imageUrl    String
+  imageLeft   Boolean     @default(true)
+  type        SectionType @default(HOME)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+enum SectionType {
+  HOME
+  BRODERIE
+}
+
 model Content {
   id        String   @id @default(cuid())
   key       String   @unique // Par exemple: "home.title", "about.description"

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { ModeToggle } from "./ToogleTheme";
 import Image from "next/image";
 import { ChevronDown, Menu, X } from "lucide-react";
-import { menuItems } from "@/constants";
+import { menuItems } from "@/constants/prestation";
 
 const NavbarMobile = () => {
   const [isOpen, setIsOpen] = useState(false);

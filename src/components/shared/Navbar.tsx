@@ -1,17 +1,34 @@
 "use client";
-import React from "react";
-import NavbarMobile from "./NavbarMobile";
+
+import { useState, useEffect } from "react";
 import NavbarLarge from "./NarbarLarge";
+import NavbarMobile from "./NavbarMobile";
 
 const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="relative w-full">
-      <nav className="w-full p-5">
+    <>
+      <div className="" />
+      <div
+        className={`fixed top-0 left-0 right-0 w-full bg-background z-50 transition-all duration-200 ${
+          isScrolled ? "shadow-md" : ""
+        }`}
+      >
         <NavbarLarge />
         <NavbarMobile />
-      </nav>
-      <div className="absolute bottom-0 w-full h-px bg-gray-200" />
-    </div>
+      </div>
+    </>
   );
 };
 

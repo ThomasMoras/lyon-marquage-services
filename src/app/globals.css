@@ -67,7 +67,7 @@ body {
 }
 
 .main {
-  @apply p-10 grow;
+  @apply  grow;
 }
 
 .footer {

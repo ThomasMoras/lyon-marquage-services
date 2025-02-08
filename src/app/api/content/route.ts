@@ -1,4 +1,3 @@
-// app/api/content/route.ts
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 // import { getServerSession } from "next-auth";
@@ -34,7 +33,6 @@ export async function GET(request: Request) {
   }
 }
 
-// PUT /api/content
 export async function PUT(request: Request) {
   try {
     // const session = await getServerSession();

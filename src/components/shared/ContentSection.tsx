@@ -27,7 +27,7 @@ export function ContentSection({ section }: ContentSectionProps) {
   };
 
   return (
-    <div className="">
+    <div className="flex flex-row">
       <EditableField
         initialValue={content["title"]?.value ?? "empty title"}
         fieldName="title"
