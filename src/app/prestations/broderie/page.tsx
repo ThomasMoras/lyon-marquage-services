@@ -1,5 +1,5 @@
 "use client";
-import CustomCarousel from "@/components/shared/CustomCarousel";
+import CustomCarousel from "@/components/shared/EditableCarousel";
 import { EditableCard } from "@/components/shared/EditableCardProps";
 import { useEffect, useState } from "react";
 import { PageLayout } from "@/components/shared/PageLayout";
@@ -41,11 +41,6 @@ export default function Broderie() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Carousel Section */}
-      {/* <section className="h-screen w-full">
-        <CustomCarousel section="broderie" />
-      </section> */}
-
       <section>
         <PageLayout pageType="broderie" />
       </section>

@@ -22,6 +22,19 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Carousel {
+  id          String      @id @default(cuid())
+  title       String
+  description String      @db.Text
+  image       String
+  buttonText  String
+  buttonLink  String
+  type        SectionType
+  order       Int
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
 model Card {
   id          String   @id @default(cuid())
   title       String

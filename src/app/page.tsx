@@ -1,5 +1,3 @@
-import { ContentSection } from "@/components/shared/ContentSection";
-import CustomCarousel from "@/components/shared/CustomCarousel";
 import { PageLayout } from "@/components/shared/PageLayout";
 
 export default function Home() {

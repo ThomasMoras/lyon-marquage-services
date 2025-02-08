@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import CustomCarousel from "@/components/shared/CustomCarousel";
 import { EditableSectionCard } from "@/components/shared/EditableSectionCard";
-import { ContentSection } from "@/components/shared/ContentSection";
+import EditableCarousel from "@/components/shared/EditableCarousel";
 
 interface PageLayoutProps {
   pageType: "home" | "broderie";
@@ -20,7 +19,7 @@ export function PageLayout({ pageType }: PageLayoutProps) {
   return (
     <div className="flex flex-col">
       <section className="h-screen w-full">
-        <CustomCarousel section={pageType} />
+        <EditableCarousel section={pageType} />
       </section>
 
       <section className="container mx-auto py-16">

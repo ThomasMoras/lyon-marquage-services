@@ -93,6 +93,45 @@ async function main() {
     },
   ];
 
+  const carousels = [
+    {
+      title: "Bienvenue chez Lyon Marquage Service",
+      description: "Votre partenaire en marquage textile professionnel",
+      image: "/images/t_1.jpg",
+      buttonText: "Découvrir",
+      buttonLink: "/about",
+      type: SectionType.HOME,
+      order: 1,
+    },
+    {
+      title: "Solutions Personnalisées",
+      description: "Des solutions adaptées à vos besoins",
+      image: "/images/t_2.jpg",
+      buttonText: "Nos Services",
+      buttonLink: "/services",
+      type: SectionType.HOME,
+      order: 2,
+    },
+    {
+      title: "Broderie Artisanale",
+      description: "Excellence et savoir-faire",
+      image: "/images/broderie_1.jpg",
+      buttonText: "Explorer",
+      buttonLink: "/broderie",
+      type: SectionType.BRODERIE,
+      order: 1,
+    },
+    {
+      title: "Collections Sur Mesure",
+      description: "Créations uniques pour votre entreprise",
+      image: "/images/broderie_2.jpg",
+      buttonText: "En savoir plus",
+      buttonLink: "/collections",
+      type: SectionType.BRODERIE,
+      order: 2,
+    },
+  ];
+
   // Execute seeds
   for (const card of cards) {
     await prisma.card.create({ data: card });
@@ -100,6 +139,10 @@ async function main() {
 
   for (const section of [...homeSections, ...broderieSections]) {
     await prisma.section.create({ data: section });
+  }
+
+  for (const carousel of carousels) {
+    await prisma.carousel.create({ data: carousel });
   }
 }
 
