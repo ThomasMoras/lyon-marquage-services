@@ -39,8 +39,6 @@ export function PageLayout({ pageType }: PageLayoutProps) {
           ))}
         </div>
       </section>
-
-      {/* <ContentSection section={pageType} /> */}
     </div>
   );
 }

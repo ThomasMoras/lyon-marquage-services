@@ -34,7 +34,7 @@ export function EditableCard({ card, onSave }: EditableCardProps) {
           <img
             src={editedCard.imageUrl || "/api/placeholder/400/200"}
             alt={editedCard.title}
-            className="w-full h-48 object-cover rounded-md mb-4"
+            className="w-full h-48 object-cover rounded-md mb-4 z"
           />
           {isEditing ? (
             <Input

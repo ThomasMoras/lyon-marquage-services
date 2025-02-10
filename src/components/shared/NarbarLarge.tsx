@@ -14,6 +14,8 @@ import React from "react";
 import { menuCatalogue } from "@/constants/catalogue";
 import { menuItems } from "@/constants/prestation";
 import { ModeToggle } from "./ToogleTheme";
+import { inter, robotoMono } from "@/app/fonts";
+import { DropdownMenuSeparator } from "../ui/dropdown-menu";
 
 const ListItem = React.forwardRef<
   React.ElementRef<"div">,
@@ -41,35 +43,35 @@ ListItem.displayName = "ListItem";
 
 const NavbarLarge = () => {
   return (
-    <div className="hidden lg:grid lg:grid-cols-3 lg:items-center">
-      <div className="flex items-center gap-4 ml-8">
-        <Link href="/" className="flex items-center gap-4">
-          <div className="relative w-16 h-16 m-2">
-            <Image
-              src="/logo_svg.svg"
-              fill
-              alt="Logo Lyon Marquage Service"
-              className="object-contain"
-              priority
-            />
-          </div>
-          <h1 className="text-2xl font-bold">Lyon Marquage Service</h1>
-        </Link>
-      </div>
-
-      <div className="flex justify-center text-center">
+    <div className="hidden lg:flex lg:justify-start w-full px-4">
+      <div className="flex items-center gap-8">
+        <div className="flex items-center gap-4">
+          <Link href="/" className="flex items-center gap-4">
+            <div className="relative w-14 h-14 m-2">
+              <Image
+                src="/logo_svg.svg"
+                fill
+                alt="Logo Lyon Marquage Service"
+                className="object-contain"
+                priority
+              />
+            </div>
+            <h1 className={`${robotoMono.className} text-2xl font-bold`}>Lyon Marquage Service</h1>
+          </Link>
+        </div>
         <NavigationMenu>
           <NavigationMenuList className="text-xl">
             <NavigationMenuItem>
               <NavigationMenuTrigger className="text-xl">Catalogue</NavigationMenuTrigger>
               <NavigationMenuContent className="data-[side=bottom]:animate-slideUpAndFade">
                 <div
-                  className="grid w-[800px] gap-3 p-4 md:grid-cols-2"
+                  className="grid w-[800px] gap-3 p-4 md:grid-cols-2 text-center"
                   style={{ transform: "translateX(-50%)", left: "50%", position: "relative" }}
                 >
                   {menuCatalogue.map((c) => (
                     <div key={c.category}>
                       <h3 className="mb-2 text-lg font-semibold">{c.category}</h3>
+                      <DropdownMenuSeparator />
                       <ul className="grid gap-1">
                         {c.items.map((item) => (
                           <ListItem key={item.title} title={item.title} href={item.href} />
@@ -84,7 +86,7 @@ const NavbarLarge = () => {
             <NavigationMenuItem className="relative">
               <NavigationMenuTrigger className="text-xl">Nos prestations</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid w-[600px] md:w-[400px] md:grid-cols-1 lg:w-[300px]">
+                <ul className="grid w-[600px] md:w-[400px] md:grid-cols-1 lg:w-[300px] text-center">
                   {menuItems.map((menu) => (
                     <Link key={menu.title} href={menu.href} prefetch>
                       <ListItem title={menu.title}></ListItem>

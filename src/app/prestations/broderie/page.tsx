@@ -1,5 +1,4 @@
 "use client";
-import CustomCarousel from "@/components/shared/EditableCarousel";
 import { EditableCard } from "@/components/shared/EditableCardProps";
 import { useEffect, useState } from "react";
 import { PageLayout } from "@/components/shared/PageLayout";

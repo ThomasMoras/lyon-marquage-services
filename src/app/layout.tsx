@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <body
-        className={`${inter.className} ${inter.className} antialiased min-h-screen bg-background font-sans`}
+        className={`${robotoMono.className} ${inter.className} antialiased min-h-screen bg-background font-sans`}
       >
         <ThemeProvider
           attribute="class"
