@@ -57,7 +57,11 @@ model Section {
 
 enum SectionType {
   HOME
+  SERIGRAPHIE
   BRODERIE
+  IMPRESSION_TEXTILE
+  IMPRESSION_TRANSFERT
+  FLOCAGE
 }
 
 model Content {

@@ -1,7 +1,12 @@
-import React from "react";
+"use client";
+import { PageLayout } from "@/components/shared/PageLayout";
 
-const Flocage = () => {
-  return <div>Flocage</div>;
-};
-
-export default Flocage;
+export default function Flocage() {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <section>
+        <PageLayout pageSection="flocage" />
+      </section>
+    </div>
+  );
+}

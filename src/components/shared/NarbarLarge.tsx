@@ -14,7 +14,7 @@ import React from "react";
 import { menuCatalogue } from "@/constants/catalogue";
 import { menuItems } from "@/constants/prestation";
 import { ModeToggle } from "./ToogleTheme";
-import { inter, robotoMono } from "@/app/fonts";
+import { robotoMono } from "@/app/fonts";
 import { DropdownMenuSeparator } from "../ui/dropdown-menu";
 
 const ListItem = React.forwardRef<
@@ -46,7 +46,7 @@ const NavbarLarge = () => {
     <div className="hidden lg:flex lg:justify-start w-full px-4">
       <div className="flex items-center gap-8">
         <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-4">
+          <Link href="/" className="flex items-center gap-3">
             <div className="relative w-14 h-14 m-2">
               <Image
                 src="/logo_svg.svg"

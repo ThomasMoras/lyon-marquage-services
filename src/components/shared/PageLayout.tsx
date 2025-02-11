@@ -3,26 +3,22 @@ import { useEffect, useState } from "react";
 import { EditableSectionCard } from "@/components/shared/EditableSectionCard";
 import EditableCarousel from "@/components/shared/EditableCarousel";
 
-interface PageLayoutProps {
-  pageType: "home" | "broderie";
-}
-
-export function PageLayout({ pageType }: PageLayoutProps) {
+export function PageLayout({ pageSection }: PageSections) {
   const [sections, setSections] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/section?type=${pageType}`)
+    fetch(`/api/section?type=${pageSection}`)
       .then((res) => res.json())
       .then(setSections);
-  }, [pageType]);
+  }, [pageSection]);
 
   return (
     <div className="flex flex-col">
       <section className="h-screen w-full">
-        <EditableCarousel section={pageType} />
+        <EditableCarousel pageSection={pageSection} />
       </section>
 
-      <section id={"start-" + pageType} className="container mx-auto py-16">
+      <section id={"start-" + pageSection} className="container mx-auto py-16">
         <div className="space-y-16">
           {sections.map((section) => (
             <EditableSectionCard

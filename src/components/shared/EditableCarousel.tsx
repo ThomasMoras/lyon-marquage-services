@@ -26,10 +26,6 @@ interface CarouselSlide {
   buttonLink: string;
 }
 
-interface EditableCarouselProps {
-  section: "home" | "broderie";
-}
-
 const CarouselSlide = ({ slide }: { slide: CarouselSlide }) => {
   return (
     <div className="relative h-screen">
@@ -58,7 +54,7 @@ const CarouselSlide = ({ slide }: { slide: CarouselSlide }) => {
   );
 };
 
-export default function EditableCarousel({ section }: EditableCarouselProps) {
+export default function EditableCarousel({ pageSection }: PageSections) {
   const [slides, setSlides] = useState<CarouselSlide[]>([]);
   const [isEditing, setIsEditing] = useState(false);
   const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
@@ -80,10 +76,10 @@ export default function EditableCarousel({ section }: EditableCarouselProps) {
   }, []);
 
   useEffect(() => {
-    fetch(`/api/carousel?type=${section}`)
+    fetch(`/api/carousel?type=${pageSection}`)
       .then((res) => res.json())
       .then(setSlides);
-  }, [section]);
+  }, [pageSection]);
 
   const handleFieldChange = (index: number, field: keyof CarouselSlide, value: string) => {
     const newSlides = [...slides];
@@ -144,7 +140,7 @@ export default function EditableCarousel({ section }: EditableCarouselProps) {
                       />
                     </div>
                     <ImageSelector
-                      folder={`images/${section}`}
+                      folder={`images/${pageSection}`}
                       currentImage={slide.image}
                       onSelect={(imagePath) => {
                         handleFieldChange(index, "image", imagePath);

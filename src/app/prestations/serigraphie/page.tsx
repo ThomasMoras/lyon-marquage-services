@@ -1,7 +1,12 @@
-import React from "react";
+"use client";
+import { PageLayout } from "@/components/shared/PageLayout";
 
-const Serigraphie = () => {
-  return <div>Serigraphie</div>;
-};
-
-export default Serigraphie;
+export default function Serigraphie() {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <section>
+        <PageLayout pageSection="serigraphie" />
+      </section>
+    </div>
+  );
+}
