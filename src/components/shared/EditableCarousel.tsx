@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   Carousel,
@@ -14,8 +14,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Pencil, X } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 import { cn } from "@/lib/utils";
-import { UploadFile } from "./UploadFile";
 import { ImageSelector } from "./ImageSelector";
+import Link from "next/link";
 
 interface CarouselSlide {
   id: string;
@@ -32,38 +32,25 @@ interface EditableCarouselProps {
 
 const CarouselSlide = ({ slide }: { slide: CarouselSlide }) => {
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative h-screen">
       <div className="absolute inset-0">
         <Image
           src={slide.image}
           alt={slide.title}
           fill
           priority
-          className="object-cover object-center"
+          className="object-cover"
           sizes="100vw"
-          quality={90}
         />
       </div>
-      <div
-        className={cn(
-          "absolute inset-0 flex flex-col items-center justify-center p-8 z-10",
-          "bg-gradient-to-t from-black/50 via-transparent to-transparent"
-        )}
-      >
-        <div className="max-w-4xl mx-auto text-center space-y-6 mt-20">
-          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl text-white drop-shadow-md">
-            {slide.title}
-          </h2>
-          <p className="text-xl max-w-2xl mx-auto leading-relaxed text-white/90 drop-shadow">
-            {slide.description}
-          </p>
-          <Button
-            size="lg"
-            variant="outline"
-            className="mt-8 bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-black transition-all"
-            asChild
-          >
-            <a href={slide.buttonLink}>{slide.buttonText}</a>
+      <div className="absolute inset-0 flex items-center bg-gradient-to-t from-black/50">
+        <div className="max-w-4xl mx-auto text-center space-y-10">
+          <h2 className="text-4xl lg:text-6xl font-bold text-white">{slide.title}</h2>
+          <p className="text-xl text-white/90 max-w-2xl mx-auto">{slide.description}</p>
+          <Button size="lg" className="btn-carousel" asChild>
+            <Link href={slide.buttonLink} scroll>
+              {slide.buttonText}
+            </Link>
           </Button>
         </div>
       </div>
@@ -75,6 +62,22 @@ export default function EditableCarousel({ section }: EditableCarouselProps) {
   const [slides, setSlides] = useState<CarouselSlide[]>([]);
   const [isEditing, setIsEditing] = useState(false);
   const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
+  const editMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        editMenuRef.current &&
+        !editMenuRef.current.contains(event.target as Node) &&
+        !(event.target as Element).closest('[role="dialog"]')
+      ) {
+        setIsEditing(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     fetch(`/api/carousel?type=${section}`)
@@ -82,18 +85,23 @@ export default function EditableCarousel({ section }: EditableCarouselProps) {
       .then(setSlides);
   }, [section]);
 
-  const handleEdit = async (updatedSlide: CarouselSlide) => {
+  const handleFieldChange = (index: number, field: keyof CarouselSlide, value: string) => {
+    const newSlides = [...slides];
+    const updatedSlide = { ...newSlides[index], [field]: value };
+    newSlides[index] = updatedSlide;
+    setSlides(newSlides);
+    handleSaveSlide(updatedSlide);
+  };
+
+  const handleSaveSlide = async (slide: CarouselSlide) => {
     try {
       await fetch("/api/carousel", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedSlide),
+        body: JSON.stringify(slide),
       });
-      const response = await fetch(`/api/carousel?type=${section}`);
-      const updatedSlides = await response.json();
-      setSlides(updatedSlides);
     } catch (error) {
-      console.error("Error updating slide:", error);
+      console.error("Error saving:", error);
     }
   };
 
@@ -102,7 +110,7 @@ export default function EditableCarousel({ section }: EditableCarouselProps) {
       <div className="relative h-screen">
         {isEditing && (
           <div className="absolute inset-0 z-30 overflow-y-auto flex items-center justify-center">
-            <div className="max-w-3xl w-full p-6 space-y-4 bg-white my-8">
+            <div ref={editMenuRef} className="max-w-3xl w-full p-6 space-y-4 bg-white my-8">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-semibold">Edit Carousel</h3>
                 <Button onClick={() => setIsEditing(false)} variant="outline">
@@ -115,39 +123,23 @@ export default function EditableCarousel({ section }: EditableCarouselProps) {
                   <div className="space-y-3">
                     <Input
                       value={slide.title}
-                      onChange={(e) => {
-                        const newSlides = [...slides];
-                        newSlides[index] = { ...slide, title: e.target.value };
-                        setSlides(newSlides);
-                      }}
+                      onChange={(e) => handleFieldChange(index, "title", e.target.value)}
                       placeholder="Title"
                     />
                     <Textarea
                       value={slide.description}
-                      onChange={(e) => {
-                        const newSlides = [...slides];
-                        newSlides[index] = { ...slide, description: e.target.value };
-                        setSlides(newSlides);
-                      }}
+                      onChange={(e) => handleFieldChange(index, "description", e.target.value)}
                       placeholder="Description"
                     />
                     <div className="grid grid-cols-2 gap-3">
                       <Input
                         value={slide.buttonText}
-                        onChange={(e) => {
-                          const newSlides = [...slides];
-                          newSlides[index] = { ...slide, buttonText: e.target.value };
-                          setSlides(newSlides);
-                        }}
+                        onChange={(e) => handleFieldChange(index, "buttonText", e.target.value)}
                         placeholder="Button Text"
                       />
                       <Input
                         value={slide.buttonLink}
-                        onChange={(e) => {
-                          const newSlides = [...slides];
-                          newSlides[index] = { ...slide, buttonLink: e.target.value };
-                          setSlides(newSlides);
-                        }}
+                        onChange={(e) => handleFieldChange(index, "buttonLink", e.target.value)}
                         placeholder="Button Link"
                       />
                     </div>
@@ -155,20 +147,9 @@ export default function EditableCarousel({ section }: EditableCarouselProps) {
                       folder={`images/${section}`}
                       currentImage={slide.image}
                       onSelect={(imagePath) => {
-                        const newSlides = [...slides];
-                        newSlides[index] = { ...slide, image: imagePath };
-                        setSlides(newSlides);
+                        handleFieldChange(index, "image", imagePath);
                       }}
                     />
-                    {/* <div className="flex justify-end mt-3">
-                      <Button
-                        className=" bg-green-600 hover:bg-green-500"
-                        onClick={() => handleEdit(slide)}
-                        size="sm"
-                      >
-                        Save
-                      </Button>
-                    </div> */}
                   </div>
                 </div>
               ))}
@@ -196,17 +177,17 @@ export default function EditableCarousel({ section }: EditableCarouselProps) {
 
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
             <CarouselPrevious
-              variant="outline"
+              variant="default"
               className={cn(
                 "relative translate-y-0 left-0 mr-2 bg-background/80 hover:bg-background/90",
-                "border-white text-white hover:text-white"
+                "border-white text-white hover:text-white  bg-blue-400 hover:bg-blue-300"
               )}
             />
             <CarouselNext
-              variant="outline"
+              variant="default"
               className={cn(
                 "relative translate-y-0 right-0 bg-background/80 hover:bg-background/90",
-                "border-white text-white hover:text-white"
+                "border-white text-white hover:text-white bg-blue-400 hover:bg-blue-300"
               )}
             />
           </div>

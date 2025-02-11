@@ -56,7 +56,16 @@ const NavbarLarge = () => {
                 priority
               />
             </div>
-            <h1 className={`${robotoMono.className} text-2xl font-bold`}>Lyon Marquage Service</h1>
+            <h1
+              className={`${robotoMono.className} text-3xl font-bold text-blue-600 mb-2 text-shadow`}
+            >
+              Lyon
+            </h1>
+            <h1
+              className={`${robotoMono.className} text-2xl font-semibold text-red-600 tracking-wide text-shadow`}
+            >
+              Marquage
+            </h1>
           </Link>
         </div>
         <NavigationMenu>

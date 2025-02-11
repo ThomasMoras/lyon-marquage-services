@@ -97,7 +97,7 @@ async function main() {
     {
       title: "Bienvenue chez Lyon Marquage Service",
       description: "Votre partenaire en marquage textile professionnel",
-      image: "/images/t_1.jpg",
+      image: "/images/home/t_1.jpg",
       buttonText: "Découvrir",
       buttonLink: "/about",
       type: SectionType.HOME,
@@ -106,7 +106,7 @@ async function main() {
     {
       title: "Solutions Personnalisées",
       description: "Des solutions adaptées à vos besoins",
-      image: "/images/t_2.jpg",
+      image: "/images/home/t_2.jpg",
       buttonText: "Nos Services",
       buttonLink: "/services",
       type: SectionType.HOME,
@@ -115,7 +115,7 @@ async function main() {
     {
       title: "Broderie Artisanale",
       description: "Excellence et savoir-faire",
-      image: "/images/broderie_1.jpg",
+      image: "/images/broderie/b_5.jpg",
       buttonText: "Explorer",
       buttonLink: "/broderie",
       type: SectionType.BRODERIE,
@@ -124,7 +124,7 @@ async function main() {
     {
       title: "Collections Sur Mesure",
       description: "Créations uniques pour votre entreprise",
-      image: "/images/broderie_2.jpg",
+      image: "/images/broderie/b_7.jpg",
       buttonText: "En savoir plus",
       buttonLink: "/collections",
       type: SectionType.BRODERIE,

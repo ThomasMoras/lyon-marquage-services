@@ -22,7 +22,7 @@ export function PageLayout({ pageType }: PageLayoutProps) {
         <EditableCarousel section={pageType} />
       </section>
 
-      <section className="container mx-auto py-16">
+      <section id={"start-" + pageType} className="container mx-auto py-16">
         <div className="space-y-16">
           {sections.map((section) => (
             <EditableSectionCard
