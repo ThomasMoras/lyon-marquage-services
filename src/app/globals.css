@@ -95,7 +95,7 @@ html {
 
 .title {
   @apply text-4xl mb-4;
-}
+} 
 
 .btn-carousel {
   @apply rounded-2xl px-12 py-7
