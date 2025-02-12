@@ -5,7 +5,7 @@ export default function ImpressionTransfert() {
   return (
     <div className="flex flex-col min-h-screen">
       <section>
-        <PageLayout pageSection="impression-transfert" />
+        <PageLayout pageSection="impression_transfert" />
       </section>
     </div>
   );

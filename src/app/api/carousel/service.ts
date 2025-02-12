@@ -23,6 +23,20 @@ export async function updateCarousel(id: string, data: Partial<Carousel>) {
   });
 }
 
-export async function createCarousel(data: Omit<Carousel, "id" | "createdAt" | "updatedAt">) {
-  return await prisma.carousel.create({ data });
+export async function createCarousel(data: any) {
+  console.log("SERVICE - Creating carousel with data:", data);
+  try {
+    const result = await prisma.carousel.create({ data });
+    console.log("SERVICE - Created carousel:", result);
+    return result;
+  } catch (error) {
+    console.error("SERVICE - Error creating carousel:", error);
+    throw error;
+  }
+}
+
+export async function deleteCarousel(id: string) {
+  return await prisma.carousel.delete({
+    where: { id },
+  });
 }
