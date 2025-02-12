@@ -22,6 +22,7 @@ export function PageLayout({ pageSection }: PageSections) {
         <div className="space-y-16">
           {sections.map((section) => (
             <EditableSectionCard
+              pageSection="broderie"
               key={section.id}
               section={section}
               onSave={async (updated) => {

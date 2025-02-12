@@ -33,7 +33,6 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --btn-carousel-bg: 217 91% 60%; /* blue-500 */
     --btn-carousel-hover: 217 91% 45%; /* darker blue */
     --btn-carousel-text: 0 0% 100%;
   }
@@ -98,13 +97,13 @@ html {
 } 
 
 .btn-carousel {
-  @apply rounded-2xl px-12 py-7
-    text-lg font-medium text-white 
+  @apply rounded-2xl px-14 py-8
+    text-xl font-medium text-white 
     shadow-primary-3 transition duration-150 ease-in-out
     focus:outline-none focus:ring-0
     tracking-wide items-center justify-center
-    hover:!bg-blue-600 hover:text-white;
-  background-color: hsl(var(--btn-carousel-bg));
+    hover:!bg-blue-400 hover:text-white bg-blue-500;
+  /* background-color: hsl(var(--btn-carousel-bg)); */
  }
 
 @layer base {

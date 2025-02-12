@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Pencil, Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ImageSelector } from "./ImageSelector";
 
 interface SectionCardProps {
   section: {
@@ -17,9 +18,10 @@ interface SectionCardProps {
     imageLeft: boolean;
   };
   onSave: (section: any) => void;
+  pageSection: PageSections;
 }
 
-export function EditableSectionCard({ section, onSave }: SectionCardProps) {
+export function EditableSectionCard({ section, onSave, pageSection }: SectionCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedSection, setEditedSection] = useState(section);
 
@@ -29,8 +31,8 @@ export function EditableSectionCard({ section, onSave }: SectionCardProps) {
   };
 
   const contentSection = (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-2xl font-bold">{editedSection.title}</h2>
+    <div className="flex flex-col gap-6">
+      <h2 className="text-2xl font-bold pt-16 pl-9">{editedSection.title}</h2>
       <p className="text-muted-foreground">{editedSection.description}</p>
     </div>
   );
@@ -47,11 +49,12 @@ export function EditableSectionCard({ section, onSave }: SectionCardProps) {
         onChange={(e) => setEditedSection({ ...editedSection, description: e.target.value })}
         placeholder="Description"
       />
-      <Input
-        type="url"
-        value={editedSection.imageUrl}
-        onChange={(e) => setEditedSection({ ...editedSection, imageUrl: e.target.value })}
-        placeholder="Image URL"
+      <ImageSelector
+        folder={`images/${pageSection}`}
+        currentImage={editedSection.imageUrl}
+        onSelect={(imagePath) => {
+          setEditedSection({ ...editedSection, imageUrl: imagePath });
+        }}
       />
       <div className="flex items-center gap-2">
         <Switch
@@ -71,12 +74,12 @@ export function EditableSectionCard({ section, onSave }: SectionCardProps) {
           editedSection.imageLeft ? "flex-row" : "flex-row-reverse"
         )}
       >
-        <div className="w-1/3 relative aspect-square">
+        <div className="w-1/3 max-h-64 max-w-64 relative aspect-square overflow-hidden rounded-xl transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
           <Image
             src={editedSection.imageUrl || "/api/placeholder/400/400"}
             alt={editedSection.title}
             fill
-            className="object-cover rounded-lg"
+            className="object-cover rounded-xl shadow-xl"
           />
         </div>
         <div className="flex-1">
