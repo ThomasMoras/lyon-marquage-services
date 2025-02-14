@@ -105,13 +105,13 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-8">
       <Card className="max-w-4xl mx-auto shadow-lg">
-        <div className="bg-white px-8 py-6 border-b border-gray-200">
+        {/* <div className="bg-white px-8 py-6 border-b border-gray-200">
           <h2 className="text-3xl font-bold text-gray-900">Contactez-nous</h2>
           <p className="mt-2 text-gray-600">
             Pour obtenir des informations supplémentaires ou des conseils adaptés à vos besoins,
             n'hésitez pas à nous contacter.
           </p>
-        </div>
+        </div> */}
         <CardContent className="px-8 py-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
