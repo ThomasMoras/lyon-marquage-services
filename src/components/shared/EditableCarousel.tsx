@@ -59,7 +59,7 @@ export default function EditableCarousel({ pageSection }: PageSections) {
   const [slides, setSlides] = useState<CarouselSlide[]>([]);
   const [isEditing, setIsEditing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const slidesPerPage = 2;
+  const slidesPerPage = 1;
   const { toast } = useToast();
 
   const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
@@ -197,7 +197,7 @@ export default function EditableCarousel({ pageSection }: PageSections) {
     <div className="w-full">
       <div className="relative h-screen">
         {isEditing && (
-          <div className="absolute inset-0 z-30 overflow-y-auto flex items-center justify-center mt-8">
+          <div className="absolute inset-0 z-50 overflow-y-auto flex items-center justify-center pt-10">
             <div ref={editMenuRef} className="max-w-3xl w-full p-6 space-y-4 bg-white my-8">
               {/* Header */}
               <div className="flex justify-between items-center">
