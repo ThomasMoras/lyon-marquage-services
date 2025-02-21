@@ -1,8 +1,23 @@
 // prisma/seed.ts
 import { PrismaClient, SectionType } from "@prisma/client";
+import { hash } from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
+  const adminPassword = await hash("test", 10);
+
+  const admin = await prisma.user.upsert({
+    where: { email: "moras.thomas@gmail.com" },
+    update: {},
+    create: {
+      email: "moras.thomas@gmail.com",
+      name: "Administrateur",
+      password: adminPassword,
+    },
+  });
+
+  console.log(`Utilisateur admin créé avec l'ID: ${admin.id}`);
+
   const cards = [
     {
       title: "Embroidery Design 1",

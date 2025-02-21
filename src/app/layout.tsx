@@ -4,6 +4,7 @@ import Layout from "@/components/shared/Layout";
 import { ThemeProvider } from "next-themes";
 import { inter, robotoMono } from "./fonts";
 import { Toaster } from "@/components/ui/toaster";
+import { SessionProvider } from "@/components/providers/SessionProvider";
 
 export const metadata: Metadata = {
   title: "Lyon Marquage Service",
@@ -27,7 +28,9 @@ export default function RootLayout({
           disableTransitionOnChange
           enableColorScheme
         >
-          <Layout>{children}</Layout>
+          <Layout>
+            <SessionProvider>{children}</SessionProvider>
+          </Layout>
           <Toaster />
         </ThemeProvider>
       </body>
