@@ -8,22 +8,16 @@ import { Switch } from "@/components/ui/switch";
 import { Pencil, Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ImageSelector } from "./ImageSelector";
+import { EditableSectionCardProps, Section } from "@/types";
 
-interface SectionCardProps {
-  section: {
-    id: string;
-    title: string;
-    description: string;
-    imageUrl: string;
-    imageLeft: boolean;
-  };
-  onSave: (section: any) => void;
-  pageSection: PageSections;
-}
-
-export function EditableSectionCard({ section, onSave, pageSection }: SectionCardProps) {
+export function EditableSectionCard({
+  section,
+  onSave,
+  pageSection,
+  isAdmin = false,
+}: EditableSectionCardProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedSection, setEditedSection] = useState(section);
+  const [editedSection, setEditedSection] = useState<Section>(section);
 
   const handleSave = () => {
     onSave(editedSection);
@@ -40,25 +34,25 @@ export function EditableSectionCard({ section, onSave, pageSection }: SectionCar
   const editingSection = (
     <div className="flex flex-col gap-4">
       <Input
-        value={editedSection.title}
+        value={editedSection.title || ""}
         onChange={(e) => setEditedSection({ ...editedSection, title: e.target.value })}
         placeholder="Title"
       />
       <Textarea
-        value={editedSection.description}
+        value={editedSection.description || ""}
         onChange={(e) => setEditedSection({ ...editedSection, description: e.target.value })}
         placeholder="Description"
       />
       <ImageSelector
         folder={`images/${pageSection}`}
-        currentImage={editedSection.imageUrl}
+        currentImage={editedSection.image || ""}
         onSelect={(imagePath) => {
-          setEditedSection({ ...editedSection, imageUrl: imagePath });
+          setEditedSection({ ...editedSection, image: imagePath });
         }}
       />
       <div className="flex items-center gap-2">
         <Switch
-          checked={editedSection.imageLeft}
+          checked={!!editedSection.imageLeft}
           onCheckedChange={(checked) => setEditedSection({ ...editedSection, imageLeft: checked })}
         />
         <span>Image on left</span>
@@ -76,8 +70,8 @@ export function EditableSectionCard({ section, onSave, pageSection }: SectionCar
       >
         <div className="w-1/3 max-h-64 max-w-64 relative aspect-square overflow-hidden rounded-xl transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
           <Image
-            src={editedSection.imageUrl || "/api/placeholder/400/400"}
-            alt={editedSection.title}
+            src={editedSection.image || "/api/placeholder/400/400"}
+            alt={editedSection.title || "Section image"}
             fill
             className="object-cover rounded-xl shadow-xl"
           />
@@ -95,9 +89,11 @@ export function EditableSectionCard({ section, onSave, pageSection }: SectionCar
                 </Button>
               </div>
             ) : (
-              <Button onClick={() => setIsEditing(true)} variant="outline" size="sm">
-                <Pencil className="w-4 h-4 mr-1" /> Edit
-              </Button>
+              isAdmin && (
+                <Button onClick={() => setIsEditing(true)} variant="outline" size="sm">
+                  <Pencil className="w-4 h-4 mr-1" /> Edit
+                </Button>
+              )
             )}
           </div>
         </div>

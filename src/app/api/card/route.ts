@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCards, createCard, updateCard, deleteCard } from "./service";
-import { CreateCardInput, UpdateCardInput } from "@/types/card";
+import { CreateCardInput, UpdateCardInput } from "@/types/cardTypes";
 
 export async function GET() {
   const cards = await getCards();

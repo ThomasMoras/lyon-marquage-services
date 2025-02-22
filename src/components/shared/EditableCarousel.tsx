@@ -26,8 +26,9 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { CarouselSlide, EditableCarouselProps } from "@/types";
 
-const CarouselSlide = ({ slide }: { slide: CarouselSlide }) => {
+const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
   return (
     <div className="relative h-screen">
       <div className="absolute inset-0">
@@ -55,7 +56,7 @@ const CarouselSlide = ({ slide }: { slide: CarouselSlide }) => {
   );
 };
 
-export default function EditableCarousel({ pageSection }: PageSections) {
+export default function EditableCarousel({ pageSection, isAdmin = false }: EditableCarouselProps) {
   const [slides, setSlides] = useState<CarouselSlide[]>([]);
   const [isEditing, setIsEditing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -119,7 +120,6 @@ export default function EditableCarousel({ pageSection }: PageSections) {
 
   const handleAddSlide = async () => {
     const maxOrder = slides.length > 0 ? Math.max(...slides.map((slide) => slide.order)) : -1;
-    const sectionType = pageSection.toUpperCase() as CarouselSlide["type"];
     const newSlide: Omit<CarouselSlide, "id"> = {
       title: "Nouveau titre",
       description: "Nouvelle description",
@@ -127,7 +127,7 @@ export default function EditableCarousel({ pageSection }: PageSections) {
       buttonText: "En savoir plus",
       buttonLink: "#",
       order: maxOrder + 1,
-      type: sectionType,
+      type: pageSection,
     };
 
     try {
@@ -196,7 +196,7 @@ export default function EditableCarousel({ pageSection }: PageSections) {
   return (
     <div className="w-full">
       <div className="relative h-screen">
-        {isEditing && (
+        {isEditing && isAdmin && (
           <div className="absolute inset-0 z-50 overflow-y-auto flex items-center justify-center pt-10">
             <div ref={editMenuRef} className="max-w-3xl w-full p-6 space-y-4 bg-white my-8">
               {/* Header */}
@@ -346,7 +346,7 @@ export default function EditableCarousel({ pageSection }: PageSections) {
           <CarouselContent>
             {slides.map((slide) => (
               <CarouselItem key={slide.id} className="basis-full">
-                <CarouselSlide slide={slide} />
+                <CarouselSlideComponent slide={slide} />
               </CarouselItem>
             ))}
           </CarouselContent>
@@ -369,13 +369,15 @@ export default function EditableCarousel({ pageSection }: PageSections) {
           </div>
         </Carousel>
 
-        <Button
-          onClick={() => setIsEditing(!isEditing)}
-          className="absolute bottom-4 right-4 z-30"
-          variant="outline"
-        >
-          <Pencil className="w-4 h-4" />
-        </Button>
+        {isAdmin && (
+          <Button
+            onClick={() => setIsEditing(!isEditing)}
+            className="absolute bottom-4 right-4 z-30"
+            variant="outline"
+          >
+            <Pencil className="w-4 h-4" />
+          </Button>
+        )}
       </div>
     </div>
   );
