@@ -5,23 +5,39 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Pencil, Check, X } from "lucide-react";
+import { Pencil, Check, X, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ImageSelector } from "./ImageSelector";
-import { EditableSectionCardProps, Section } from "@/types";
+import { EditableSectionCardProps, PageSectionType, Section } from "@/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export function EditableSectionCard({
   section,
   onSave,
+  onDelete,
   pageSection,
   isAdmin = false,
-}: EditableSectionCardProps) {
+}: EditableSectionCardProps & { onDelete?: (id: string) => Promise<void> }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedSection, setEditedSection] = useState<Section>(section);
 
-  const handleSave = () => {
-    onSave(editedSection);
+  const handleSave = async () => {
+    await onSave(editedSection);
     setIsEditing(false);
+  };
+
+  const handleDelete = async () => {
+    if (onDelete) {
+      await onDelete(section.id);
+    }
   };
 
   const contentSection = (
@@ -45,9 +61,9 @@ export function EditableSectionCard({
       />
       <ImageSelector
         folder={`images/${pageSection}`}
-        currentImage={editedSection.image || ""}
+        currentImage={editedSection.imageUrl || ""}
         onSelect={(imagePath) => {
-          setEditedSection({ ...editedSection, image: imagePath });
+          setEditedSection({ ...editedSection, imageUrl: imagePath });
         }}
       />
       <div className="flex items-center gap-2">
@@ -61,7 +77,37 @@ export function EditableSectionCard({
   );
 
   return (
-    <div className="w-full p-6">
+    <div className="w-full p-6 relative">
+      {isAdmin && !isEditing && (
+        <div className="absolute top-2 right-2 z-10 flex gap-2">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-white/80 hover:bg-white text-red-500 hover:text-red-600 rounded-full"
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Confirm Deletion</DialogTitle>
+                <DialogDescription>
+                  Are you sure you want to delete this section? This action cannot be undone.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button variant="outline">Cancel</Button>
+                <Button variant="destructive" onClick={handleDelete}>
+                  Delete
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
+      )}
+
       <div
         className={cn(
           "flex gap-8 items-start",
@@ -70,7 +116,7 @@ export function EditableSectionCard({
       >
         <div className="w-1/3 max-h-64 max-w-64 relative aspect-square overflow-hidden rounded-xl transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
           <Image
-            src={editedSection.image || "/api/placeholder/400/400"}
+            src={editedSection.imageUrl || "/api/placeholder/400/400"}
             alt={editedSection.title || "Section image"}
             fill
             className="object-cover rounded-xl shadow-xl"
@@ -96,6 +142,57 @@ export function EditableSectionCard({
               )
             )}
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function SectionContainer({
+  sections,
+  onSave,
+  onDelete,
+  onAdd,
+  pageSection,
+  isAdmin = false,
+}: {
+  sections: Section[];
+  onSave: (section: Section) => Promise<void>;
+  onDelete: (id: string) => Promise<void>;
+  onAdd: () => Promise<void>;
+  pageSection: PageSectionType;
+  isAdmin?: boolean;
+}) {
+  return (
+    <div className="container mx-auto py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold">Sections</h2>
+      </div>
+
+      <div className="space-y-16">
+        {sections.length > 0 ? (
+          sections.map((section) => (
+            <EditableSectionCard
+              key={section.id}
+              section={section}
+              onSave={onSave}
+              onDelete={onDelete}
+              pageSection={pageSection}
+              isAdmin={isAdmin}
+            />
+          ))
+        ) : (
+          <div className="text-center py-12 text-gray-500">
+            No sections found. Click "Add New Section" to create one.
+          </div>
+        )}
+
+        <div className="flex flex-row-reverse mt-6">
+          {isAdmin && (
+            <Button onClick={onAdd} className="bg-green-600 hover:bg-green-700">
+              Add New Section
+            </Button>
+          )}
         </div>
       </div>
     </div>

@@ -204,11 +204,6 @@ export default function Broderie() {
       <section className="container mx-auto py-16 px-4">
         <div className="flex justify-center items-center mb-12">
           <h2 className="text-3xl font-bold">Notre collection</h2>
-          {isAdmin && (
-            <Button onClick={handleAddCard} className="bg-green-600 hover:bg-green-700">
-              <Plus className="w-4 h-4 mr-2" /> Add New Card
-            </Button>
-          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -222,6 +217,13 @@ export default function Broderie() {
               isAdmin={isAdmin}
             />
           ))}
+        </div>
+        <div className="flex flex-row-reverse mt-6">
+          {isAdmin && (
+            <Button onClick={handleAddCard} className="bg-green-600 hover:bg-green-700">
+              <Plus className="w-4 h-4 mr-2" /> Add New Card
+            </Button>
+          )}
         </div>
       </section>
     </div>

@@ -61,6 +61,7 @@ model Section {
   imageUrl    String
   imageLeft   Boolean     @default(true)
   type        SectionType @default(HOME)
+  order       Int         @default(0)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }

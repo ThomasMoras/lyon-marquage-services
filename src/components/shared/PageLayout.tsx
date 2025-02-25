@@ -1,14 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import { EditableSectionCard } from "@/components/shared/EditableSectionCard";
+import { SectionContainer } from "@/components/shared/EditableSectionCard";
 import EditableCarousel from "@/components/shared/EditableCarousel";
 import { PageSectionProps, Section } from "@/types";
 import { useSession } from "next-auth/react";
+import { useToast } from "@/hooks/use-toast";
 
 export function PageLayout({ pageSection }: PageSectionProps) {
   const [sections, setSections] = useState<Section[]>([]);
   const { data: session, status } = useSession();
   const [isAdmin, setIsAdmin] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     fetch(`/api/section?type=${pageSection}`)
@@ -23,6 +25,141 @@ export function PageLayout({ pageSection }: PageSectionProps) {
     }
   }, [status]);
 
+  const fetchSections = async () => {
+    try {
+      const response = await fetch(`/api/section?type=${pageSection}`);
+      if (!response.ok) throw new Error("Failed to fetch sections");
+
+      const data = await response.json();
+
+      // Sort sections by order property, fallback to createdAt
+      const sortedSections = [...data].sort((a, b) => {
+        if (a.order !== undefined && b.order !== undefined) {
+          return a.order - b.order;
+        }
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      });
+
+      setSections(sortedSections);
+    } catch (error) {
+      console.error("Error fetching sections:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load sections. Please try again later.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSaveSection = async (updatedSection: Section) => {
+    try {
+      // Format the section for the API
+      const sectionToUpdate = {
+        id: updatedSection.id,
+        title: updatedSection.title || "",
+        description: updatedSection.description || "",
+        imageUrl: updatedSection.imageUrl || "",
+        imageLeft: updatedSection.imageLeft || false,
+        order: updatedSection.order,
+      };
+
+      const response = await fetch("/api/section", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(sectionToUpdate),
+      });
+
+      if (!response.ok) throw new Error("Failed to update section");
+
+      // Update the section in the local state
+      setSections((currentSections) =>
+        currentSections.map((section) =>
+          section.id === updatedSection.id ? updatedSection : section
+        )
+      );
+
+      toast({
+        title: "Success",
+        description: "Section updated successfully",
+      });
+    } catch (error) {
+      console.error("Error updating section:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save section. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteSection = async (id: string) => {
+    try {
+      const response = await fetch(`/api/section/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error("Failed to delete section");
+
+      // Remove the section from the local state
+      setSections((currentSections) => currentSections.filter((section) => section.id !== id));
+
+      toast({
+        title: "Success",
+        description: "Section deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting section:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete section. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleAddSection = async () => {
+    try {
+      // Find max order to put new section at the end
+      const maxOrder =
+        sections.length > 0 ? Math.max(...sections.map((section) => section.order || 0)) : -1;
+
+      // Create a new section with default values
+      const newSection = {
+        title: "New Section Title",
+        description: "Add your description here",
+        imageUrl: "/api/placeholder/400/400",
+        imageLeft: false,
+        type: pageSection.toUpperCase(),
+        order: maxOrder + 1, // Add at the end
+      };
+
+      const response = await fetch("/api/section", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newSection),
+      });
+
+      if (!response.ok) throw new Error("Failed to create section");
+
+      const createdSection = await response.json();
+
+      // Add the new section to the local state
+      setSections((currentSections) => [...currentSections, createdSection]);
+
+      toast({
+        title: "Success",
+        description: "New section created successfully",
+      });
+    } catch (error) {
+      console.error("Error adding section:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add new section. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col">
       <section className="h-screen w-full">
@@ -30,7 +167,7 @@ export function PageLayout({ pageSection }: PageSectionProps) {
       </section>
 
       <section id={"start-" + pageSection} className="container mx-auto py-16">
-        <div className="space-y-16">
+        {/* <div className="space-y-16">
           {sections.map((section) => (
             <EditableSectionCard
               pageSection={pageSection}
@@ -46,7 +183,15 @@ export function PageLayout({ pageSection }: PageSectionProps) {
               }}
             />
           ))}
-        </div>
+        </div> */}
+        <SectionContainer
+          sections={sections}
+          onSave={handleSaveSection}
+          onDelete={handleDeleteSection}
+          onAdd={handleAddSection}
+          pageSection={pageSection}
+          isAdmin={isAdmin}
+        />
       </section>
     </div>
   );

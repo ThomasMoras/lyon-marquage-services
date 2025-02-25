@@ -1,3 +1,4 @@
+// types/sectionTypes.ts
 import { PageSectionType } from "./commonTypes";
 
 export interface Section {
@@ -5,8 +6,24 @@ export interface Section {
   title?: string;
   content?: string;
   description?: string;
-  image?: string;
+  imageUrl?: string;
   imageLeft?: boolean;
+  order?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface CreateSectionInput {
+  title?: string;
+  description?: string;
+  content?: string;
+  imageUrl?: string;
+  imageLeft?: boolean;
+  order?: number;
+}
+
+export interface UpdateSectionInput extends Partial<CreateSectionInput> {
+  id: string;
 }
 
 export interface EditableSectionCardProps {
@@ -14,4 +31,14 @@ export interface EditableSectionCardProps {
   section: Section;
   isAdmin?: boolean;
   onSave: (updated: Section) => Promise<void>;
+  onDelete?: (id: string) => Promise<void>;
+}
+
+export interface SectionContainerProps {
+  sections: Section[];
+  onSave: (section: Section) => Promise<void>;
+  onDelete: (id: string) => Promise<void>;
+  onAdd: () => Promise<void>;
+  pageSection: PageSectionType;
+  isAdmin?: boolean;
 }
