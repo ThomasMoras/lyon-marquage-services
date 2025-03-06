@@ -10,11 +10,10 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Pencil, Plus, Trash2, X } from "lucide-react";
+import { Pencil, Plus, Trash2, X, ChevronLeft, ChevronRight } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 import { cn } from "@/lib/utils";
-import { ImageSelector } from "./ImageSelector";
+import { ImageSelector } from "../ImageSelector";
 import Link from "next/link";
 import {
   Dialog,
@@ -24,32 +23,54 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from "../../ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { CarouselSlide, EditableCarouselProps } from "@/types";
+import { AutoResizeTextarea } from "../AutoResizeTextarea";
 
 const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
   return (
     <div className="relative h-screen">
-      <div className="absolute inset-0">
+      {/* Background image with subtle zoom effect */}
+      <div className="absolute inset-0 overflow-hidden">
         <Image
           src={slide.image}
           alt={slide.title}
           fill
           priority
-          className="object-cover"
+          className="object-cover scale-105 transition-transform duration-10000 animate-slow-zoom"
           sizes="100vw"
         />
       </div>
-      <div className="absolute inset-0 flex items-center bg-gradient-to-t from-black/50">
-        <div className="max-w-4xl mx-auto text-center space-y-10">
-          <h2 className="text-4xl lg:text-6xl font-bold text-white">{slide.title}</h2>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto">{slide.description}</p>
-          <Button size="lg" className="btn-carousel" asChild>
-            <Link href={slide.buttonLink} scroll>
-              {slide.buttonText}
-            </Link>
-          </Button>
+
+      {/* Enhanced gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20 flex items-center">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center space-y-12 overflow-hidden">
+            {/* Titre avec taille corrigée */}
+            <div className="relative">
+              <h2 className="text-4xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight text-ellipsis break-words drop-shadow-lg">
+                {slide.title}
+              </h2>
+              <div className="h-1 w-24 bg-blue-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            {/* Description */}
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed text-ellipsis break-words drop-shadow-md">
+              {slide.description}
+            </p>
+
+            {/* Bouton corrigé - moins large et moins arrondi */}
+            <Button
+              size="lg"
+              asChild
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 h-auto rounded-md text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <Link href={slide.buttonLink} scroll>
+                {slide.buttonText}
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </div>
@@ -197,22 +218,36 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
     <div className="w-full">
       <div className="relative h-screen">
         {isEditing && isAdmin && (
-          <div className="absolute inset-0 z-50 overflow-y-auto flex items-center justify-center pt-10">
-            <div ref={editMenuRef} className="max-w-3xl w-full p-6 space-y-4 bg-white my-8">
-              {/* Header */}
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">Modification Carousel</h3>
+          <div className="fixed inset-0 z-50 overflow-y-auto flex items-start justify-center pt-4 pb-4 bg-black/40 backdrop-blur-sm">
+            <div
+              ref={editMenuRef}
+              className="max-w-4xl w-full p-6 space-y-5 bg-white dark:bg-gray-900 my-4 rounded-xl shadow-2xl animate-in fade-in-100 zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto"
+            >
+              {/* Enhanced header */}
+              <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-4">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-50">
+                    Modification Carousel
+                  </h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    Personnalisez les slides du carrousel
+                  </p>
+                </div>
                 <div className="flex flex-row justify-center text-center gap-2">
                   <Button
                     onClick={handleAddSlide}
-                    variant="outline"
-                    className="bg-green-500 hover:bg-green-400 text-white hover:text-white"
+                    className="bg-green-600 hover:bg-green-700 text-white hover:text-white"
                     size="sm"
                   >
                     <Plus className="w-4 h-4 mr-2" />
                     Ajouter une slide
                   </Button>
-                  <Button onClick={() => setIsEditing(false)} variant="outline" size="sm">
+                  <Button
+                    onClick={() => setIsEditing(false)}
+                    variant="outline"
+                    size="sm"
+                    className="border-2"
+                  >
                     <X className="w-4 h-4" />
                   </Button>
                 </div>
@@ -223,16 +258,21 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
                 const globalIndex = (currentPage - 1) * slidesPerPage + localIndex;
 
                 return (
-                  <div key={slide.id} className="p-4 border rounded-lg">
-                    <div className="flex justify-between items-center mb-4">
-                      <h4 className="font-medium">Slide {globalIndex + 1}</h4>
+                  <div
+                    key={slide.id}
+                    className="p-6 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 shadow-sm"
+                  >
+                    <div className="flex justify-between items-center mb-5 pb-3 border-b border-gray-200 dark:border-gray-700">
+                      <h4 className="font-bold text-lg text-gray-900 dark:text-gray-50">
+                        Slide {globalIndex + 1}
+                      </h4>
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button variant="destructive" className="hover:bg-red-400" size="sm">
+                          <Button variant="destructive" size="sm" className="hover:bg-red-600">
                             <Trash2 className="w-4 h-4 mr-2" /> Supprimer
                           </Button>
                         </DialogTrigger>
-                        <DialogContent>
+                        <DialogContent className="bg-white dark:bg-gray-900">
                           <DialogHeader>
                             <DialogTitle>Confirmer la suppression</DialogTitle>
                             <DialogDescription>
@@ -241,7 +281,7 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
                             </DialogDescription>
                           </DialogHeader>
                           <DialogFooter>
-                            <Button variant="outline" onClick={() => {}}>
+                            <Button variant="outline" onClick={() => {}} className="border-2">
                               Annuler
                             </Button>
                             <Button
@@ -255,77 +295,122 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
                       </Dialog>
                     </div>
 
-                    <div className="space-y-3">
-                      <Input
-                        value={slide.title}
-                        onChange={(e) => handleFieldChange(globalIndex, "title", e.target.value)}
-                        placeholder="Title"
-                      />
-                      <Textarea
-                        value={slide.description}
-                        onChange={(e) =>
-                          handleFieldChange(globalIndex, "description", e.target.value)
-                        }
-                        placeholder="Description"
-                      />
-                      <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                          Titre
+                        </label>
                         <Input
-                          value={slide.buttonText}
-                          onChange={(e) =>
-                            handleFieldChange(globalIndex, "buttonText", e.target.value)
-                          }
-                          placeholder="Button Text"
-                        />
-                        <Input
-                          value={slide.buttonLink}
-                          onChange={(e) =>
-                            handleFieldChange(globalIndex, "buttonLink", e.target.value)
-                          }
-                          placeholder="Button Link"
+                          id="title"
+                          value={slide.title}
+                          onChange={(e) => handleFieldChange(globalIndex, "title", e.target.value)}
+                          placeholder="Titre de la slide"
+                          className="border-2 focus-visible:ring-blue-500"
                         />
                       </div>
-                      <ImageSelector
-                        folder={`images/${pageSection}`}
-                        currentImage={slide.image}
-                        onSelect={(imagePath) => {
-                          handleFieldChange(globalIndex, "image", imagePath);
-                        }}
-                      />
+
+                      <div>
+                        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                          Description
+                        </label>
+                        <AutoResizeTextarea
+                          id="description"
+                          value={slide.description}
+                          onChange={(e) =>
+                            handleFieldChange(globalIndex, "description", e.target.value)
+                          }
+                          placeholder="Description de la slide"
+                          minHeight={120}
+                          className="border-2 focus-visible:ring-blue-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                          Bouton
+                        </label>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <Input
+                              id="button-text"
+                              value={slide.buttonText}
+                              onChange={(e) =>
+                                handleFieldChange(globalIndex, "buttonText", e.target.value)
+                              }
+                              placeholder="Texte du bouton"
+                              className="border-2 focus-visible:ring-blue-500"
+                            />
+                            <p className="text-xs text-gray-500 mt-1">Texte affiché</p>
+                          </div>
+                          <div>
+                            <Input
+                              id="button-link"
+                              value={slide.buttonLink}
+                              onChange={(e) =>
+                                handleFieldChange(globalIndex, "buttonLink", e.target.value)
+                              }
+                              placeholder="Lien du bouton"
+                              className="border-2 focus-visible:ring-blue-500"
+                            />
+                            <p className="text-xs text-gray-500 mt-1">URL de destination</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                          Image d'arrière-plan
+                        </label>
+                        <ImageSelector
+                          folder={`images/${pageSection}`}
+                          currentImage={slide.image}
+                          onSelect={(imagePath) => {
+                            handleFieldChange(globalIndex, "image", imagePath);
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 );
               })}
 
-              {/* Footer */}
+              {/* Enhanced pagination */}
               {totalPages > 1 && (
-                <div className="flex justify-center gap-2 mt-4">
+                <div className="flex justify-center gap-2 mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
+                    className="border-2"
                   >
-                    Précédent
+                    <ChevronLeft className="w-4 h-4 mr-1" /> Précédent
                   </Button>
 
-                  {pageNumbers.map((number) => (
-                    <Button
-                      key={number}
-                      variant={currentPage === number ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setCurrentPage(number)}
-                    >
-                      {number}
-                    </Button>
-                  ))}
+                  <div className="flex gap-1">
+                    {pageNumbers.map((number) => (
+                      <Button
+                        key={number}
+                        variant={currentPage === number ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setCurrentPage(number)}
+                        className={
+                          currentPage === number ? "bg-blue-600 hover:bg-blue-700" : "border-2"
+                        }
+                      >
+                        {number}
+                      </Button>
+                    ))}
+                  </div>
 
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
+                    className="border-2"
                   >
-                    Suivant
+                    Suivant <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
                 </div>
               )}
@@ -351,31 +436,35 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
             ))}
           </CarouselContent>
 
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          {/* Boutons de navigation sans bordures blanches */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-4 z-20">
             <CarouselPrevious
               variant="default"
               className={cn(
-                "relative translate-y-0 left-0 mr-2 bg-background/80 hover:bg-background/90",
-                "border-white text-white hover:text-white  bg-blue-400 hover:bg-blue-300"
+                "relative translate-y-0 left-0 mr-2 rounded-full w-12 h-12",
+                "border-0 text-white hover:text-white bg-blue-500/80 hover:bg-blue-600/90",
+                "shadow-lg transition-all duration-200"
               )}
             />
             <CarouselNext
               variant="default"
               className={cn(
-                "relative translate-y-0 right-0 bg-background/80 hover:bg-background/90",
-                "border-white text-white hover:text-white bg-blue-400 hover:bg-blue-300"
+                "relative translate-y-0 right-0 rounded-full w-12 h-12",
+                "border-0 text-white hover:text-white bg-blue-500/80 hover:bg-blue-600/90",
+                "shadow-lg transition-all duration-200"
               )}
             />
           </div>
         </Carousel>
 
+        {/* Enhanced edit button */}
         {isAdmin && (
           <Button
             onClick={() => setIsEditing(!isEditing)}
-            className="absolute bottom-4 right-4 z-30"
+            className="absolute bottom-8 right-8 z-30 rounded-full w-12 h-12 shadow-lg hover:scale-105 transition-transform duration-200"
             variant="outline"
           >
-            <Pencil className="w-4 h-4" />
+            <Pencil className="w-5 h-5" />
           </Button>
         )}
       </div>

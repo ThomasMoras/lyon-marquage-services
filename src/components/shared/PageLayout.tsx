@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { SectionContainer } from "@/components/shared/EditableSectionCard";
-import EditableCarousel from "@/components/shared/EditableCarousel";
+import { SectionContainer } from "@/components/shared/editable/EditableSectionCard";
+import EditableCarousel from "@/components/shared/editable/EditableCarousel";
 import { PageSectionProps, Section } from "@/types";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
@@ -167,23 +167,6 @@ export function PageLayout({ pageSection }: PageSectionProps) {
       </section>
 
       <section id={"start-" + pageSection} className="container mx-auto py-16">
-        {/* <div className="space-y-16">
-          {sections.map((section) => (
-            <EditableSectionCard
-              pageSection={pageSection}
-              key={section.id}
-              section={section}
-              isAdmin={isAdmin}
-              onSave={async (updated) => {
-                await fetch("/api/section", {
-                  method: "PUT",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(updated),
-                });
-              }}
-            />
-          ))}
-        </div> */}
         <SectionContainer
           sections={sections}
           onSave={handleSaveSection}

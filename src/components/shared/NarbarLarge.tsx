@@ -93,7 +93,7 @@ const NavbarLarge = () => {
             </NavigationMenuItem>
 
             <NavigationMenuItem className="relative">
-              <NavigationMenuTrigger className="text-xl">Nos prestations</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="text-xl">Préstations</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[600px] md:w-[400px] md:grid-cols-1 lg:w-[300px] text-center">
                   {menuItems.map((menu) => (
@@ -104,6 +104,20 @@ const NavbarLarge = () => {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
+
+            <NavigationMenuItem className="relative">
+              <NavigationMenuTrigger className="text-xl">Objets publicitaires</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[600px] md:w-[400px] md:grid-cols-1 lg:w-[300px] text-center">
+                  {menuItems.map((menu) => (
+                    <Link key={menu.title} href={menu.href} prefetch>
+                      <ListItem title={menu.title}></ListItem>
+                    </Link>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
 
             <NavigationMenuItem>
               <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "text-xl")}>
