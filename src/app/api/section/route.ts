@@ -19,9 +19,3 @@ export async function PUT(request: Request) {
   const section = await updateSection(id, updateData);
   return NextResponse.json(section);
 }
-
-export async function DELETE(request: Request) {
-  const { id } = await request.json();
-  const section = await deleteSection(id);
-  return NextResponse.json(section);
-}

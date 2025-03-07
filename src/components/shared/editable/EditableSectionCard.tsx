@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Pencil, Check, X, Trash2 } from "lucide-react";
+import { Pencil, Check, X, Trash2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ImageSelector } from "../ImageSelector";
 import { EditableSectionCardProps, PageSectionType, Section } from "@/types";
@@ -29,15 +29,31 @@ export function EditableSectionCard({
 }: EditableSectionCardProps & { onDelete?: (id: string) => Promise<void> }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedSection, setEditedSection] = useState<Section>(section);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleSave = async () => {
-    await onSave(editedSection);
-    setIsEditing(false);
+    try {
+      setIsSaving(true);
+      await onSave(editedSection);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error saving section:", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleDelete = async () => {
     if (onDelete) {
-      await onDelete(section.id);
+      try {
+        setIsDeleting(true);
+        await onDelete(section.id);
+      } catch (error) {
+        console.error("Error deleting section:", error);
+      } finally {
+        setIsDeleting(false);
+      }
     }
   };
 
@@ -66,6 +82,7 @@ export function EditableSectionCard({
         onChange={(e) => setEditedSection({ ...editedSection, title: e.target.value })}
         placeholder="Title"
         className="text-xl font-bold border-2 focus-visible:ring-blue-500"
+        disabled={isSaving}
       />
       <AutoResizeTextarea
         id="description"
@@ -74,6 +91,7 @@ export function EditableSectionCard({
         placeholder="Description"
         minHeight={120}
         className="text-base border-2 focus-visible:ring-blue-500"
+        disabled={isSaving}
       />
       <ImageSelector
         folder={`images/${pageSection}`}
@@ -81,11 +99,13 @@ export function EditableSectionCard({
         onSelect={(imagePath) => {
           setEditedSection({ ...editedSection, imageUrl: imagePath });
         }}
+        disabled={isSaving}
       />
       <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
         <Switch
           checked={!!editedSection.imageLeft}
           onCheckedChange={(checked) => setEditedSection({ ...editedSection, imageLeft: checked })}
+          disabled={isSaving}
         />
         <span className="text-sm font-medium">Image on left</span>
       </div>
@@ -102,6 +122,7 @@ export function EditableSectionCard({
                 variant="outline"
                 size="sm"
                 className="bg-white/90 hover:bg-white text-red-500 hover:text-red-600 rounded-full shadow-sm"
+                disabled={isDeleting}
               >
                 <Trash2 className="w-4 h-4" />
               </Button>
@@ -114,9 +135,17 @@ export function EditableSectionCard({
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
-                <Button variant="outline">Cancel</Button>
-                <Button variant="destructive" onClick={handleDelete}>
-                  Delete
+                <Button variant="outline" disabled={isDeleting}>
+                  Cancel
+                </Button>
+                <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
+                  {isDeleting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Deleting...
+                    </>
+                  ) : (
+                    "Delete"
+                  )}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -153,14 +182,24 @@ export function EditableSectionCard({
                   onClick={handleSave}
                   size="sm"
                   className="bg-blue-600 hover:bg-blue-700 text-white"
+                  disabled={isSaving}
                 >
-                  <Check className="w-4 h-4 mr-2" /> Save
+                  {isSaving ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Check className="w-4 h-4 mr-2" /> Save
+                    </>
+                  )}
                 </Button>
                 <Button
                   onClick={() => setIsEditing(false)}
                   variant="outline"
                   size="sm"
                   className="border-2"
+                  disabled={isSaving}
                 >
                   <X className="w-4 h-4 mr-2" /> Cancel
                 </Button>
@@ -199,6 +238,19 @@ export function SectionContainer({
   pageSection: PageSectionType;
   isAdmin?: boolean;
 }) {
+  const [isAdding, setIsAdding] = useState(false);
+
+  const handleAdd = async () => {
+    try {
+      setIsAdding(true);
+      await onAdd();
+    } catch (error) {
+      console.error("Error adding section:", error);
+    } finally {
+      setIsAdding(false);
+    }
+  };
+
   return (
     <div className="container mx-auto py-12 px-4 overflow-hidden">
       <div className="space-y-12">
@@ -223,10 +275,17 @@ export function SectionContainer({
         <div className="flex justify-center md:justify-end mt-8">
           {isAdmin && (
             <Button
-              onClick={onAdd}
+              onClick={handleAdd}
               className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-6 h-auto rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+              disabled={isAdding}
             >
-              Add New Section
+              {isAdding ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" /> Adding...
+                </>
+              ) : (
+                "Add New Section"
+              )}
             </Button>
           )}
         </div>

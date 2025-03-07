@@ -12,6 +12,7 @@ interface ImageSelectorProps {
   folder: string;
   currentImage: string;
   onSelect: (imagePath: string) => void;
+  disabled: boolean;
 }
 
 export function ImageSelector({ folder, currentImage, onSelect }: ImageSelectorProps) {
