@@ -359,7 +359,7 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
 
                       <div>
                         <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
-                          Image d'arrière-plan
+                          Image d&ldquo;arrière-plan
                         </label>
                         <ImageSelector
                           folder={`images/${pageSection}`}
@@ -367,6 +367,7 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
                           onSelect={(imagePath) => {
                             handleFieldChange(globalIndex, "image", imagePath);
                           }}
+                          disabled={false}
                         />
                       </div>
                     </div>

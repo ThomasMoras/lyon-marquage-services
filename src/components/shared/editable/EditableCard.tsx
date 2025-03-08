@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Pencil, Check, X, Minimize2, Trash2 } from "lucide-react";
-import { ImageSelector } from "./ImageSelector";
+import { ImageSelector } from "../ImageSelector";
 import { CardItem, EditableCardProps } from "@/types/cardTypes";
 import {
   Dialog,
@@ -73,6 +73,7 @@ export function EditableCard({
                   onSelect={(imagePath) => {
                     setEditedCard({ ...editedCard, imageUrl: imagePath });
                   }}
+                  disabled={false}
                 />
               </div>
               <div className="flex gap-2">

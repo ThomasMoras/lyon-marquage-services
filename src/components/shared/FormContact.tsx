@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -16,9 +16,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { Send } from "lucide-react";
+import { Send, Loader2, Mail, User, MessageSquare, Tag } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   firstName: z
@@ -46,7 +46,7 @@ const formSchema = z.object({
     .max(1000, "Le message ne peut pas dépasser 1000 caractères"),
 });
 
-export default function ContactPage() {
+export default function FormContact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -79,23 +79,20 @@ export default function ContactPage() {
         description: "Nous vous répondrons dans les plus brefs délais.",
         duration: 5000,
         variant: "default",
-        action: (
-          <ToastAction altText="Fermer">Fermer</ToastAction>
-        ),
+        action: <ToastAction altText="Fermer">Fermer</ToastAction>,
       });
-      
+
       form.reset();
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Une erreur inattendue est survenue";
-      
+      const errorMessage =
+        error instanceof Error ? error.message : "Une erreur inattendue est survenue";
+
       toast({
         title: "Erreur",
         description: errorMessage,
         variant: "destructive",
         duration: 5000,
-        action: (
-          <ToastAction altText="Réessayer">Réessayer</ToastAction>
-        ),
+        action: <ToastAction altText="Réessayer">Réessayer</ToastAction>,
       });
     } finally {
       setIsSubmitting(false);
@@ -103,146 +100,144 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen px-4 sm:px-6 lg:px-8">
-      <Card className="max-w-4xl mx-auto shadow-lg">
-        {/* <div className="bg-white px-8 py-6 border-b border-gray-200">
-          <h2 className="text-3xl font-bold text-gray-900">Contactez-nous</h2>
-          <p className="mt-2 text-gray-600">
-            Pour obtenir des informations supplémentaires ou des conseils adaptés à vos besoins,
-            n'hésitez pas à nous contacter.
-          </p>
-        </div> */}
-        <CardContent className="px-8 py-6">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <FormField
-                  control={form.control}
-                  name="firstName"
-                  render={({ field }) => (
-                    <FormItem className="text-left">
-                      <FormLabel className="text-base font-semibold text-gray-700 text-left flex items-center gap-1">
-                        Nom
-                        <span className="text-red-500">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input 
-                          className="h-12 text-lg px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                          placeholder="Votre nom"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-sm" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="lastName"
-                  render={({ field }) => (
-                    <FormItem className="text-left">
-                      <FormLabel className="text-base font-semibold text-gray-700 text-left flex items-center gap-1">
-                        Prénom
-                        <span className="text-red-500">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          className="h-12 text-lg px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                          placeholder="Votre prénom"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-sm" />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem className="text-left">
-                      <FormLabel className="text-base font-semibold text-gray-700 text-left flex items-center gap-1">
-                        Email
-                        <span className="text-red-500">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          className="h-12 text-lg px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                          type="email"
-                          placeholder="votremail@example.com"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-sm" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="subject"
-                  render={({ field }) => (
-                    <FormItem className="text-left">
-                      <FormLabel className="text-base font-semibold text-gray-700 text-left flex items-center gap-1">
-                        Objet
-                        <span className="text-red-500">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          className="h-12 text-lg px-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                          placeholder="A propos de votre commande"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-sm" />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
+    <Card className="shadow-lg border-0 overflow-hidden rounded-xl h-full">
+      <CardContent className="p-6 sm:p-8">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* Grille pour nom et prénom */}
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <FormField
                 control={form.control}
-                name="message"
+                name="firstName"
                 render={({ field }) => (
-                  <FormItem className="">
-                    <FormLabel className="text-base font-semibold text-gray-700 gap-1">
-                      Votre message
-                      <span className="text-red-500"> *</span>
+                  <FormItem className="text-left">
+                    <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                      <User className="h-4 w-4 text-blue-500" />
+                      Nom <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Textarea
-                        className="min-h-[200px] text-lg p-4 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                        placeholder="Votre message..."
+                      <Input
+                        className="h-11 text-base px-4 bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                        placeholder="Votre nom"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-sm" />
+                    <FormMessage className="text-xs mt-1" />
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem className="text-left">
+                    <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                      <User className="h-4 w-4 text-blue-500" />
+                      Prénom <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        className="h-11 text-base px-4 bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                        placeholder="Votre prénom"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs mt-1" />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-              <div className="flex justify-center">
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="h-12 px-8 text-lg bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg"
-                >
-                  {isSubmitting ? (
-                    "Envoi en cours..."
-                  ) : (
-                    <>
-                      Envoyer
-                      <Send className="ml-2 h-5 w-5" />
-                    </>
-                  )}
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-    </div>
+            {/* Grille pour email et objet */}
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="text-left">
+                    <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-blue-500" />
+                      Email <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        className="h-11 text-base px-4 bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                        type="email"
+                        placeholder="votremail@example.com"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs mt-1" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="subject"
+                render={({ field }) => (
+                  <FormItem className="text-left">
+                    <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                      <Tag className="h-4 w-4 text-blue-500" />
+                      Objet <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        className="h-11 text-base px-4 bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                        placeholder="À propos de votre demande..."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs mt-1" />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Champ de message */}
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem className="text-left">
+                  <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                    <MessageSquare className="h-4 w-4 text-blue-500" />
+                    Votre message <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className="min-h-[180px] text-base p-4 bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-y"
+                      placeholder="Décrivez votre demande en détail..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-xs mt-1" />
+                </FormItem>
+              )}
+            />
+
+            {/* Bouton d'envoi avec effet visuel */}
+            <div className="flex justify-center pt-2">
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full h-12 px-6 text-base font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow-md hover:shadow-lg transition-all duration-200"
+              >
+                {isSubmitting ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    <span>Envoi en cours...</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center gap-2">
+                    <span>Envoyer votre message</span>
+                    <Send className="h-5 w-5" />
+                  </div>
+                )}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }

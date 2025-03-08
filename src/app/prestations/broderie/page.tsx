@@ -1,5 +1,4 @@
 "use client";
-import { EditableCard } from "@/components/shared/EditableCard";
 import { useEffect, useState } from "react";
 import { PageLayout } from "@/components/shared/PageLayout";
 import { CardItem } from "@/types/cardTypes";
@@ -7,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { EditableCard } from "@/components/shared/editable/EditableCard";
 
 export default function Broderie() {
   const [cards, setCards] = useState<CardItem[]>([]);

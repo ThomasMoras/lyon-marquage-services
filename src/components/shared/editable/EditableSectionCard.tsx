@@ -268,7 +268,9 @@ export function SectionContainer({
         ) : (
           <div className="text-center py-16 text-gray-500 bg-gray-50 dark:bg-gray-800 rounded-lg">
             <p className="text-lg">No sections found.</p>
-            {isAdmin && <p className="text-sm mt-2">Click "Add New Section" to create one.</p>}
+            {isAdmin && (
+              <p className="text-sm mt-2">Click &ldquo;Add New Section&ldquo; to create one.</p>
+            )}
           </div>
         )}
 
