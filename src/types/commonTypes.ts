@@ -4,7 +4,8 @@ export type PageSectionType =
   | "broderie"
   | "impression_textile"
   | "impression_transfert"
-  | "flocage";
+  | "flocage"
+  | "objets_publicitaires";
 
 export type MenuItem = {
   title: string;

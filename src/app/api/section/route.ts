@@ -3,6 +3,7 @@ import { getSections, createSection, updateSection, deleteSection } from "./serv
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
+  console.log("params : ", searchParams);
   const type = searchParams.get("type") || undefined;
   const sections = await getSections(type);
   return NextResponse.json(sections);

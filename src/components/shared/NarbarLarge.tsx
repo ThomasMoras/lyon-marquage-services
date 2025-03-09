@@ -46,7 +46,10 @@ const NavbarLarge = () => {
     <div className="hidden lg:flex lg:justify-start w-full px-4">
       <div className="flex items-center gap-8">
         <div className="flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-3 transition-transform duration-300 hover:scale-110">
+          <Link
+            href="/"
+            className="flex items-center gap-3 transition-transform duration-300 hover:scale-110"
+          >
             <div className="relative w-14 h-14 m-2">
               <Image
                 src="/logo_svg.svg"
@@ -68,68 +71,92 @@ const NavbarLarge = () => {
             </h1>
           </Link>
         </div>
-        <NavigationMenu>
-          <NavigationMenuList className="text-xl">
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="text-xl">Catalogue</NavigationMenuTrigger>
-              <NavigationMenuContent className="data-[side=bottom]:animate-slideUpAndFade">
-                <div
-                  className="grid w-[800px] gap-3 p-4 md:grid-cols-2 text-center"
-                  style={{ transform: "translateX(-50%)", left: "50%", position: "relative" }}
+        <div className="flex items-center gap-2">
+          {/* Catalogue Menu */}
+          <NavigationMenu>
+            <NavigationMenuList className="text-xl">
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="text-xl">Catalogue</NavigationMenuTrigger>
+                <NavigationMenuContent className="data-[side=bottom]:animate-slideUpAndFade">
+                  <div className="grid w-[1000px] gap-6 p-4 md:grid-cols-2 text-center">
+                    {menuCatalogue.map((c) => (
+                      <div key={c.category}>
+                        <h3 className="mb-2 text-lg font-semibold">{c.category}</h3>
+                        <DropdownMenuSeparator />
+                        {c.category === "Produits" ? (
+                          <div className="grid grid-cols-2 gap-x-6">
+                            <ul className="grid gap-1">
+                              {c.items.slice(0, Math.ceil(c.items.length / 2)).map((item) => (
+                                <ListItem key={item.title} title={item.title} href={item.href} />
+                              ))}
+                            </ul>
+                            <ul className="grid gap-1">
+                              {c.items.slice(Math.ceil(c.items.length / 2)).map((item) => (
+                                <ListItem key={item.title} title={item.title} href={item.href} />
+                              ))}
+                            </ul>
+                          </div>
+                        ) : (
+                          <ul className="grid gap-1">
+                            {c.items.map((item) => (
+                              <ListItem key={item.title} title={item.title} href={item.href} />
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          {/* Prestations Menu */}
+          <NavigationMenu>
+            <NavigationMenuList className="text-xl">
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="text-xl">Préstations</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[600px] md:w-[400px] md:grid-cols-1 lg:w-[300px] text-center">
+                    {menuItems.map((menu) => (
+                      <Link key={menu.title} href={menu.href} prefetch>
+                        <ListItem title={menu.title}></ListItem>
+                      </Link>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          {/* Direct Links */}
+          <NavigationMenu>
+            <NavigationMenuList className="text-xl">
+              <NavigationMenuItem>
+                <Link
+                  href="/objets-publicitaires"
+                  className={cn(navigationMenuTriggerStyle(), "text-xl")}
                 >
-                  {menuCatalogue.map((c) => (
-                    <div key={c.category}>
-                      <h3 className="mb-2 text-lg font-semibold">{c.category}</h3>
-                      <DropdownMenuSeparator />
-                      <ul className="grid gap-1">
-                        {c.items.map((item) => (
-                          <ListItem key={item.title} title={item.title} href={item.href} />
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+                  Objets Publicitaires
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
 
-            <NavigationMenuItem className="relative">
-              <NavigationMenuTrigger className="text-xl">Préstations</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[600px] md:w-[400px] md:grid-cols-1 lg:w-[300px] text-center">
-                  {menuItems.map((menu) => (
-                    <Link key={menu.title} href={menu.href} prefetch>
-                      <ListItem title={menu.title}></ListItem>
-                    </Link>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem className="relative">
-              <NavigationMenuTrigger className="text-xl">Objets publicitaires</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[600px] md:w-[400px] md:grid-cols-1 lg:w-[300px] text-center">
-                  {menuItems.map((menu) => (
-                    <Link key={menu.title} href={menu.href} prefetch>
-                      <ListItem title={menu.title}></ListItem>
-                    </Link>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-
-            <NavigationMenuItem>
-              <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "text-xl")}>
-                Contact
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
+          <NavigationMenu>
+            <NavigationMenuList className="text-xl">
+              <NavigationMenuItem>
+                <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "text-xl")}>
+                  Contact
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
 
           <div className="ml-4">
             <ModeToggle />
           </div>
-        </NavigationMenu>
+        </div>
       </div>
     </div>
   );

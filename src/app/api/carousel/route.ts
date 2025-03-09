@@ -17,17 +17,12 @@ export async function PUT(request: Request) {
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    console.log("REQUEST BODY:", data);
-
     // Convertir le type en majuscules avant de créer
     const carouselData = {
       ...data,
       type: data.type.toUpperCase(),
     };
-    console.log("PROCESSED DATA:", carouselData);
     const carousel = await createCarousel(carouselData);
-    console.log("CREATED CAROUSEL:", carousel);
-
     return NextResponse.json(carousel);
   } catch (error) {
     console.error("ERROR IN POST:", error);
