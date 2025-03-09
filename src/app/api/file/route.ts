@@ -27,7 +27,7 @@ export async function POST(request: Request) {
       fileUrl: `/${folder}/${fileName}`,
     });
   } catch (error) {
-    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+    return NextResponse.json({ error: "Upload failed : " + error }, { status: 500 });
   }
 }
 
@@ -48,6 +48,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ images });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to read directory" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to read directory : " + error }, { status: 500 });
   }
 }

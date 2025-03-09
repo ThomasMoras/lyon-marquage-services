@@ -8,7 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 
 export function PageLayout({ pageSection }: PageSectionProps) {
   const [sections, setSections] = useState<Section[]>([]);
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [isAdmin, setIsAdmin] = useState(false);
   const { toast } = useToast();
 
@@ -24,32 +24,6 @@ export function PageLayout({ pageSection }: PageSectionProps) {
       setIsAdmin(true);
     }
   }, [status]);
-
-  const fetchSections = async () => {
-    try {
-      const response = await fetch(`/api/section?type=${pageSection}`);
-      if (!response.ok) throw new Error("Failed to fetch sections");
-
-      const data = await response.json();
-
-      // Sort sections by order property, fallback to createdAt
-      const sortedSections = [...data].sort((a, b) => {
-        if (a.order !== undefined && b.order !== undefined) {
-          return a.order - b.order;
-        }
-        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-      });
-
-      setSections(sortedSections);
-    } catch (error) {
-      console.error("Error fetching sections:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load sections. Please try again later.",
-        variant: "destructive",
-      });
-    }
-  };
 
   const handleSaveSection = async (updatedSection: Section) => {
     try {

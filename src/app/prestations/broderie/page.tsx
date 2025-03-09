@@ -10,7 +10,7 @@ import { EditableCard } from "@/components/shared/editable/EditableCard";
 
 export default function Broderie() {
   const [cards, setCards] = useState<CardItem[]>([]);
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [isAdmin, setIsAdmin] = useState(false);
   const { toast } = useToast();
   const pageSection = "broderie";
@@ -159,41 +159,41 @@ export default function Broderie() {
     }
   };
 
-  // Function to handle reordering cards (optional drag-and-drop implementation)
-  const handleReorder = async (reorderedCards: CardItem[]) => {
-    // Update the order property on each card
-    const updatedCards = reorderedCards.map((card, index) => ({
-      ...card,
-      order: index,
-    }));
+  // // Function to handle reordering cards (optional drag-and-drop implementation)
+  // const handleReorder = async (reorderedCards: CardItem[]) => {
+  //   // Update the order property on each card
+  //   const updatedCards = reorderedCards.map((card, index) => ({
+  //     ...card,
+  //     order: index,
+  //   }));
 
-    // Update the cards in the database
-    try {
-      // This would require a new API endpoint that can handle bulk updates
-      const response = await fetch("/api/reorder-cards", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedCards),
-      });
+  //   // Update the cards in the database
+  //   try {
+  //     // This would require a new API endpoint that can handle bulk updates
+  //     const response = await fetch("/api/reorder-cards", {
+  //       method: "PUT",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(updatedCards),
+  //     });
 
-      if (!response.ok) throw new Error("Failed to update card order");
+  //     if (!response.ok) throw new Error("Failed to update card order");
 
-      // Update local state with the new order
-      setCards(updatedCards);
+  //     // Update local state with the new order
+  //     setCards(updatedCards);
 
-      toast({
-        title: "Success",
-        description: "Card order updated successfully",
-      });
-    } catch (error) {
-      console.error("Error updating card order:", error);
-      toast({
-        title: "Error",
-        description: "Failed to update card order. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
+  //     toast({
+  //       title: "Success",
+  //       description: "Card order updated successfully",
+  //     });
+  //   } catch (error) {
+  //     console.error("Error updating card order:", error);
+  //     toast({
+  //       title: "Error",
+  //       description: "Failed to update card order. Please try again.",
+  //       variant: "destructive",
+  //     });
+  //   }
+  // };
 
   return (
     <div className="flex flex-col min-h-screen">

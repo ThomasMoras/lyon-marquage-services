@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Camera, X, Upload, Loader2 } from "lucide-react";
+import { Camera, Loader2 } from "lucide-react";
 
 interface EditableImageProps {
   initialSrc: string;
@@ -22,7 +22,7 @@ const EditableImage: React.FC<EditableImageProps> = ({
   maxSizeMB = 5,
   allowedTypes = ["image/jpeg", "image/png", "image/webp"],
 }) => {
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  // const [setIsEditing] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [preview, setPreview] = useState<string>(initialSrc);
   const [error, setError] = useState<string>("");
@@ -64,7 +64,7 @@ const EditableImage: React.FC<EditableImageProps> = ({
     try {
       setIsLoading(true);
       await onSave(fieldName, file);
-      setIsEditing(false);
+      // setIsEditing(false);
     } catch (error) {
       setError("Erreur lors du téléchargement");
       console.error("Erreur upload:", error);
@@ -74,15 +74,6 @@ const EditableImage: React.FC<EditableImageProps> = ({
 
     // Nettoyer l'URL de preview
     return () => URL.revokeObjectURL(objectUrl);
-  };
-
-  const handleCancel = () => {
-    setPreview(initialSrc);
-    setIsEditing(false);
-    setError("");
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
   };
 
   const triggerFileInput = () => {

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSections, createSection, updateSection, deleteSection } from "./service";
+import { getSections, createSection, updateSection } from "./service";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

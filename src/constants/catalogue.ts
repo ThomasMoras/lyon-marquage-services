@@ -1,3 +1,5 @@
+import { CatalogueItem } from "@/types/commonTypes";
+
 export const menuCatalogue: CatalogueItem[] = [
   {
     category: "Produits",
@@ -23,7 +25,6 @@ export const menuCatalogue: CatalogueItem[] = [
       { title: "Sacs & Bagagerie", href: "/catalogue/sacs-bagagerie" },
       { title: "Tabliers", href: "/catalogue/tabliers" },
       { title: "Vestes", href: "/catalogue/vestes" },
-
     ],
   },
   {

@@ -4,12 +4,12 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export default function Informations() {
   return (
-    <Card className="shadow-lg border-0 rounded-xl overflow-hidden h-full">
+    <Card className="shadow-lg border-0 rounded-xl overflow-hidden">
       <CardContent className="p-0">
         {/* Header avec fond coloré et padding uniforme */}
         <div className="bg-blue-600 text-white px-6 py-5">
           <h2 className="text-xl font-bold">Nos coordonnées</h2>
-          <p className="text-blue-100 text-sm mt-1">N'hésitez pas à nous contacter</p>
+          <p className="text-blue-100 text-sm mt-1">N&apos;hésitez pas à nous contacter</p>
         </div>
 
         {/* Container principal avec padding uniforme et espacement constant */}

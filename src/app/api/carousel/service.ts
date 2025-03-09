@@ -23,11 +23,9 @@ export async function updateCarousel(id: string, data: Partial<Carousel>) {
   });
 }
 
-export async function createCarousel(data: any) {
-  console.log("SERVICE - Creating carousel with data:", data);
+export async function createCarousel(data: Carousel) {
   try {
     const result = await prisma.carousel.create({ data });
-    console.log("SERVICE - Created carousel:", result);
     return result;
   } catch (error) {
     console.error("SERVICE - Error creating carousel:", error);

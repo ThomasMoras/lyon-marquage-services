@@ -24,8 +24,18 @@ export async function POST(request: Request) {
     };
     const carousel = await createCarousel(carouselData);
     return NextResponse.json(carousel);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("ERROR IN POST:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    let errorMessage = "An unknown error occurred";
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    } else if (typeof error === "string") {
+      errorMessage = error;
+    } else if (error && typeof error === "object" && "message" in error) {
+      errorMessage = (error as { message: string }).message;
+    }
+
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

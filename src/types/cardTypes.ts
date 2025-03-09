@@ -6,10 +6,13 @@ export type CardType = PrismaCard;
 
 // API-related input types
 export interface CreateCardInput {
-  title?: string;
-  description?: string;
+  title: string;
+  id: string;
+  order: number;
+  description: string;
   imageUrl: string;
-  order?: number; // Add order property
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface UpdateCardInput extends Partial<CreateCardInput> {

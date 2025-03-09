@@ -3,7 +3,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Pencil, Check, X, Trash2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
