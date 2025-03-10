@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import { CreateCardInput, UpdateCardInput } from "@/types/card";
-
-const prisma = new PrismaClient();
 
 export async function getCards() {
   return await prisma.card.findMany();

@@ -1,6 +1,6 @@
-import { PrismaClient, SectionType } from "@prisma/client";
+import prisma from "@/lib/prisma";
+import { SectionType } from "@prisma/client";
 import { Section } from "@prisma/client";
-const prisma = new PrismaClient();
 
 export async function getSections(type?: string) {
   console.log(type);

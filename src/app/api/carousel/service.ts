@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import { Carousel, SectionType } from "@prisma/client";
-
-const prisma = new PrismaClient();
 
 export async function getCarousels(type?: string) {
   return await prisma.carousel.findMany({
