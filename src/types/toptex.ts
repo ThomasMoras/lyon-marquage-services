@@ -1,3 +1,5 @@
+// types/toptex.ts
+
 export interface TopTexAuthResponse {
   token: string;
 }
@@ -13,20 +15,83 @@ export interface TopTexProductPrice {
   modificationDate: string;
 }
 
+export interface TopTexColor {
+  code: string;
+  name: string;
+  hexaCode?: string;
+}
+
+export interface TopTexSize {
+  code: string;
+  name: string;
+  sku?: string;
+}
+
+export interface TopTexImage {
+  url: string;
+  image_id?: string;
+  type?: string;
+  last_update?: string;
+}
+
+export interface TopTexMultiLangText {
+  fr?: string;
+  en?: string;
+  de?: string;
+  es?: string;
+  it?: string;
+  nl?: string;
+  pt?: string;
+  [key: string]: string | undefined;
+}
+
 export interface TopTexProduct {
+  // Identifiants du produit
   sku: string;
   catalogReference: string;
-  designation: string;
-  colorCode: string;
-  sizeCode: string;
-  color: string;
-  size: string;
+
+  // Informations de base
+  designation: string | TopTexMultiLangText;
+  description?: string | TopTexMultiLangText;
+  composition?: string | TopTexMultiLangText;
+
+  // Attributs de variation
+  colorCode?: string;
+  sizeCode?: string;
+  color?: string;
+  size?: string;
+
+  // Catégorisation
   brand?: string;
-  family?: string;
-  subfamily?: string;
+  family?: string | TopTexMultiLangText;
+  subfamily?: string | TopTexMultiLangText;
+
+  // Prix et inventaire
   packaging?: number;
   publicPrice?: number;
+  price?: number | string; // Pour l'interface utilisateur
   prices?: TopTexProductPrice[];
+
+  // Médias
+  images?: (string | TopTexImage)[];
+  mainImage?: string;
+
+  // Variations disponibles
+  colors?: TopTexColor[];
+  sizes?: TopTexSize[];
+
+  // Attributs techniques
+  weight?: string;
+  labelType?: string;
+  averageWeight?: string;
+
+  // Attributs supplémentaires (ajoutez selon vos besoins)
+  style?: TopTexMultiLangText[] | string;
+  gender?: TopTexMultiLangText[] | string;
+  collection?: string;
+
+  // Champ pour stocker les données originales si nécessaire
+  _original?: any;
 }
 
 export interface TopTexProductsResponse {

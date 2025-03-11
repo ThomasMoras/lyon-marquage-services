@@ -1,4 +1,3 @@
-// app/catalogue/vetements/sweat/page.tsx
 import TopTexProductList from "@/components/shared/top_tex/TopTexProductList";
 import { Suspense } from "react";
 

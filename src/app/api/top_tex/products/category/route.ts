@@ -1,4 +1,3 @@
-// app/api/top_tex/products/category/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { getTopTexClient } from "../../client";
 import { z } from "zod";

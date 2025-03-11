@@ -152,11 +152,92 @@ export function useTopTex() {
     []
   );
 
+  // hooks/useTopTex.ts - Ajouter cette méthode au hook useTopTex
+
+  /**
+   * Récupération d'un produit par référence catalogue
+   */
+  const getProductByCatalogReference = useCallback(
+    async (
+      catalogReference: string,
+      options: {
+        usageRight?: string;
+        lang?: string;
+        color?: string;
+      } = {}
+    ) => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const url = new URL(
+          `/api/top_tex/products/catalog/${catalogReference}`,
+          window.location.origin
+        );
+
+        if (options.usageRight) url.searchParams.append("usage_right", options.usageRight);
+        if (options.lang) url.searchParams.append("lang", options.lang);
+        if (options.color) url.searchParams.append("color", options.color);
+
+        const response = await fetch(url.toString());
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.message || "Échec de récupération du produit");
+        }
+
+        return {
+          product: data.product,
+          relatedProducts: data.relatedProducts || [],
+        };
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Une erreur s'est produite");
+        return { product: null, relatedProducts: [] };
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
+
+  /**
+   * Récupère les produits associés à une référence de catalogue
+   * Cette méthode est utile pour afficher les variations d'un produit (différentes couleurs, etc.)
+   */
+  const getRelatedProducts = useCallback(async (catalogReference: string) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const url = new URL(
+        `/api/top_tex/products/catalog/${catalogReference}/related`,
+        window.location.origin
+      );
+
+      const response = await fetch(url.toString());
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.message || "Échec de récupération des produits associés");
+      }
+
+      return data.products || [];
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Une erreur s'est produite");
+      return [];
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  // N'oubliez pas d'ajouter cette méthode au retour du hook
   return {
     isLoading,
     error,
     authenticate,
     getProductsByBrand,
     getProductsByCategory,
+    getProductByCatalogReference,
+    getRelatedProducts,
   };
 }
