@@ -37,7 +37,7 @@ const ListItem = React.forwardRef<
     </div>
   );
 
-  return <li>{href ? <Link href={href}>{content}</Link> : content}</li>;
+  return <div>{href ? <Link href={href}>{content}</Link> : content}</div>;
 });
 ListItem.displayName = "ListItem";
 
@@ -72,39 +72,42 @@ const NavbarLarge = () => {
           </Link>
         </div>
         <div className="flex items-center gap-2">
-          {/* Catalogue Menu */}
-          <NavigationMenu>
+          <NavigationMenu contentWidth="fullscreen">
             <NavigationMenuList className="text-xl">
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="text-xl">Catalogue</NavigationMenuTrigger>
-                <NavigationMenuContent className="data-[side=bottom]:animate-slideUpAndFade">
-                  <div className="grid w-[1000px] gap-6 p-4 md:grid-cols-2 text-center">
-                    {menuCatalogue.map((c) => (
-                      <div key={c.category}>
-                        <h3 className="mb-2 text-lg font-semibold">{c.category}</h3>
-                        <DropdownMenuSeparator />
-                        {c.category === "Produits" ? (
-                          <div className="grid grid-cols-2 gap-x-6">
-                            <ul className="grid gap-1">
-                              {c.items.slice(0, Math.ceil(c.items.length / 2)).map((item) => (
+                <NavigationMenuContent>
+                  <div className="w-screen max-h-[70vh] overflow-y-auto">
+                    <div className="max-w-screen-2xl mx-auto p-2">
+                      {/* Grid pour mettre Produits et Marques côte à côte */}
+                      <div className="grid grid-cols-4 gap-2">
+                        {/* Colonne Produits (3/4) */}
+                        <div className="col-span-3">
+                          <h3 className="mb-3 text-lg font-semibold border-b pb-2">Produits</h3>
+                          <div className="grid grid-cols-3 gap-1">
+                            {/* Filtrer les doublons */}
+                            {menuCatalogue[0].items
+                              .filter(
+                                (item, index, self) =>
+                                  index === self.findIndex((i) => i.title === item.title)
+                              )
+                              .map((item) => (
                                 <ListItem key={item.title} title={item.title} href={item.href} />
                               ))}
-                            </ul>
-                            <ul className="grid gap-1">
-                              {c.items.slice(Math.ceil(c.items.length / 2)).map((item) => (
-                                <ListItem key={item.title} title={item.title} href={item.href} />
-                              ))}
-                            </ul>
                           </div>
-                        ) : (
-                          <ul className="grid gap-1">
-                            {c.items.map((item) => (
+                        </div>
+
+                        {/* Colonne Marques (1/4) */}
+                        <div className="col-span-1">
+                          <h3 className="mb-3 text-lg font-semibold border-b pb-2">Marques</h3>
+                          <div className="grid grid-cols-1 gap-1">
+                            {menuCatalogue[1].items.map((item) => (
                               <ListItem key={item.title} title={item.title} href={item.href} />
                             ))}
-                          </ul>
-                        )}
+                          </div>
+                        </div>
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -112,18 +115,18 @@ const NavbarLarge = () => {
           </NavigationMenu>
 
           {/* Prestations Menu */}
-          <NavigationMenu>
+          <NavigationMenu contentWidth="default">
             <NavigationMenuList className="text-xl">
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="text-xl">Préstations</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[600px] md:w-[400px] md:grid-cols-1 lg:w-[300px] text-center">
+                  <div className="p-4 w-[400px] md:w-[400px] lg:w-[400px]">
                     {menuItems.map((menu) => (
                       <Link key={menu.title} href={menu.href} prefetch>
                         <ListItem title={menu.title}></ListItem>
                       </Link>
                     ))}
-                  </ul>
+                  </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>

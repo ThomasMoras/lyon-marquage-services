@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import NavbarLarge from "./NarbarLarge";
+import NavbarLarge from "./NavbarLarge";
 import NavbarMobile from "./NavbarMobile";
 
 const Navbar = () => {

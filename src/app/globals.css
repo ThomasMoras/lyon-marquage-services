@@ -35,6 +35,7 @@ body {
     --radius: 0.5rem;
     --btn-carousel-hover: 217 91% 45%; /* darker blue */
     --btn-carousel-text: 0 0% 100%;
+    --nav-height: 5rem; /* environ 72px, à ajuster selon votre design */
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -64,6 +65,7 @@ body {
     --btn-carousel-bg: 0 0% 98%;
     --btn-carousel-hover: 0 0% 80%;
     --btn-carousel-text: 0 0% 9%;
+    --nav-height: 4rem; /* environ 72px, à ajuster selon votre design */
   }
 }
 
@@ -138,4 +140,12 @@ html {
 
 .animate-slow-zoom {
   animation: slow-zoom 15s ease-in-out infinite alternate;
+}
+
+/* Ajoutez ce code à votre fichier globals.css */
+
+/* Centre le dropdown du menu Prestations */
+[data-prestations-menu] > div > [data-radix-navigation-menu-viewport] {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
 }
