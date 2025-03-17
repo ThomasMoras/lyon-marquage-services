@@ -11,8 +11,8 @@ export default function CombinaisonPage() {
     <ProductCategoryDisplay
       title="Combinaisons personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Combinaison"
+      family="Vêtements"
+      subfamily="Combinaisons"
     />
   );
 }

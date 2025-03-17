@@ -1,9 +1,9 @@
-
 import ProductCategoryDisplay from "@/components/shared/ProductCategoryDisplay";
 
 export const metadata = {
   title: "Catalogue Chemise/Surchemises | Lyon Marquage Service",
-  description: "Découvrez notre sélection de chemise/surchemises personnalisables pour votre communication",
+  description:
+    "Découvrez notre sélection de chemise/surchemises personnalisables pour votre communication",
 };
 
 export default function ChemiseSurchemisePage() {

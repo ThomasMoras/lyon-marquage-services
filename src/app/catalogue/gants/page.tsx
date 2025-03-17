@@ -11,7 +11,7 @@ export default function GantsPage() {
     <ProductCategoryDisplay
       title="Gantss personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
+      family="Headwear & Accessoires"
       subfamily="Gants"
     />
   );

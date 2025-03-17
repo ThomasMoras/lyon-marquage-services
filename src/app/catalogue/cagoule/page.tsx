@@ -11,8 +11,8 @@ export default function CagoulePage() {
     <ProductCategoryDisplay
       title="Cagoules personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Cagoule"
+      family="Headwear & Accessoires"
+      subfamily="Cagoules"
     />
   );
 }

@@ -11,8 +11,8 @@ export default function TablierPage() {
     <ProductCategoryDisplay
       title="Tabliers personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Tablier"
+      family="Vêtements"
+      subfamily="Tabliers"
     />
   );
 }

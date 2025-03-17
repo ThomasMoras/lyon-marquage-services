@@ -11,8 +11,8 @@ export default function TuniquePage() {
     <ProductCategoryDisplay
       title="Tuniques personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Tunique"
+      family="Vêtements"
+      subfamily="Tuniques"
     />
   );
 }

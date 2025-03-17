@@ -11,8 +11,8 @@ export default function DbardeurPage() {
     <ProductCategoryDisplay
       title="Débardeurs personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Débardeur"
+      family="Vêtements"
+      subfamily="Débardeurs"
     />
   );
 }

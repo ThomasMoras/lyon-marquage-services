@@ -1,4 +1,3 @@
-
 import ProductCategoryDisplay from "@/components/shared/ProductCategoryDisplay";
 
 export const metadata = {
@@ -11,7 +10,7 @@ export default function BodywarmerPage() {
     <ProductCategoryDisplay
       title="Bodywarmers personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
+      family="Vêtements"
       subfamily="Bodywarmer"
     />
   );

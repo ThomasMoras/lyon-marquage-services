@@ -11,7 +11,7 @@ export default function BodyPage() {
     <ProductCategoryDisplay
       title="Bodys personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
+      family="Vêtements"
       subfamily="Body"
     />
   );

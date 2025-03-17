@@ -1,3 +1,4 @@
+
 import ProductCategoryDisplay from "@/components/shared/ProductCategoryDisplay";
 
 export const metadata = {
@@ -10,8 +11,8 @@ export default function BandeauPage() {
     <ProductCategoryDisplay
       title="Bandeaus personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Bandeau"
+      family="Headwear & Accessoires"
+      subfamily="Bandeaux"
     />
   );
 }

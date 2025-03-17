@@ -11,7 +11,7 @@ export default function CasquePage() {
     <ProductCategoryDisplay
       title="Casques personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
+      family="Headwear & Accessoires"
       subfamily="Casque"
     />
   );

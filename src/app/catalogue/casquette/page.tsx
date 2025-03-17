@@ -11,7 +11,7 @@ export default function CasquettePage() {
     <ProductCategoryDisplay
       title="Casquettes personnalisables"
       description="Notre collection de casquettes offre un excellent support pour votre communication visuelle."
-      family="Accessoires"
+      family="Headwear & Accessoires"
       subfamily="Casquette"
     />
   );

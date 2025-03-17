@@ -11,8 +11,8 @@ export default function BobPage() {
     <ProductCategoryDisplay
       title="Bobs personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Bob"
+      family="Headwear & Accessoires"
+      subfamily="Bobs"
     />
   );
 }

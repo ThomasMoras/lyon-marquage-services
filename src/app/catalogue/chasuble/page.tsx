@@ -11,8 +11,8 @@ export default function ChasublePage() {
     <ProductCategoryDisplay
       title="Chasubles personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Chasuble"
+      family="Vêtements"
+      subfamily="Chasubles"
     />
   );
 }

@@ -11,8 +11,8 @@ export default function JupePage() {
     <ProductCategoryDisplay
       title="Jupes personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Jupe"
+      family="Vêtements"
+      subfamily="Jupes"
     />
   );
 }

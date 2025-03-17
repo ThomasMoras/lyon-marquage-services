@@ -11,7 +11,7 @@ export default function BonnetPage() {
     <ProductCategoryDisplay
       title="Bonnets personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Accessoires"
+      family="Headwear & Accessoires"
       subfamily="Bonnet"
     />
   );

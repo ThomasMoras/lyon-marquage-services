@@ -11,8 +11,8 @@ export default function SalopettePage() {
     <ProductCategoryDisplay
       title="Salopettes personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Salopette"
+      family="Vêtements"
+      subfamily="Salopettes"
     />
   );
 }

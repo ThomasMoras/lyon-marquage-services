@@ -11,8 +11,8 @@ export default function RobePage() {
     <ProductCategoryDisplay
       title="Robes personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Robe"
+      family="Vêtements"
+      subfamily="Robes"
     />
   );
 }

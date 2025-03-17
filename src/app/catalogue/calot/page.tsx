@@ -11,8 +11,8 @@ export default function CalotPage() {
     <ProductCategoryDisplay
       title="Calots personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Calot"
+      family="Headwear & Accessoires"
+      subfamily="Calots"
     />
   );
 }

@@ -11,8 +11,8 @@ export default function BretPage() {
     <ProductCategoryDisplay
       title="Bérets personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Béret"
+      family="Headwear & Accessoires"
+      subfamily="Bérets"
     />
   );
 }

@@ -11,8 +11,8 @@ export default function GiletPage() {
     <ProductCategoryDisplay
       title="Gilets personnalisables"
       description="Découvrez notre sélection de produits personnalisables pour votre communication par l'objet."
-      family="Divers"
-      subfamily="Gilet"
+      family="Vêtements"
+      subfamily="Gilets"
     />
   );
 }
