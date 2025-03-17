@@ -91,7 +91,7 @@ export interface TopTexProduct {
   collection?: string;
 
   // Champ pour stocker les données originales si nécessaire
-  _original?: any;
+  // _original?: any;
 }
 
 export interface TopTexProductsResponse {
@@ -115,4 +115,39 @@ export interface TopTexError {
   error: string;
   message: string;
   statusCode: number;
+}
+
+export interface Color {
+  hexaCode?: string;
+  name?: string;
+}
+
+export interface ProductImage {
+  url: string;
+}
+
+export interface ProductDesignation {
+  fr?: string;
+  en?: string;
+}
+
+export interface Product {
+  sku?: string;
+  catalogReference?: string;
+  mainImage?: string;
+  images?: Array<string | ProductImage>;
+  designation: string | ProductDesignation;
+  price?: number;
+  publicPrice?: number;
+  brand?: string;
+  colors?: Color[];
+}
+
+export interface ProductCardProps {
+  product: TopTexProduct;
+}
+
+export interface ProductResult {
+  product: TopTexProduct;
+  relatedProducts?: TopTexProduct[];
 }

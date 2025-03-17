@@ -1,29 +1,22 @@
-// app/produits/[sku]/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTopTex } from "@/hooks/useTopTex";
 import { notFound } from "next/navigation";
+import { TopTexProduct, TopTexMultiLangText, ProductResult } from "@/types/toptex";
 
 export default function ProductDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const identifier = params.sku as string;
 
-  const { isLoading: apiLoading, error: apiError, getProductByCatalogReference } = useTopTex();
-  const [product, setProduct] = useState<any>(null);
-  const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
+  const { getProductByCatalogReference } = useTopTex();
+  const [product, setProduct] = useState<TopTexProduct | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<TopTexProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
@@ -47,7 +40,7 @@ export default function ProductDetailPage() {
           `Identifiant détecté comme ${isSku ? "SKU" : "référence catalogue"}: ${identifier}`
         );
 
-        let result;
+        let result: ProductResult;
 
         if (isSku) {
           // C'est un SKU, utiliser l'API SKU
@@ -55,10 +48,10 @@ export default function ProductDetailPage() {
           // On pourrait implémenter l'appel à l'API SKU ici, mais pour la simplicité
           // nous utilisons l'API référence catalogue en extrayant la référence du SKU
           const catalogReference = identifier.split("_")[0];
-          result = await getProductByCatalogReference(catalogReference, {
+          result = (await getProductByCatalogReference(catalogReference, {
             lang: "fr,en",
             usageRight: "b2b_uniquement",
-          });
+          })) as ProductResult;
 
           // Si le SKU ne correspond pas exactement au SKU du produit retourné
           if (result.product && result.product.sku !== identifier) {
@@ -67,10 +60,10 @@ export default function ProductDetailPage() {
         } else {
           // C'est une référence catalogue, utiliser l'API référence catalogue
           console.log("Récupération par référence catalogue");
-          result = await getProductByCatalogReference(identifier, {
+          result = (await getProductByCatalogReference(identifier, {
             lang: "fr,en",
             usageRight: "b2b_uniquement",
-          });
+          })) as ProductResult;
         }
 
         if (!result.product) {
@@ -176,21 +169,14 @@ export default function ProductDetailPage() {
     );
   }
 
+  if (!product) {
+    return null;
+  }
+
   // Extraire les informations du produit
-  const productName =
-    typeof product.designation === "object"
-      ? product.designation.fr || product.designation.en || "Produit sans titre"
-      : product.designation || "Produit sans titre";
-
-  const productDescription =
-    typeof product.description === "object"
-      ? product.description.fr || product.description.en || ""
-      : product.description || "";
-
-  const productComposition =
-    typeof product.composition === "object"
-      ? product.composition.fr || product.composition.en || ""
-      : product.composition || "";
+  const productName = getMultiLangText(product.designation, "Produit sans titre");
+  const productDescription = getMultiLangText(product.description, "");
+  const productComposition = getMultiLangText(product.composition, "");
 
   const mainImageUrl = selectedImage || product.mainImage || "/images/product-placeholder.jpg";
 
@@ -233,19 +219,8 @@ export default function ProductDetailPage() {
         <span className="mx-2">/</span>
         {product.family && (
           <>
-            <Link
-              href={`/catalogue/${
-                typeof product.family === "object"
-                  ? (product.family.fr || product.family.en || "")
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")
-                  : product.family.toLowerCase().replace(/\s+/g, "-")
-              }`}
-              className="hover:underline"
-            >
-              {typeof product.family === "object"
-                ? product.family.fr || product.family.en || ""
-                : product.family}
+            <Link href={`/catalogue/${getFamilySlug(product.family)}`} className="hover:underline">
+              {getMultiLangText(product.family, "")}
             </Link>
             <span className="mx-2">/</span>
           </>
@@ -453,7 +428,7 @@ export default function ProductDetailPage() {
 
                   {product.labelType && (
                     <div>
-                      <p className="font-medium">Type d'étiquette:</p>
+                      <p className="font-medium">Type d&apos;étiquette:</p>
                       <p>{product.labelType}</p>
                     </div>
                   )}
@@ -465,7 +440,9 @@ export default function ProductDetailPage() {
                       <p>
                         {Array.isArray(product.style)
                           ? typeof product.style[0] === "object"
-                            ? product.style[0].fr || product.style[0].en || ""
+                            ? (product.style[0] as TopTexMultiLangText).fr ||
+                              (product.style[0] as TopTexMultiLangText).en ||
+                              ""
                             : product.style[0]
                           : product.style}
                       </p>
@@ -493,29 +470,22 @@ export default function ProductDetailPage() {
                   <div className="relative aspect-square overflow-hidden rounded-md bg-gray-100 mb-3">
                     <Image
                       src={relatedProduct.mainImage || "/images/product-placeholder.jpg"}
-                      alt={
-                        typeof relatedProduct.designation === "object"
-                          ? relatedProduct.designation.fr ||
-                            relatedProduct.designation.en ||
-                            "Produit similaire"
-                          : relatedProduct.designation || "Produit similaire"
-                      }
+                      alt={getMultiLangText(relatedProduct.designation, "Produit similaire")}
                       fill
                       sizes="(max-width: 768px) 50vw, 25vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <h3 className="text-sm font-medium line-clamp-2">
-                    {typeof relatedProduct.designation === "object"
-                      ? relatedProduct.designation.fr ||
-                        relatedProduct.designation.en ||
-                        "Produit similaire"
-                      : relatedProduct.designation || "Produit similaire"}
+                    {getMultiLangText(relatedProduct.designation, "Produit similaire")}
                   </h3>
                   {relatedProduct.price || relatedProduct.publicPrice ? (
                     <p className="mt-1 text-sm font-bold">
                       {typeof (relatedProduct.price || relatedProduct.publicPrice) === "number"
-                        ? `${(relatedProduct.price || relatedProduct.publicPrice).toFixed(2)} €`
+                        ? `${(
+                            (relatedProduct.price as number) ||
+                            (relatedProduct.publicPrice as number)
+                          ).toFixed(2)} €`
                         : relatedProduct.price || relatedProduct.publicPrice}
                     </p>
                   ) : null}
@@ -527,4 +497,24 @@ export default function ProductDetailPage() {
       )}
     </div>
   );
+}
+
+// Fonction helper pour extraire le texte multilingue
+function getMultiLangText(
+  text: string | TopTexMultiLangText | undefined,
+  defaultText: string
+): string {
+  if (!text) return defaultText;
+
+  if (typeof text === "object") {
+    return text.fr || text.en || defaultText;
+  }
+
+  return text;
+}
+
+// Fonction helper pour créer un slug à partir du nom de famille
+function getFamilySlug(family: string | TopTexMultiLangText): string {
+  const familyName = getMultiLangText(family, "");
+  return familyName.toLowerCase().replace(/\s+/g, "-");
 }

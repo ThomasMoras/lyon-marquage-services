@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getTopTexClient } from "../../client";
+import { TopTexProduct } from "@/types/toptex";
+import { RawProductData } from "../../types";
+
+interface ProductWithRelatedResult {
+  product: TopTexProduct | null;
+  relatedProducts: TopTexProduct[];
+  exactMatch: boolean;
+}
 
 export async function GET(request: NextRequest, { params }: { params: { sku: string } }) {
   try {
@@ -84,7 +92,11 @@ export async function GET(request: NextRequest, { params }: { params: { sku: str
 }
 
 // Fonction pour récupérer un produit avec des produits associés
-async function fetchProductWithRelated(topTexClient: any, sku: string, catalogReference: string) {
+async function fetchProductWithRelated(
+  topTexClient: ReturnType<typeof getTopTexClient>,
+  sku: string,
+  catalogReference: string
+): Promise<ProductWithRelatedResult> {
   // S'assurer d'avoir un token valide
   await topTexClient.ensureAuthenticated();
 
@@ -92,7 +104,7 @@ async function fetchProductWithRelated(topTexClient: any, sku: string, catalogRe
   const usageRight = "b2b_uniquement";
 
   // Résultat par défaut
-  const result = {
+  const result: ProductWithRelatedResult = {
     product: null,
     relatedProducts: [],
     exactMatch: false,
@@ -118,7 +130,7 @@ async function fetchProductWithRelated(topTexClient: any, sku: string, catalogRe
     }
 
     const data = await response.json();
-    let products = [];
+    let products: RawProductData[] = [];
 
     // Extraire les produits selon le format de réponse
     if (Array.isArray(data)) {
@@ -141,15 +153,15 @@ async function fetchProductWithRelated(topTexClient: any, sku: string, catalogRe
     }
 
     // Traiter tous les produits
-    const processedProducts = products.map((p: any) => topTexClient.processProductData(p));
+    const processedProducts = products.map((p) => topTexClient.processProductData(p));
 
     // Chercher le produit exact par SKU
-    const exactMatch = sku.includes("_") ? processedProducts.find((p: any) => p.sku === sku) : null;
+    const exactMatch = sku.includes("_") ? processedProducts.find((p) => p.sku === sku) : null;
 
     if (exactMatch) {
       console.log(`Correspondance exacte trouvée pour le SKU ${sku}`);
       result.product = exactMatch;
-      result.relatedProducts = processedProducts.filter((p: any) => p.sku !== sku);
+      result.relatedProducts = processedProducts.filter((p) => p.sku !== sku);
       result.exactMatch = true;
     } else {
       // Si pas de correspondance exacte, prendre le premier produit

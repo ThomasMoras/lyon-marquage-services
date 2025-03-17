@@ -1,4 +1,3 @@
-// components/shared/top_tex/TopTexProductList.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -12,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ProductCard from "./ProductCard";
+import { TopTexProduct, TopTexProductsResponse } from "@/types/toptex";
 
 interface TopTexProductListProps {
   family: string;
@@ -29,7 +29,7 @@ export default function TopTexProductList({
   title,
 }: TopTexProductListProps) {
   const { isLoading, error, getProductsByCategory } = useTopTex();
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<TopTexProduct[]>([]);
   const [pagination, setPagination] = useState({
     currentPage: initialPage,
     totalPages: 0,
@@ -39,12 +39,12 @@ export default function TopTexProductList({
 
   const loadProducts = async (page: number) => {
     try {
-      const result = await getProductsByCategory({
+      const result = (await getProductsByCategory({
         family,
         subfamily,
         pageNumber: page,
         pageSize,
-      });
+      })) as TopTexProductsResponse;
 
       console.log("Résultat formaté:", result);
 
@@ -71,7 +71,7 @@ export default function TopTexProductList({
   // Utiliser useEffect seulement pour le chargement initial
   useEffect(() => {
     loadProducts(initialPage);
-  }, [family, subfamily]);
+  }, [family, subfamily, initialPage]);
 
   // Fonction pour trier les produits
   const sortProducts = (option: string) => {
@@ -82,15 +82,15 @@ export default function TopTexProductList({
     switch (option) {
       case "price-asc":
         sortedProducts.sort((a, b) => {
-          const priceA = a.price || a.publicPrice || 0;
-          const priceB = b.price || b.publicPrice || 0;
+          const priceA = typeof a.price === "number" ? a.price : a.publicPrice || 0;
+          const priceB = typeof b.price === "number" ? b.price : b.publicPrice || 0;
           return priceA - priceB;
         });
         break;
       case "price-desc":
         sortedProducts.sort((a, b) => {
-          const priceA = a.price || a.publicPrice || 0;
-          const priceB = b.price || b.publicPrice || 0;
+          const priceA = typeof a.price === "number" ? a.price : a.publicPrice || 0;
+          const priceB = typeof b.price === "number" ? b.price : b.publicPrice || 0;
           return priceB - priceA;
         });
         break;

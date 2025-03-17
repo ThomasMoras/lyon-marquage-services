@@ -1,6 +1,12 @@
-// app/api/top_tex/products/catalog/[reference]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { getTopTexClient } from "../../../client";
+import { TopTexProduct } from "@/types/toptex";
+
+interface ProductOptions {
+  usageRight?: string;
+  lang?: string[];
+  color?: string;
+}
 
 export async function GET(request: NextRequest, { params }: { params: { reference: string } }) {
   try {
@@ -43,8 +49,8 @@ export async function GET(request: NextRequest, { params }: { params: { referenc
     const topTexClient = getTopTexClient();
 
     try {
-      // Récupérer le produit par sa référence catalogue
-      const options: any = { usageRight };
+      // Créer l'objet d'options correctement typé
+      const options: ProductOptions = { usageRight };
       if (lang) options.lang = lang.split(",");
       if (color) options.color = color;
 
@@ -61,7 +67,7 @@ export async function GET(request: NextRequest, { params }: { params: { referenc
       console.log(`Produit récupéré avec succès: ${product.catalogReference}`);
 
       // Récupérer les produits associés (autres produits avec la même référence catalogue mais des couleurs différentes)
-      let relatedProducts: any[] = [];
+      const relatedProducts: TopTexProduct[] = [];
 
       if (product.colors && product.colors.length > 0) {
         // TODO: Implémenter la récupération des produits associés si nécessaire

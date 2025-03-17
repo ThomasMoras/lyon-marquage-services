@@ -1,4 +1,3 @@
-// components/shared/top_tex/ProductCard.tsx
 "use client";
 
 import { useState } from "react";
@@ -6,10 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
-interface ProductCardProps {
-  product: any;
-}
+import { ProductCardProps } from "@/types/toptex";
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);

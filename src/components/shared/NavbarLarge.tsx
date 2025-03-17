@@ -15,7 +15,6 @@ import { menuCatalogue } from "@/constants/catalogue";
 import { menuItems } from "@/constants/prestation";
 import { ModeToggle } from "./ToogleTheme";
 import { robotoMono } from "@/app/fonts";
-import { DropdownMenuSeparator } from "../ui/dropdown-menu";
 
 const ListItem = React.forwardRef<
   React.ElementRef<"div">,
