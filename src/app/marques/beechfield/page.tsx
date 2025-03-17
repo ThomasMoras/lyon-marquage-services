@@ -1,6 +1,4 @@
 
-import { Suspense } from "react";
-
 export const metadata = {
   title: "Beechfield | Lyon Marquage Service",
   description: "Découvrez notre sélection de vêtements Beechfield, reconnus pour leur qualité et leur durabilité",

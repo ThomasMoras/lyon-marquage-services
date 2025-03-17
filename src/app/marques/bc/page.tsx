@@ -1,6 +1,4 @@
 
-import { Suspense } from "react";
-
 export const metadata = {
   title: "B&C | Lyon Marquage Service",
   description: "Découvrez notre sélection de vêtements B&C, reconnus pour leur qualité et leur durabilité",

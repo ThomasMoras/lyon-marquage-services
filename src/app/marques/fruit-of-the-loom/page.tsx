@@ -1,6 +1,4 @@
 
-import { Suspense } from "react";
-
 export const metadata = {
   title: "Fruit of the Loom | Lyon Marquage Service",
   description: "Découvrez notre sélection de vêtements Fruit of the Loom, reconnus pour leur qualité et leur durabilité",

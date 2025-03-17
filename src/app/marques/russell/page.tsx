@@ -1,6 +1,4 @@
 
-import { Suspense } from "react";
-
 export const metadata = {
   title: "Russell | Lyon Marquage Service",
   description: "Découvrez notre sélection de vêtements Russell, reconnus pour leur qualité et leur durabilité",

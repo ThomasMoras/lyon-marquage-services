@@ -1,6 +1,4 @@
 
-import { Suspense } from "react";
-
 export const metadata = {
   title: "Kariban | Lyon Marquage Service",
   description: "Découvrez notre sélection de vêtements Kariban, reconnus pour leur qualité et leur durabilité",

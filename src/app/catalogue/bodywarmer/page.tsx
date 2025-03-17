@@ -1,3 +1,4 @@
+
 import ProductCategoryDisplay from "@/components/shared/ProductCategoryDisplay";
 
 export const metadata = {

@@ -151,8 +151,6 @@ export default function ${formattedTitle.replace(/[\W-]/g, "")}Page() {
 // Template pour la page de marque
 const generateBrandPageTemplate = (slug: string, title: any) => {
   return `
-import { Suspense } from "react";
-
 export const metadata = {
   title: "${title} | Lyon Marquage Service",
   description: "Découvrez notre sélection de vêtements ${title}, reconnus pour leur qualité et leur durabilité",
