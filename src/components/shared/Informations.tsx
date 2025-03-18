@@ -21,7 +21,7 @@ export default function Informations() {
             </div>
             <div className="ml-4">
               <h3 className="font-semibold text-gray-900 mb-1">Adresse</h3>
-              <p className="text-gray-600 text-sm">69800 Saint-Priest</p>
+              <p className="text-gray-600 text-sm">89 Rue du Dauphiné, 69800, Saint-Priest</p>
             </div>
           </div>
 
@@ -31,7 +31,7 @@ export default function Informations() {
             </div>
             <div className="ml-4">
               <h3 className="font-semibold text-gray-900 mb-1">Téléphone</h3>
-              <p className="text-gray-600 text-sm">XX XX XX XX XX</p>
+              <p className="text-gray-600 text-sm">09 51 52 28 80</p>
             </div>
           </div>
 
@@ -41,7 +41,7 @@ export default function Informations() {
             </div>
             <div className="ml-4">
               <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-              <p className="text-gray-600 text-sm">contact@gmail.com</p>
+              <p className="text-gray-600 text-sm">info@lyonmarquage.fr</p>
             </div>
           </div>
 
