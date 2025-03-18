@@ -21,8 +21,8 @@ export function SuccessMessage({ onReset }: SuccessMessageProps) {
           </h3>
 
           <p className="text-gray-600 dark:text-gray-300 max-w-md">
-            Merci pour votre message. Nous l'avons bien reçu et nous vous répondrons dans les plus
-            brefs délais.
+            Merci pour votre message. Nous l&spos;avons bien reçu et nous vous répondrons dans les
+            plus brefs délais.
           </p>
 
           <Button
