@@ -16,9 +16,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { Send, Loader2, Mail, User, MessageSquare, Tag } from "lucide-react";
+import { Send, Loader2, Mail, User, MessageSquare, Tag, ShieldAlert } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { SuccessMessage } from "./SucessMessage";
 
 const formSchema = z.object({
@@ -50,7 +51,10 @@ const formSchema = z.object({
 export default function FormContact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState<string | null>(null);
   const { toast } = useToast();
+  const captchaRef = React.useRef<HCaptcha>(null);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -64,17 +68,29 @@ export default function FormContact() {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    // Vérifier si le captcha a été validé
+    if (!captchaToken) {
+      setCaptchaError("Veuillez valider le captcha avant d'envoyer le formulaire");
+      return;
+    }
+
     setIsSubmitting(true);
+    setCaptchaError(null);
+
     try {
       const response = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          ...values,
+          captchaToken,
+        }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Une erreur est survenue lors de l'envoi du message");
+        throw new Error(data.message || "Une erreur est survenue lors de l'envoi du message");
       }
 
       toast({
@@ -97,6 +113,12 @@ export default function FormContact() {
         duration: 5000,
         action: <ToastAction altText="Réessayer">Réessayer</ToastAction>,
       });
+
+      // Réinitialiser le captcha en cas d'erreur
+      if (captchaRef.current) {
+        captchaRef.current.resetCaptcha();
+      }
+      setCaptchaToken(null);
     } finally {
       setIsSubmitting(false);
     }
@@ -105,6 +127,21 @@ export default function FormContact() {
   const handleReset = () => {
     form.reset();
     setIsSubmitSuccessful(false);
+    setCaptchaToken(null);
+    setCaptchaError(null);
+    if (captchaRef.current) {
+      captchaRef.current.resetCaptcha();
+    }
+  };
+
+  const handleCaptchaChange = (token: string) => {
+    setCaptchaToken(token);
+    setCaptchaError(null);
+  };
+
+  const handleCaptchaError = () => {
+    setCaptchaError("Une erreur s'est produite avec le captcha. Veuillez réessayer.");
+    setCaptchaToken(null);
   };
 
   if (isSubmitSuccessful) {
@@ -227,11 +264,35 @@ export default function FormContact() {
               )}
             />
 
+            {/* Captcha */}
+            <div className="flex flex-col items-center space-y-2">
+              <div className="flex items-center gap-2 self-start mb-2">
+                <ShieldAlert className="h-4 w-4 text-blue-500" />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Vérification de sécurité <span className="text-red-500">*</span>
+                </span>
+              </div>
+
+              <div className="w-full flex justify-center">
+                <HCaptcha
+                  ref={captchaRef}
+                  sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || ""}
+                  onVerify={handleCaptchaChange}
+                  onError={handleCaptchaError}
+                  theme="light"
+                  size="normal"
+                  languageOverride="fr"
+                />
+              </div>
+
+              {captchaError && <div className="text-red-500 text-xs mt-1">{captchaError}</div>}
+            </div>
+
             {/* Bouton d'envoi avec effet visuel */}
             <div className="flex justify-center pt-2">
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !captchaToken}
                 className="w-full h-12 px-6 text-base font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow-md hover:shadow-lg transition-all duration-200"
               >
                 {isSubmitting ? (

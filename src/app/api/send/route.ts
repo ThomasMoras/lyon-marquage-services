@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { z } from "zod";
 
-// Schéma de validation (même schéma que dans votre formulaire)
+// Schéma de validation avec captcha
 const formSchema = z.object({
   firstName: z
     .string()
@@ -27,16 +27,50 @@ const formSchema = z.object({
     .string()
     .min(10, "Le message doit contenir au moins 10 caractères")
     .max(1000, "Le message ne peut pas dépasser 1000 caractères"),
+  captchaToken: z.string().min(1, "Le token captcha est requis"),
 });
 
-// Stockage simple pour le rate limiting (note: en production, utilisez Redis)
+// Fonction pour vérifier le token captcha
+async function verifyCaptcha(token: string): Promise<boolean> {
+  try {
+    if (!process.env.HCAPTCHA_SECRET_KEY) {
+      console.error("HCAPTCHA_SECRET_KEY n'est pas définie dans les variables d'environnement");
+      return false;
+    }
+
+    const response = await fetch("https://hcaptcha.com/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        "secret": process.env.HCAPTCHA_SECRET_KEY || "",
+        "response": token,
+      }),
+    });
+
+    const data = await response.json();
+
+    // Journaliser la réponse pour le débogage (à supprimer en production)
+    if (process.env.NODE_ENV !== "production") {
+      console.log("Réponse captcha:", data);
+    }
+
+    return data.success === true;
+  } catch (error) {
+    console.error("Erreur lors de la vérification du captcha:", error);
+    return false;
+  }
+}
+
+// Stockage simple pour le rate limiting (en production, utilisez Redis)
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const MAX_REQUESTS = 5;
 
 export async function POST(request: NextRequest) {
   try {
-    // Vérification du rate limiting
+    // Rate limiting
     const ip = request.ip || "unknown";
     const now = Date.now();
     const requestLog = rateLimitMap.get(ip) || [];
@@ -55,6 +89,15 @@ export async function POST(request: NextRequest) {
     // Récupérer et valider les données
     const body = await request.json();
     const validatedData = formSchema.parse(body);
+
+    // Vérifier le captcha
+    const isCaptchaValid = await verifyCaptcha(validatedData.captchaToken);
+    if (!isCaptchaValid) {
+      return NextResponse.json(
+        { message: "Échec de la vérification du captcha. Veuillez réessayer." },
+        { status: 400 }
+      );
+    }
 
     // Configurer le transporteur d'email
     const transporter = nodemailer.createTransport({
@@ -78,6 +121,7 @@ export async function POST(request: NextRequest) {
       <p>${validatedData.message.replace(/\n/g, "<br>")}</p>
       <hr>
       <p><em>Ce message a été envoyé depuis le formulaire de contact du site Lyon Marquage (lyonmarquage.fr)</em></p>
+      <p><small>IP: ${ip} - Date: ${new Date().toLocaleString("fr-FR")}</small></p>
     `;
 
     // Options pour l'envoi de l'email
