@@ -19,6 +19,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Send, Loader2, Mail, User, MessageSquare, Tag } from "lucide-react";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
+import { SuccessMessage } from "./SucessMessage";
 
 const formSchema = z.object({
   firstName: z
@@ -48,6 +49,7 @@ const formSchema = z.object({
 
 export default function FormContact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
   const { toast } = useToast();
 
   const form = useForm({
@@ -71,7 +73,8 @@ export default function FormContact() {
       });
 
       if (!response.ok) {
-        throw new Error("Une erreur est survenue lors de l'envoi du message");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Une erreur est survenue lors de l'envoi du message");
       }
 
       toast({
@@ -82,7 +85,7 @@ export default function FormContact() {
         action: <ToastAction altText="Fermer">Fermer</ToastAction>,
       });
 
-      form.reset();
+      setIsSubmitSuccessful(true);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Une erreur inattendue est survenue";
@@ -98,6 +101,15 @@ export default function FormContact() {
       setIsSubmitting(false);
     }
   };
+
+  const handleReset = () => {
+    form.reset();
+    setIsSubmitSuccessful(false);
+  };
+
+  if (isSubmitSuccessful) {
+    return <SuccessMessage onReset={handleReset} />;
+  }
 
   return (
     <Card className="shadow-lg border-0 overflow-hidden rounded-xl h-full">
