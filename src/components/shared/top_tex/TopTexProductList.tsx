@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ProductCard from "./ProductCard";
+import { TopTexProductListSkeleton } from "@/components/shared/skeleton/TopTexProductListSkeleton";
 import { TopTexProduct, TopTexProductsResponse } from "@/types/toptex";
 
 interface TopTexProductListProps {
@@ -145,6 +146,11 @@ export default function TopTexProductList({
     return <div className="p-4 bg-red-50 text-red-600 rounded-md">Erreur: {error}</div>;
   }
 
+  // Show skeleton during loading
+  if (isLoading) {
+    return <TopTexProductListSkeleton itemCount={pageSize} />;
+  }
+
   return (
     <div className="space-y-6">
       {/* En-tête avec titre et options de tri */}
@@ -155,8 +161,6 @@ export default function TopTexProductList({
         </div>
 
         <div className="flex items-center gap-4">
-          {isLoading && <div className="text-sm text-gray-500">Chargement...</div>}
-
           <div className="flex items-center gap-2">
             <span className="text-sm whitespace-nowrap">Trier par:</span>
             <Select value={sortOption} onValueChange={sortProducts}>
@@ -175,7 +179,7 @@ export default function TopTexProductList({
         </div>
       </div>
 
-      {(!products || products.length === 0) && !isLoading ? (
+      {!products || products.length === 0 ? (
         <div className="p-8 text-center bg-gray-50 rounded-lg">
           <p className="text-gray-500">Aucun produit trouvé dans cette catégorie.</p>
           <Button className="mt-4" variant="outline">
@@ -201,7 +205,7 @@ export default function TopTexProductList({
             <div className="flex gap-2">
               <Button
                 variant={pagination.currentPage === 1 ? "outline" : "default"}
-                disabled={pagination.currentPage === 1 || isLoading}
+                disabled={pagination.currentPage === 1}
                 onClick={handlePrevPage}
                 className="min-w-[100px]"
               >
@@ -209,7 +213,7 @@ export default function TopTexProductList({
               </Button>
               <Button
                 variant={pagination.currentPage === pagination.totalPages ? "outline" : "default"}
-                disabled={pagination.currentPage === pagination.totalPages || isLoading}
+                disabled={pagination.currentPage === pagination.totalPages}
                 onClick={handleNextPage}
                 className="min-w-[100px]"
               >

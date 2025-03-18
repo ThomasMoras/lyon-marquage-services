@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTopTex } from "@/hooks/useTopTex";
 import { notFound } from "next/navigation";
 import { TopTexProduct, TopTexMultiLangText, ProductResult } from "@/types/toptex";
+import { ProductDetailSkeleton } from "@/components/shared/skeleton/ProductDetailSkeleton";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -131,22 +132,7 @@ export default function ProductDetailPage() {
 
   // Si chargement en cours
   if (loading) {
-    return (
-      <div className="container mx-auto py-12 px-4">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/3 mb-8"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="aspect-square bg-gray-200 rounded"></div>
-            <div className="space-y-4">
-              <div className="h-8 bg-gray-200 rounded w-2/3"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-              <div className="h-12 bg-gray-200 rounded w-1/4 mt-8"></div>
-              <div className="h-10 bg-gray-200 rounded w-full mt-8"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    return <ProductDetailSkeleton />;
   }
 
   // Si erreur

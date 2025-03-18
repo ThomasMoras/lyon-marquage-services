@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import TopTexProductList from "@/components/shared/top_tex/TopTexProductList";
 
 interface ProductCategoryDisplayProps {
@@ -27,14 +26,12 @@ export default function ProductCategoryDisplay({
         </p>
       )}
 
-      <Suspense fallback={<div>Chargement du catalogue...</div>}>
-        <TopTexProductList
-          family={family}
-          subfamily={subfamily}
-          pageSize={12}
-          title={`${formattedTitle} - Collection complète`}
-        />
-      </Suspense>
+      <TopTexProductList
+        family={family}
+        subfamily={subfamily}
+        pageSize={12}
+        title={`${formattedTitle} - Collection complète`}
+      />
     </>
   );
 }

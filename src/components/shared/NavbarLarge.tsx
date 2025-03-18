@@ -1,46 +1,51 @@
 "use client";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useState } from "react";
 import { menuCatalogue } from "@/constants/catalogue";
 import { menuItems } from "@/constants/prestation";
 import { ModeToggle } from "./ToogleTheme";
 import { robotoMono } from "@/app/fonts";
+import { ChevronDown } from "lucide-react";
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div"> & { href?: string }
->(({ className, title, children, href, ...props }, ref) => {
-  const content = (
-    <div
+const MenuLink = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a"> & {
+    title: string;
+    onSelect?: () => void;
+    children?: React.ReactNode;
+  }
+>(({ className, title, children, onSelect, ...props }, ref) => {
+  return (
+    <a
       ref={ref}
       className={cn(
         "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
         className
       )}
+      onClick={onSelect}
       {...props}
     >
       <div className="text-base font-medium leading-none">{title}</div>
       {children && (
         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
       )}
-    </div>
+    </a>
   );
-
-  return <div>{href ? <Link href={href}>{content}</Link> : content}</div>;
 });
-ListItem.displayName = "ListItem";
+MenuLink.displayName = "MenuLink";
 
 const NavbarLarge = () => {
+  // États pour gérer l'ouverture/fermeture des menus
+  const [catalogueOpen, setCatalogueOpen] = useState(false);
+  const [prestationsOpen, setPrestationsOpen] = useState(false);
+
   return (
     <div className="hidden lg:flex lg:justify-start w-full px-4">
       <div className="flex items-center gap-8">
@@ -71,89 +76,97 @@ const NavbarLarge = () => {
           </Link>
         </div>
         <div className="flex items-center gap-2">
-          <NavigationMenu contentWidth="fullscreen">
-            <NavigationMenuList className="text-xl">
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-xl">Catalogue</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="w-screen max-h-[70vh] overflow-y-auto">
-                    <div className="max-w-screen-2xl mx-auto p-2">
-                      {/* Grid pour mettre Produits et Marques côte à côte */}
-                      <div className="grid grid-cols-4 gap-2">
-                        {/* Colonne Produits (3/4) */}
-                        <div className="col-span-3">
-                          <h3 className="mb-3 text-lg font-semibold border-b pb-2">Produits</h3>
-                          <div className="grid grid-cols-3 gap-1">
-                            {/* Filtrer les doublons */}
-                            {menuCatalogue[0].items
-                              .filter(
-                                (item, index, self) =>
-                                  index === self.findIndex((i) => i.title === item.title)
-                              )
-                              .map((item) => (
-                                <ListItem key={item.title} title={item.title} href={item.href} />
-                              ))}
-                          </div>
-                        </div>
-
-                        {/* Colonne Marques (1/4) */}
-                        <div className="col-span-1">
-                          <h3 className="mb-3 text-lg font-semibold border-b pb-2">Marques</h3>
-                          <div className="grid grid-cols-1 gap-1">
-                            {menuCatalogue[1].items.map((item) => (
-                              <ListItem key={item.title} title={item.title} href={item.href} />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
+          {/* Menu Catalogue avec DropdownMenu */}
+          <DropdownMenu open={catalogueOpen} onOpenChange={setCatalogueOpen}>
+            <DropdownMenuTrigger asChild>
+              <button className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-xl font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-accent/50">
+                Catalogue
+                <ChevronDown
+                  className="relative top-[1px] ml-1 h-3 w-3 transition duration-300 group-data-[state=open]:rotate-180"
+                  aria-hidden="true"
+                />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-screen max-h-[70vh] overflow-y-auto" align="start">
+              <div className="max-w-screen-2xl mx-auto p-2">
+                {/* Grid pour mettre Produits et Marques côte à côte */}
+                <div className="grid grid-cols-4 gap-2">
+                  {/* Colonne Produits (3/4) */}
+                  <div className="col-span-3">
+                    <h3 className="mb-3 text-lg font-semibold border-b pb-2">Produits</h3>
+                    <div className="grid grid-cols-3 gap-1">
+                      {/* Filtrer les doublons */}
+                      {menuCatalogue[0].items
+                        .filter(
+                          (item, index, self) =>
+                            index === self.findIndex((i) => i.title === item.title)
+                        )
+                        .map((item) => (
+                          <MenuLink
+                            key={item.title}
+                            href={item.href}
+                            title={item.title}
+                            onSelect={() => setCatalogueOpen(false)}
+                          />
+                        ))}
                     </div>
                   </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-
-          {/* Prestations Menu */}
-          <NavigationMenu contentWidth="default">
-            <NavigationMenuList className="text-xl">
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-xl">Préstations</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="p-4 w-[400px] md:w-[400px] lg:w-[400px]">
-                    {menuItems.map((menu) => (
-                      <Link key={menu.title} href={menu.href} prefetch>
-                        <ListItem title={menu.title}></ListItem>
-                      </Link>
-                    ))}
+                  {/* Colonne Marques (1/4) */}
+                  <div className="col-span-1">
+                    <h3 className="mb-3 text-lg font-semibold border-b pb-2">Marques</h3>
+                    <div className="grid grid-cols-1 gap-1">
+                      {menuCatalogue[1].items.map((item) => (
+                        <MenuLink
+                          key={item.title}
+                          href={item.href}
+                          title={item.title}
+                          onSelect={() => setCatalogueOpen(false)}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+                </div>
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
-          {/* Direct Links */}
-          <NavigationMenu>
-            <NavigationMenuList className="text-xl">
-              <NavigationMenuItem>
-                <Link
-                  href="/objets-publicitaires"
-                  className={cn(navigationMenuTriggerStyle(), "text-xl")}
-                >
-                  Objets Publicitaires
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+          {/* Menu Prestations avec DropdownMenu */}
+          <DropdownMenu open={prestationsOpen} onOpenChange={setPrestationsOpen}>
+            <DropdownMenuTrigger asChild>
+              <button className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-xl font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-accent/50">
+                Préstations
+                <ChevronDown
+                  className="relative top-[1px] ml-1 h-3 w-3 transition duration-300 group-data-[state=open]:rotate-180"
+                  aria-hidden="true"
+                />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="p-4 w-[400px]" align="start">
+              {menuItems.map((menu) => (
+                <MenuLink
+                  key={menu.title}
+                  href={menu.href}
+                  title={menu.title}
+                  onSelect={() => setPrestationsOpen(false)}
+                />
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
-          <NavigationMenu>
-            <NavigationMenuList className="text-xl">
-              <NavigationMenuItem>
-                <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "text-xl")}>
-                  Contact
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+          {/* Liens directs */}
+          <Link
+            href="/objets-publicitaires"
+            className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-xl font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+          >
+            Objets Publicitaires
+          </Link>
+
+          <Link
+            href="/contact"
+            className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-xl font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+          >
+            Contact
+          </Link>
 
           <div className="ml-4">
             <ModeToggle />
