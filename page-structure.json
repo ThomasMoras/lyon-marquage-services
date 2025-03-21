@@ -1,0 +1,719 @@
+[
+  {
+    "path": "/catalogue",
+    "children": [
+      {
+        "path": "/catalogue/bandana",
+        "children": [
+          {
+            "path": "/catalogue/bandana/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/bandeau",
+        "children": [
+          {
+            "path": "/catalogue/bandeau/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/beret",
+        "children": [
+          {
+            "path": "/catalogue/beret/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/bermuda",
+        "children": [
+          {
+            "path": "/catalogue/bermuda/short",
+            "children": [
+              {
+                "path": "/catalogue/bermuda/short/page",
+                "file": "page.tsx",
+                "type": "file"
+              }
+            ],
+            "type": "directory"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/blouse-de-travail",
+        "children": [
+          {
+            "path": "/catalogue/blouse-de-travail/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/bob",
+        "children": [
+          {
+            "path": "/catalogue/bob/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/body",
+        "children": [
+          {
+            "path": "/catalogue/body/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/bodywarmer",
+        "children": [
+          {
+            "path": "/catalogue/bodywarmer/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/bonnet",
+        "children": [
+          {
+            "path": "/catalogue/bonnet/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/cagoule",
+        "children": [
+          {
+            "path": "/catalogue/cagoule/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/calot",
+        "children": [
+          {
+            "path": "/catalogue/calot/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/casque",
+        "children": [
+          {
+            "path": "/catalogue/casque/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/casquette",
+        "children": [
+          {
+            "path": "/catalogue/casquette/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/chapeau-bandana",
+        "children": [
+          {
+            "path": "/catalogue/chapeau-bandana/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/chapeau-et-accessoires",
+        "children": [
+          {
+            "path": "/catalogue/chapeau-et-accessoires/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/chasuble",
+        "children": [
+          {
+            "path": "/catalogue/chasuble/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/chemise",
+        "children": [
+          {
+            "path": "/catalogue/chemise/surchemise",
+            "children": [
+              {
+                "path": "/catalogue/chemise/surchemise/page",
+                "file": "page.tsx",
+                "type": "file"
+              }
+            ],
+            "type": "directory"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/chemisier",
+        "children": [
+          {
+            "path": "/catalogue/chemisier/blouse",
+            "children": [
+              {
+                "path": "/catalogue/chemisier/blouse/page",
+                "file": "page.tsx",
+                "type": "file"
+              }
+            ],
+            "type": "directory"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/combinaison",
+        "children": [
+          {
+            "path": "/catalogue/combinaison/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/debardeur",
+        "children": [
+          {
+            "path": "/catalogue/debardeur/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/echarpe-",
+        "children": [
+          {
+            "path": "/catalogue/echarpe-/-etole-",
+            "children": [
+              {
+                "path": "/catalogue/echarpe-/-etole-/-tour-de-cou",
+                "children": [
+                  {
+                    "path": "/catalogue/echarpe-/-etole-/-tour-de-cou/page",
+                    "file": "page.tsx",
+                    "type": "file"
+                  }
+                ],
+                "type": "directory"
+              }
+            ],
+            "type": "directory"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/gants",
+        "children": [
+          {
+            "path": "/catalogue/gants/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/gilet",
+        "children": [
+          {
+            "path": "/catalogue/gilet/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/jean",
+        "children": [
+          {
+            "path": "/catalogue/jean/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/jupe",
+        "children": [
+          {
+            "path": "/catalogue/jupe/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/layout",
+        "file": "layout.tsx",
+        "type": "file"
+      },
+      {
+        "path": "/catalogue/loading",
+        "file": "loading.tsx",
+        "type": "file"
+      },
+      {
+        "path": "/catalogue/maillot-de-bain",
+        "children": [
+          {
+            "path": "/catalogue/maillot-de-bain/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/maillot-de-sport",
+        "children": [
+          {
+            "path": "/catalogue/maillot-de-sport/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/page",
+        "file": "page.tsx",
+        "type": "file"
+      },
+      {
+        "path": "/catalogue/pantalon",
+        "children": [
+          {
+            "path": "/catalogue/pantalon/pantacourt",
+            "children": [
+              {
+                "path": "/catalogue/pantalon/pantacourt/page",
+                "file": "page.tsx",
+                "type": "file"
+              }
+            ],
+            "type": "directory"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/polo",
+        "children": [
+          {
+            "path": "/catalogue/polo/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/poncho",
+        "children": [
+          {
+            "path": "/catalogue/poncho/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/pullover",
+        "children": [
+          {
+            "path": "/catalogue/pullover/cardigan",
+            "children": [
+              {
+                "path": "/catalogue/pullover/cardigan/page",
+                "file": "page.tsx",
+                "type": "file"
+              }
+            ],
+            "type": "directory"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/robe",
+        "children": [
+          {
+            "path": "/catalogue/robe/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/salopette",
+        "children": [
+          {
+            "path": "/catalogue/salopette/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/sweat",
+        "children": [
+          {
+            "path": "/catalogue/sweat/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/tablier",
+        "children": [
+          {
+            "path": "/catalogue/tablier/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/tshirt",
+        "children": [
+          {
+            "path": "/catalogue/tshirt/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/tunique",
+        "children": [
+          {
+            "path": "/catalogue/tunique/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/catalogue/veste",
+        "children": [
+          {
+            "path": "/catalogue/veste/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      }
+    ],
+    "type": "directory"
+  },
+  {
+    "path": "/contact",
+    "children": [
+      {
+        "path": "/contact/page",
+        "file": "page.tsx",
+        "type": "file"
+      }
+    ],
+    "type": "directory"
+  },
+  {
+    "path": "/enseignes",
+    "children": [
+      {
+        "path": "/enseignes/page",
+        "file": "page.tsx",
+        "type": "file"
+      }
+    ],
+    "type": "directory"
+  },
+  {
+    "path": "/fonts",
+    "children": [
+      {
+        "path": "/fonts",
+        "file": "index.ts",
+        "type": "file"
+      }
+    ],
+    "type": "directory"
+  },
+  {
+    "path": "/layout",
+    "file": "layout.tsx",
+    "type": "file"
+  },
+  {
+    "path": "/login",
+    "children": [
+      {
+        "path": "/login/page",
+        "file": "page.tsx",
+        "type": "file"
+      }
+    ],
+    "type": "directory"
+  },
+  {
+    "path": "/marques",
+    "children": [
+      {
+        "path": "/marques/bc",
+        "children": [
+          {
+            "path": "/marques/bc/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/marques/beechfield",
+        "children": [
+          {
+            "path": "/marques/beechfield/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/marques/fruit-of-the-loom",
+        "children": [
+          {
+            "path": "/marques/fruit-of-the-loom/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/marques/gildan",
+        "children": [
+          {
+            "path": "/marques/gildan/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/marques/kariban",
+        "children": [
+          {
+            "path": "/marques/kariban/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/marques/layout",
+        "file": "layout.tsx",
+        "type": "file"
+      },
+      {
+        "path": "/marques/russell",
+        "children": [
+          {
+            "path": "/marques/russell/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      }
+    ],
+    "type": "directory"
+  },
+  {
+    "path": "/objets-publicitaires",
+    "children": [
+      {
+        "path": "/objets-publicitaires/page",
+        "file": "page.tsx",
+        "type": "file"
+      }
+    ],
+    "type": "directory"
+  },
+  {
+    "path": "/page",
+    "file": "page.tsx",
+    "type": "file"
+  },
+  {
+    "path": "/pages",
+    "children": [],
+    "type": "directory"
+  },
+  {
+    "path": "/presentation",
+    "children": [
+      {
+        "path": "/presentation/page",
+        "file": "page.tsx",
+        "type": "file"
+      }
+    ],
+    "type": "directory"
+  },
+  {
+    "path": "/prestations",
+    "children": [
+      {
+        "path": "/prestations/broderie",
+        "children": [
+          {
+            "path": "/prestations/broderie/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/prestations/flocage",
+        "children": [
+          {
+            "path": "/prestations/flocage/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/prestations/impression-textile",
+        "children": [
+          {
+            "path": "/prestations/impression-textile/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/prestations/impression-transfert",
+        "children": [
+          {
+            "path": "/prestations/impression-transfert/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      },
+      {
+        "path": "/prestations/serigraphie",
+        "children": [
+          {
+            "path": "/prestations/serigraphie/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      }
+    ],
+    "type": "directory"
+  },
+  {
+    "path": "/produits",
+    "children": [
+      {
+        "path": "/produits/[sku]",
+        "children": [
+          {
+            "path": "/produits/[sku]/page",
+            "file": "page.tsx",
+            "type": "file"
+          }
+        ],
+        "type": "directory"
+      }
+    ],
+    "type": "directory"
+  }
+]

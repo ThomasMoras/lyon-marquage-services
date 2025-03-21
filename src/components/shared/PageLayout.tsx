@@ -5,6 +5,7 @@ import EditableCarousel from "@/components/shared/editable/EditableCarousel";
 import { PageSectionProps, Section } from "@/types";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
+import SchemaOrg from "./SchemaOrg";
 
 export function PageLayout({ pageSection }: PageSectionProps) {
   const [sections, setSections] = useState<Section[]>([]);
@@ -150,6 +151,7 @@ export function PageLayout({ pageSection }: PageSectionProps) {
           isAdmin={isAdmin}
         />
       </section>
+      <SchemaOrg type={pageSection} />
     </div>
   );
 }
