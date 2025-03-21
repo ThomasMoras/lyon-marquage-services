@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
@@ -47,24 +48,21 @@ const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20 flex items-center">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-12 overflow-hidden">
-            {/* Titre avec taille corrigée */}
             <div className="relative">
-              <h2 className="text-4xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight text-ellipsis break-words drop-shadow-lg">
+              <h2 className="text-3xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight text-ellipsis break-words drop-shadow-lg whitespace-pre-line">
                 {slide.title}
               </h2>
               <div className="h-1 w-24 bg-blue-500 mx-auto mt-6 rounded-full"></div>
             </div>
 
-            {/* Description */}
-            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed text-ellipsis break-words drop-shadow-md">
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed text-ellipsis break-words drop-shadow-md whitespace-pre-line">
               {slide.description}
             </p>
 
-            {/* Bouton corrigé - moins large et moins arrondi */}
             <Button
               size="lg"
               asChild
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 h-auto rounded-md text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 h-auto rounded-3xl text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <Link href={slide.buttonLink} scroll>
                 {slide.buttonText}
@@ -300,13 +298,17 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
                         <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                           Titre
                         </label>
-                        <Input
+                        <AutoResizeTextarea
                           id="title"
                           value={slide.title}
                           onChange={(e) => handleFieldChange(globalIndex, "title", e.target.value)}
-                          placeholder="Titre de la slide"
+                          placeholder="Titre de la slide (Pressez Entrée pour les sauts de ligne)"
+                          minHeight={60}
                           className="border-2 focus-visible:ring-blue-500"
                         />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Utilisez la touche Entrée pour créer des sauts de ligne
+                        </p>
                       </div>
 
                       <div>
@@ -319,10 +321,13 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
                           onChange={(e) =>
                             handleFieldChange(globalIndex, "description", e.target.value)
                           }
-                          placeholder="Description de la slide"
+                          placeholder="Description de la slide (Pressez Entrée pour les sauts de ligne)"
                           minHeight={120}
                           className="border-2 focus-visible:ring-blue-500"
                         />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Utilisez la touche Entrée pour créer des sauts de ligne
+                        </p>
                       </div>
 
                       <div>
