@@ -2,6 +2,55 @@
 
 import { PageSectionType } from "@/types";
 
+interface GeoCoordinates {
+  "@type": "GeoCoordinates";
+  latitude: number;
+  longitude: number;
+}
+
+interface PostalAddress {
+  "@type": "PostalAddress";
+  streetAddress: string;
+  addressLocality: string;
+  postalCode: string;
+  addressRegion: string;
+  addressCountry: string;
+}
+
+interface OpeningHoursSpecification {
+  "@type": "OpeningHoursSpecification";
+  dayOfWeek: string[];
+  opens: string;
+  closes: string;
+}
+
+interface LocalBusiness {
+  "@context": "https://schema.org";
+  "@type": "LocalBusiness";
+  name: string;
+  image: string;
+  "@id": string;
+  url: string;
+  telephone: string;
+  priceRange: string;
+  address: PostalAddress;
+  geo: GeoCoordinates;
+  openingHoursSpecification: OpeningHoursSpecification[];
+}
+
+interface Service {
+  "@context": "https://schema.org";
+  "@type": "Service";
+  name: string;
+  description: string;
+  url: string;
+  provider: LocalBusiness;
+  areaServed: {
+    "@type": "City";
+    name: string;
+  };
+}
+
 type SchemaOrgProps = {
   type?: PageSectionType;
   title?: string;
@@ -17,7 +66,7 @@ export default function SchemaOrg({
   url = "https://www.lyonmarquage.fr",
   imageUrl = "/logo.png",
 }: SchemaOrgProps) {
-  const businessSchema = {
+  const businessSchema: LocalBusiness = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: "Lyon Marquage Service",
@@ -29,7 +78,7 @@ export default function SchemaOrg({
     address: {
       "@type": "PostalAddress",
       streetAddress: "89 Rue du Dauphiné",
-      addressLocality: "LyoSaint-Priestn",
+      addressLocality: "Saint-Priest",
       postalCode: "69800",
       addressRegion: "Rhône-Alpes",
       addressCountry: "FR",
@@ -49,7 +98,7 @@ export default function SchemaOrg({
     ],
   };
 
-  let schemaData: any = businessSchema;
+  let schemaData: LocalBusiness | Service = businessSchema;
 
   if (type) {
     const serviceTitle = title || getServiceTitle(type);
