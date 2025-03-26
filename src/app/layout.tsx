@@ -8,7 +8,7 @@ import { SessionProvider } from "@/components/providers/SessionProvider";
 import CookieBanner from "@/components/cookie/CookieBanner";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-XXXXXXXXXX";
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.lyonmarquage.fr"),
@@ -76,7 +76,7 @@ export default function RootLayout({
           </Layout>
           <Toaster />
           <CookieBanner />
-          <GoogleAnalytics GA_MEASUREMENT_ID={GA_MEASUREMENT_ID} />
+          {GA_MEASUREMENT_ID && <GoogleAnalytics GA_MEASUREMENT_ID={GA_MEASUREMENT_ID} />}
         </ThemeProvider>
       </body>
     </html>
