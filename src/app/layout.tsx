@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { inter, robotoMono } from "./fonts";
 import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "@/components/providers/SessionProvider";
+import CookieBanner from "@/components/cookie/CookieBanner";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.lyonmarquage.fr"),
@@ -71,6 +72,7 @@ export default function RootLayout({
             <SessionProvider>{children}</SessionProvider>
           </Layout>
           <Toaster />
+          <CookieBanner />
         </ThemeProvider>
       </body>
     </html>
