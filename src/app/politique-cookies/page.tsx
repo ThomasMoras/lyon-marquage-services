@@ -1,9 +1,8 @@
-// app/politique-cookies/page.tsx
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Politique de cookies | Lyon Marquage Service",
-  description: "Notre politique concernant l'utilisation des cookies sur notre site web.",
+  description: "Notre politique concernant l&apos;utilisation des cookies sur notre site web.",
 };
 
 export default function CookiePolicyPage() {
@@ -12,7 +11,7 @@ export default function CookiePolicyPage() {
       <h1 className="text-3xl font-bold mb-8">Politique de cookies</h1>
 
       <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Qu'est-ce qu'un cookie ?</h2>
+        <h2 className="text-2xl font-semibold mb-4">Qu&apos;est-ce qu&apos;un cookie ?</h2>
         <p className="mb-4">
           Un cookie est un petit fichier texte qui peut être placé sur votre appareil lorsque vous
           visitez un site web. Les cookies sont largement utilisés pour faire fonctionner les sites
@@ -29,16 +28,17 @@ export default function CookiePolicyPage() {
         <ul className="list-disc pl-6 mb-4 space-y-2">
           <li>
             <strong>Cookies nécessaires :</strong> Ces cookies sont essentiels au fonctionnement de
-            notre site web. Ils vous permettent de naviguer sur le site et d'utiliser ses
-            fonctionnalités, comme l'accès aux zones sécurisées. Sans ces cookies, certains services
-            que vous avez demandés ne peuvent pas être fournis.
+            notre site web. Ils vous permettent de naviguer sur le site et d&apos;utiliser ses
+            fonctionnalités, comme l&apos;accès aux zones sécurisées. Sans ces cookies, certains
+            services que vous avez demandés ne peuvent pas être fournis.
           </li>
           <li>
             <strong>Cookies de préférences :</strong> Ces cookies nous permettent de mémoriser vos
-            choix (comme votre nom d'utilisateur, la langue ou la région où vous vous trouvez) et de
-            fournir des fonctionnalités améliorées et plus personnalisées. Ils peuvent également
-            être utilisés pour mémoriser les changements que vous avez apportés à la taille du
-            texte, aux polices et à d'autres parties des pages web que vous pouvez personnaliser.
+            choix (comme votre nom d&apos;utilisateur, la langue ou la région où vous vous trouvez)
+            et de fournir des fonctionnalités améliorées et plus personnalisées. Ils peuvent
+            également être utilisés pour mémoriser les changements que vous avez apportés à la
+            taille du texte, aux polices et à d&apos;autres parties des pages web que vous pouvez
+            personnaliser.
           </li>
           <li>
             <strong>Cookies statistiques :</strong> Ces cookies nous aident à comprendre comment les
@@ -47,9 +47,9 @@ export default function CookiePolicyPage() {
           </li>
           <li>
             <strong>Cookies marketing :</strong> Ces cookies sont utilisés pour suivre les visiteurs
-            sur les sites web. L'intention est d'afficher des publicités qui sont pertinentes et
-            attrayantes pour l'utilisateur individuel et donc plus précieuses pour les éditeurs et
-            les annonceurs tiers.
+            sur les sites web. L&apos;intention est d&apos;afficher des publicités qui sont
+            pertinentes et attrayantes pour l&apos;utilisateur individuel et donc plus précieuses
+            pour les éditeurs et les annonceurs tiers.
           </li>
         </ul>
       </section>
@@ -58,10 +58,10 @@ export default function CookiePolicyPage() {
         <h2 className="text-2xl font-semibold mb-4">Comment gérer vos cookies</h2>
         <p className="mb-4">
           Vous pouvez modifier vos préférences en matière de cookies à tout moment en cliquant sur
-          le bouton "Paramètres des cookies" situé en bas de notre site. Vous pouvez également
-          choisir d'accepter ou de refuser les cookies en modifiant les paramètres de votre
-          navigateur. Veuillez noter que la désactivation de certains cookies peut affecter votre
-          expérience sur notre site web.
+          le bouton &quot;Paramètres des cookies&quot; situé en bas de notre site. Vous pouvez
+          également choisir d&apos;accepter ou de refuser les cookies en modifiant les paramètres de
+          votre navigateur. Veuillez noter que la désactivation de certains cookies peut affecter
+          votre expérience sur notre site web.
         </p>
       </section>
 
@@ -98,7 +98,6 @@ export default function CookiePolicyPage() {
                 <td className="py-2 px-4 border-b">6 mois</td>
                 <td className="py-2 px-4 border-b">Nécessaire</td>
               </tr>
-              {/* Ajoutez d'autres cookies si nécessaire */}
             </tbody>
           </table>
         </div>
@@ -118,7 +117,7 @@ export default function CookiePolicyPage() {
         <h2 className="text-2xl font-semibold mb-4">Contact</h2>
         <p>
           Si vous avez des questions concernant notre politique de cookies, veuillez nous contacter
-          à l'adresse suivante : [VOTRE ADRESSE EMAIL].
+          à l&apos;adresse suivante : [VOTRE ADRESSE EMAIL].
         </p>
       </section>
     </div>

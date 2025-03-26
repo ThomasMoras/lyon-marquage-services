@@ -124,7 +124,8 @@ export default function CookieBanner() {
               <div className="flex-1">
                 <p className="text-sm md:text-base mb-2">
                   Nous utilisons des cookies pour améliorer votre expérience sur notre site. Ces
-                  cookies nous permettent d'améliorer le contenu et les fonctionnalités du site.
+                  cookies nous permettent d&apos;améliorer le contenu et les fonctionnalités du
+                  site.
                 </p>
                 <p className="text-xs text-gray-500">
                   <Link href="/politique-cookies" className="underline hover:text-primary">

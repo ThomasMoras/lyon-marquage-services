@@ -1,4 +1,3 @@
-// components/CookieConsentDialog.tsx
 "use client";
 
 import { useState } from "react";
@@ -37,13 +36,8 @@ export default function CookieConsentDialog({
   const [activeTab, setActiveTab] = useState("simple");
   const [settings, setSettings] = useState<CookieSettings>({
     ...initialSettings,
-    necessary: true, // Toujours true et non modifiable
+    necessary: true,
   });
-
-  const handleClose = () => {
-    setOpen(false);
-    onClose();
-  };
 
   const handleAcceptAll = () => {
     const newSettings = {
@@ -161,7 +155,7 @@ export default function CookieConsentDialog({
                   Marketing
                 </Label>
                 <p className="text-sm text-gray-500">
-                  Permet d'afficher des contenus personnalisés
+                  Permet d&apos;afficher des contenus personnalisés
                 </p>
               </div>
               <Switch
