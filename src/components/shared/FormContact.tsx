@@ -265,12 +265,31 @@ export default function FormContact() {
             />
 
             {/* Captcha */}
-            <div className="flex flex-col items-center space-y-2">
-              <div className="flex items-center gap-2 self-start mb-2">
+            <div className="flex flex-col space-y-2">
+              <div className="flex gap-2 self-start mb-2">
                 <ShieldAlert className="h-4 w-4 text-blue-500" />
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                {/* <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Vérification de sécurité <span className="text-red-500">*</span>
-                </span>
+                </span> */}
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-300">
+                  Ce site est protégé par reCAPTCHA et applique les{" "}
+                  <a
+                    className="text-blue-500"
+                    href="https://policies.google.com/terms?hl=fr"
+                    target="_blank"
+                  >
+                    conditions d&apos;utilisation
+                  </a>{" "}
+                  et la{" "}
+                  <a
+                    className="text-blue-500"
+                    href="https://policies.google.com/privacy?hl=fr"
+                    target="_blank"
+                  >
+                    politique de confidentialité
+                  </a>{" "}
+                  de Google.
+                </p>
               </div>
 
               <div className="w-full flex justify-center">
