@@ -93,38 +93,19 @@ export default function Home() {
               </a>
             </div>
 
-            {/* Impression textile */}
+            {/* Impression */}
             <div className="flex flex-col items-center bg-white rounded-lg p-6 shadow border border-gray-200 hover:shadow-xl transition-shadow">
               <div className="w-24 h-24 bg-sky-100 rounded-full flex items-center justify-center mb-6">
                 <svg className="w-12 h-12 text-sky-600" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h4v4H7V7zm0 6h10v4H7v-4z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-2">Impression textile</h3>
+              <h3 className="text-2xl font-bold mb-2">Impression</h3>
               <p className="text-gray-600 text-center mb-4">
                 Parfait pour les noms, numéros et logos sur textiles sportifs
               </p>
               <a
-                href="/prestations/impression-textile"
-                className="text-sky-600 hover:text-sky-700 font-semibold"
-              >
-                En savoir plus →
-              </a>
-            </div>
-
-            {/* Impression transfert */}
-            <div className="flex flex-col items-center bg-white rounded-lg p-6 shadow border border-gray-200 hover:shadow-xl transition-shadow">
-              <div className="w-24 h-24 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-12 h-12 text-sky-600" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h4v4H7V7zm0 6h10v4H7v-4z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Impression transfert</h3>
-              <p className="text-gray-600 text-center mb-4">
-                Parfait pour les noms, numéros et logos sur textiles sportifs
-              </p>
-              <a
-                href="/prestations/impression-transfert"
+                href="/prestations/impression"
                 className="text-sky-600 hover:text-sky-700 font-semibold"
               >
                 En savoir plus →
@@ -278,7 +259,7 @@ export default function Home() {
             Contactez-nous dès aujourd&apos;hui pour un devis gratuit et personnalisé ou pour en
             savoir plus sur nos services
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/contact"
               className="px-8 py-4 bg-white hover:bg-gray-100 text-gray-900 font-bold rounded-md transition-colors duration-300"
@@ -291,7 +272,7 @@ export default function Home() {
             >
               EXPLORER NOS PRODUITS
             </a>
-          </div>
+          </div> */}
         </div>
       </section>
 

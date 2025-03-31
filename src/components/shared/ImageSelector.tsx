@@ -45,17 +45,18 @@ export function ImageSelector({ folder, currentImage, onSelect }: ImageSelectorP
             <DialogTitle>Select Image</DialogTitle>
           </DialogHeader>
           <div className="grid grid-cols-3 gap-4 overflow-y-auto max-h-[60vh]">
-            {images.map((image) => (
-              <div
-                key={image}
-                onClick={() => onSelect(image)}
-                className={`cursor-pointer rounded-lg overflow-hidden border-2 ${
-                  currentImage === image ? "border-primary" : "border-transparent"
-                }`}
-              >
-                <img src={image} alt="" className="w-full h-32 object-cover" />
-              </div>
-            ))}
+            {images &&
+              images.map((image) => (
+                <div
+                  key={image}
+                  onClick={() => onSelect(image)}
+                  className={`cursor-pointer rounded-lg overflow-hidden border-2 ${
+                    currentImage === image ? "border-primary" : "border-transparent"
+                  }`}
+                >
+                  <img src={image} alt="" className="w-full h-32 object-cover" />
+                </div>
+              ))}
           </div>
         </DialogContent>
       </Dialog>

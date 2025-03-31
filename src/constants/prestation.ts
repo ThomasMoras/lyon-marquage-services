@@ -12,16 +12,10 @@ export const menuItems: { title: string; href: string; description: string }[] =
       "Marquage textile haut de gamme avec relief et finitions élégantes, idéal pour les logos et textes détaillés.",
   },
   {
-    title: "Impression textile",
-    href: "/prestations/impression-textile",
+    title: "Impression",
+    href: "/prestations/impression",
     description:
       "Impression numérique directe sur textile permettant des visuels complexes et multicolores avec un rendu naturel.",
-  },
-  {
-    title: "Impression par transfert",
-    href: "/prestations/impression-transfert",
-    description:
-      "Solution polyvalente adaptée à tous types de supports, parfaite pour les petites séries et les designs détaillés.",
   },
   {
     title: "Flocage",

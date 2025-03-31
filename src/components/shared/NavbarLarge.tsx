@@ -8,7 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import React, { useState } from "react";
-import { menuCatalogue } from "@/constants/catalogue";
+// import { menuCatalogue } from "@/constants/catalogue";
 import { menuItems } from "@/constants/prestation";
 import { ModeToggle } from "./ToogleTheme";
 import { robotoMono } from "@/app/fonts";
@@ -77,6 +77,7 @@ const NavbarLarge = () => {
         </div>
         <div className="flex items-center gap-2">
           {/* Menu Catalogue avec DropdownMenu */}
+          {/*
           <DropdownMenu open={catalogueOpen} onOpenChange={setCatalogueOpen}>
             <DropdownMenuTrigger asChild>
               <button className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-xl font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-accent/50">
@@ -89,13 +90,10 @@ const NavbarLarge = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-screen max-h-[70vh] overflow-y-auto" align="start">
               <div className="max-w-screen-2xl mx-auto p-2">
-                {/* Grid pour mettre Produits et Marques côte à côte */}
                 <div className="grid grid-cols-4 gap-2">
-                  {/* Colonne Produits (3/4) */}
                   <div className="col-span-3">
                     <h3 className="mb-3 text-lg font-semibold border-b pb-2">Produits</h3>
                     <div className="grid grid-cols-3 gap-1">
-                      {/* Filtrer les doublons */}
                       {menuCatalogue[0].items
                         .filter(
                           (item, index, self) =>
@@ -111,7 +109,6 @@ const NavbarLarge = () => {
                         ))}
                     </div>
                   </div>
-                  {/* Colonne Marques (1/4) */}
                   <div className="col-span-1">
                     <h3 className="mb-3 text-lg font-semibold border-b pb-2">Marques</h3>
                     <div className="grid grid-cols-1 gap-1">
@@ -129,11 +126,11 @@ const NavbarLarge = () => {
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
-
+        */}
           {/* Menu Prestations avec DropdownMenu */}
           <DropdownMenu open={prestationsOpen} onOpenChange={setPrestationsOpen}>
             <DropdownMenuTrigger asChild>
-              <button className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-xl font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-accent/50">
+              <button className="group inline-flex h-12 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-xl font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-accent/50">
                 Prestations
                 <ChevronDown
                   className="relative top-[1px] ml-1 h-3 w-3 transition duration-300 group-data-[state=open]:rotate-180"
@@ -160,7 +157,18 @@ const NavbarLarge = () => {
           >
             Objets Publicitaires
           </Link>
-
+          <Link
+            href="/objets-publicitaires"
+            className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-xl font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+          >
+            Imprimerie
+          </Link>
+          <Link
+            href="/objets-publicitaires"
+            className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-xl font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+          >
+            Enseigne Signalétique
+          </Link>
           <Link
             href="/contact"
             className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-xl font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
