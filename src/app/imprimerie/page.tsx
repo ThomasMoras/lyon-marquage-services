@@ -1,11 +1,11 @@
 "use client";
 import { PageLayout } from "@/components/shared/PageLayout";
 
-export default function Enseignes() {
+export default function Imprimerie() {
   return (
     <div className="flex flex-col min-h-screen">
       <section>
-        <PageLayout pageSection="enseignes" />
+        <PageLayout pageSection="imprimerie" />
       </section>
     </div>
   );

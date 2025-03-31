@@ -5,7 +5,9 @@ export type PageSectionType =
   | "impression_textile"
   | "impression_transfert"
   | "flocage"
-  | "objets_publicitaires";
+  | "objets_publicitaires"
+  | "imprimerie"
+  | "enseignes";
 
 export type MenuItem = {
   title: string;

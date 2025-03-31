@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,8 +11,8 @@ datasource db {
 model User {
   id        String    @id @default(cuid())
   email     String    @unique
-  password  String
   name      String?
+  password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   sessions  Session[]
@@ -35,7 +29,7 @@ model Session {
 model Carousel {
   id          String      @id @default(cuid())
   title       String
-  description String      @db.Text
+  description String
   image       String
   buttonText  String
   buttonLink  String
@@ -50,51 +44,53 @@ model Card {
   title       String
   description String
   imageUrl    String
-  order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  order       Int      @default(0)
 }
 
 model Section {
   id          String      @id @default(cuid())
   title       String
-  description String      @db.Text
+  description String
   imageUrl    String
   imageLeft   Boolean     @default(true)
   type        SectionType @default(HOME)
-  order       Int         @default(0)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+  order       Int         @default(0)
+}
+
+model Content {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  type      String   @default("text")
+  section   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  version   Int      @default(1)
+
+  @@index([section, key])
+}
+
+model ContentHistory {
+  id        String   @id @default(cuid())
+  contentId String
+  value     String
+  updatedBy String
+  createdAt DateTime @default(now())
+  version   Int
 }
 
 enum SectionType {
   HOME
   SERIGRAPHIE
   BRODERIE
-  IMPRESSION
+  IMPRESSION_TEXTILE
+  IMPRESSION_TRANSFERT
   FLOCAGE
   OBJETS_PUBLICITAIRES
-}
-
-model Content {
-  id        String   @id @default(cuid())
-  key       String   @unique // Par exemple: "home.title", "about.description"
-  value     String   @db.Text
-  type      String   @default("text") // "text" ou "textarea"
-  section   String // "home", "about", etc.
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  version   Int      @default(1) // Pour le versioning optionnel
-
-  @@index([section, key])
-}
-
-// Optionnel : pour garder un historique des modifications
-model ContentHistory {
-  id        String   @id @default(cuid())
-  contentId String
-  value     String   @db.Text
-  updatedBy String // ID de l'admin
-  createdAt DateTime @default(now())
-  version   Int
+  IMPRIMERIE
+  ENSEIGNES
 }
