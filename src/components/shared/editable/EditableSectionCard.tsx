@@ -7,7 +7,8 @@ import { Switch } from "@/components/ui/switch";
 import { Pencil, Check, X, Trash2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ImageSelector } from "../ImageSelector";
-import { EditableSectionCardProps, PageSectionType, Section } from "@/types";
+import { Section } from "@/types";
+import { SectionType } from "@prisma/client";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +19,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { AutoResizeTextarea } from "../AutoResizeTextarea";
+
+// Mise à jour de l'interface avec SectionType de Prisma
+interface EditableSectionCardProps {
+  section: Section;
+  onSave: (section: Section) => Promise<void>;
+  pageSection: SectionType;
+  isAdmin?: boolean;
+}
 
 export function EditableSectionCard({
   section,
@@ -234,7 +243,7 @@ export function SectionContainer({
   onSave: (section: Section) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
   onAdd: () => Promise<void>;
-  pageSection: PageSectionType;
+  pageSection: SectionType;
   isAdmin?: boolean;
 }) {
   const [isAdding, setIsAdding] = useState(false);

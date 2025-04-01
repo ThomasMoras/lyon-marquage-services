@@ -26,8 +26,15 @@ import {
   DialogTrigger,
 } from "../../ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { CarouselSlide, EditableCarouselProps } from "@/types";
+import { CarouselSlide } from "@/types";
 import { AutoResizeTextarea } from "../AutoResizeTextarea";
+import { SectionType } from "@prisma/client";
+
+// Mise à jour pour utiliser SectionType de Prisma
+interface EditableCarouselProps {
+  pageSection: SectionType;
+  isAdmin?: boolean;
+}
 
 const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
   return (

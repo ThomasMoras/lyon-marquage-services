@@ -7,16 +7,18 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { EditableCard } from "@/components/shared/editable/EditableCard";
-import { PageSectionType } from "@/types/commonTypes";
+import { SectionType } from "@prisma/client";
 
 interface CollectionSectionProps {
-  pageSection: PageSectionType;
+  pageSection: SectionType;
 }
 
 export const CollectionSection = ({ pageSection }: CollectionSectionProps) => {
   const [cards, setCards] = useState<CardItem[]>([]);
   const { status } = useSession();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [newCardId, setNewCardId] = useState<string | null>(null);
+
   const { toast } = useToast();
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export const CollectionSection = ({ pageSection }: CollectionSectionProps) => {
       const data = await response.json();
 
       // Filter cards for this specific page section
-      const filteredCards = data.filter((card: CardItem) => card.pageSection === pageSection);
+      const filteredCards = data.filter((card: CardItem) => card.type === pageSection);
 
       // Sort cards by order property, fallback to createdAt if no order exists
       const sortedCards = [...filteredCards].sort((a, b) => {
@@ -69,7 +71,7 @@ export const CollectionSection = ({ pageSection }: CollectionSectionProps) => {
         title: updatedCard.title || "",
         description: updatedCard.description || "",
         imageUrl: updatedCard.imageUrl,
-        pageSection: pageSection,
+        type: pageSection,
         order: updatedCard.order, // Include order if it exists
       };
 
@@ -152,6 +154,7 @@ export const CollectionSection = ({ pageSection }: CollectionSectionProps) => {
       // Get the newly created card from the response and add it to the local state
       const createdCard = await response.json();
       setCards((currentCards) => [...currentCards, createdCard]);
+      setNewCardId(createdCard.id);
 
       toast({
         title: "Success",
@@ -180,8 +183,13 @@ export const CollectionSection = ({ pageSection }: CollectionSectionProps) => {
             card={card}
             onSave={handleSave}
             onDelete={handleDelete}
-            pageSection={pageSection}
+            type={pageSection}
             isAdmin={isAdmin}
+            isNewCard={card.id === newCardId}
+            allCards={cards}
+            // onNavigate={(cardId) => {
+            //   console.log(`Navigated to card: ${cardId}`);
+            // }}
           />
         ))}
       </div>

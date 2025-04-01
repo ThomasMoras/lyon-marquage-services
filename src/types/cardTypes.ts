@@ -1,5 +1,5 @@
-import { PageSectionType } from "./commonTypes";
 import { Card as PrismaCard } from "@prisma/client";
+import { SectionType } from "@prisma/client";
 
 // Re-export the Prisma Card type
 export type CardType = PrismaCard;
@@ -7,16 +7,19 @@ export type CardType = PrismaCard;
 // API-related input types
 export interface CreateCardInput {
   title: string;
-  id: string;
-  order: number;
   description: string;
   imageUrl: string;
-  createdAt: Date;
-  updatedAt: Date;
+  type: SectionType;
+  order?: number;
 }
 
-export interface UpdateCardInput extends Partial<CreateCardInput> {
+export interface UpdateCardInput {
   id: string;
+  title?: string;
+  description?: string;
+  imageUrl?: string;
+  type?: SectionType;
+  order?: number;
 }
 
 // UI Component types
@@ -25,9 +28,9 @@ export interface CardItem {
   title?: string;
   description?: string;
   imageUrl: string;
-  pageSection: string;
-  order?: number; // Add order property
-  createdAt?: string; // Add createdAt for fallback sorting
+  type: SectionType;
+  order?: number;
+  createdAt?: string;
   updatedAt?: string;
 }
 
@@ -35,8 +38,9 @@ export interface EditableCardProps {
   card: CardItem;
   onSave: (card: CardItem) => Promise<void>;
   onDelete?: (id: string) => Promise<void>;
-  pageSection: PageSectionType;
+  type: SectionType;
   isAdmin?: boolean;
+  isNewCard: boolean;
 }
 
 export interface CardGridProps {
@@ -44,6 +48,6 @@ export interface CardGridProps {
   onSave: (card: CardItem) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
   onAdd: () => Promise<void>;
-  pageSection: PageSectionType;
+  pageSection: SectionType;
   isAdmin?: boolean;
 }

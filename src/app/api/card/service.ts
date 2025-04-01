@@ -1,23 +1,38 @@
-import prisma from "@/lib/prisma";
-import { CreateCardInput, UpdateCardInput } from "@/types/card";
+import { PrismaClient } from "@prisma/client";
+import { CreateCardInput, UpdateCardInput } from "@/types/cardTypes";
+
+const prisma = new PrismaClient();
 
 export async function getCards() {
-  return await prisma.card.findMany();
+  return prisma.card.findMany({
+    orderBy: {
+      order: "asc",
+    },
+  });
 }
 
 export async function createCard(data: CreateCardInput) {
-  return await prisma.card.create({ data });
+  return prisma.card.create({
+    data: {
+      title: data.title,
+      description: data.description,
+      imageUrl: data.imageUrl,
+      type: data.type,
+      order: data.order || 0,
+    },
+  });
 }
 
 export async function updateCard(data: UpdateCardInput) {
-  return await prisma.card.update({
-    where: { id: data.id },
-    data,
+  const { id, ...updateData } = data;
+  return prisma.card.update({
+    where: { id },
+    data: updateData,
   });
 }
 
 export async function deleteCard(id: string) {
-  return await prisma.card.delete({
+  return prisma.card.delete({
     where: { id },
   });
 }

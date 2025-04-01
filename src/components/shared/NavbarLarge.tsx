@@ -43,7 +43,7 @@ MenuLink.displayName = "MenuLink";
 
 const NavbarLarge = () => {
   // États pour gérer l'ouverture/fermeture des menus
-  const [catalogueOpen, setCatalogueOpen] = useState(false);
+  // const [catalogueOpen, setCatalogueOpen] = useState(false);
   const [prestationsOpen, setPrestationsOpen] = useState(false);
 
   return (

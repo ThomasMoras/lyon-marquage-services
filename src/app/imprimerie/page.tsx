@@ -1,10 +1,10 @@
 "use client";
 import { CollectionSection } from "@/components/shared/editable/CollectionSection";
 import { PageLayout } from "@/components/shared/PageLayout";
-import { PageSectionType } from "@/types/commonTypes";
+import { SectionType } from "@prisma/client";
 
 export default function Imprimerie() {
-  const pageSection: PageSectionType = "imprimerie";
+  const pageSection: SectionType = SectionType.IMPRIMERIE;
 
   return (
     <div className="flex flex-col min-h-screen">

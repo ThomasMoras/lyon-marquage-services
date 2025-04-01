@@ -1,5 +1,4 @@
-// types/sectionTypes.ts
-import { PageSectionType } from "./commonTypes";
+import { SectionType } from "@prisma/client";
 
 export interface Section {
   id: string;
@@ -27,7 +26,7 @@ export interface UpdateSectionInput extends Partial<CreateSectionInput> {
 }
 
 export interface EditableSectionCardProps {
-  pageSection: PageSectionType;
+  pageSection: SectionType;
   section: Section;
   isAdmin?: boolean;
   onSave: (updated: Section) => Promise<void>;
@@ -39,6 +38,6 @@ export interface SectionContainerProps {
   onSave: (section: Section) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
   onAdd: () => Promise<void>;
-  pageSection: PageSectionType;
+  pageSection: SectionType;
   isAdmin?: boolean;
 }

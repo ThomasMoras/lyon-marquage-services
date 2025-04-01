@@ -9,6 +9,7 @@ import { IoIosHome } from "react-icons/io";
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import Image from "next/image";
+import { SectionType } from "@prisma/client";
 
 export default function Home() {
   const { status } = useSession();
@@ -25,7 +26,7 @@ export default function Home() {
     <div className="flex flex-col w-full">
       {/* Section Hero avec le carousel éditable */}
       <section className="h-screen w-full">
-        <EditableCarousel pageSection="home" isAdmin={isAdmin} />
+        <EditableCarousel pageSection={SectionType.HOME} isAdmin={isAdmin} />
       </section>
 
       {/* Nos prestations */}
@@ -329,7 +330,7 @@ export default function Home() {
       </section>
 
       {/* Schéma pour le SEO */}
-      <SchemaOrg type="home" />
+      <SchemaOrg type={SectionType.HOME} />
     </div>
   );
 }

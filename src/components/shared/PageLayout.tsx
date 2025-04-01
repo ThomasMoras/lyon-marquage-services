@@ -2,12 +2,18 @@
 import { useEffect, useState } from "react";
 import { SectionContainer } from "@/components/shared/editable/EditableSectionCard";
 import EditableCarousel from "@/components/shared/editable/EditableCarousel";
-import { PageSectionProps, Section } from "@/types";
+import { Section } from "@/types";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import SchemaOrg from "./SchemaOrg";
+import { SectionType } from "@prisma/client";
 
-export function PageLayout({ pageSection }: PageSectionProps) {
+// Correction de l'interface
+interface PageLayoutProps {
+  pageSection: SectionType;
+}
+
+export function PageLayout({ pageSection }: PageLayoutProps) {
   const [sections, setSections] = useState<Section[]>([]);
   const { status } = useSession();
   const [isAdmin, setIsAdmin] = useState(false);
@@ -35,6 +41,7 @@ export function PageLayout({ pageSection }: PageSectionProps) {
         description: updatedSection.description || "",
         imageUrl: updatedSection.imageUrl || "",
         imageLeft: updatedSection.imageLeft || false,
+        type: pageSection, // Ajout du type pour s'assurer qu'il est conservé
         order: updatedSection.order,
       };
 
@@ -104,7 +111,7 @@ export function PageLayout({ pageSection }: PageSectionProps) {
         description: "Add your description here",
         imageUrl: "/api/placeholder/400/400",
         imageLeft: false,
-        type: pageSection.toUpperCase(),
+        type: pageSection,
         order: maxOrder + 1, // Add at the end
       };
 
@@ -141,7 +148,7 @@ export function PageLayout({ pageSection }: PageSectionProps) {
         <EditableCarousel pageSection={pageSection} isAdmin={isAdmin} />
       </section>
 
-      <section id={"start-" + pageSection} className="container mx-auto py-16">
+      <section id={`start-${pageSection}`} className="container mx-auto py-16">
         <SectionContainer
           sections={sections}
           onSave={handleSaveSection}

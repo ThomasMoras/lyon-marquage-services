@@ -9,6 +9,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const data: CreateCardInput = await request.json();
+  console.log("data post reception : ", data);
   const card = await createCard(data);
   return NextResponse.json(card);
 }

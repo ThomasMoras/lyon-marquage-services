@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import prisma from "../lib/prisma";
+import { SectionType } from "@prisma/client"; // Importation du type depuis Prisma
 
 type ChangeFrequency = "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
 
@@ -126,19 +127,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     });
 
+    // Créer un mapping entre les types de section et les URLs
+    const typeToUrl: Record<SectionType, string> = {
+      [SectionType.SERIGRAPHIE]: `/prestations/serigraphie`,
+      [SectionType.BRODERIE]: `/prestations/broderie`,
+      [SectionType.IMPRESSION]: `/prestations/impression`,
+      [SectionType.FLOCAGE]: `/prestations/flocage`,
+      [SectionType.OBJETS_PUBLICITAIRES]: `/objets-publicitaires`,
+      [SectionType.HOME]: `/`,
+      [SectionType.ENSEIGNES]: `/enseignes`,
+      [SectionType.IMPRIMERIE]: `/imprimerie`,
+    };
+
     // Mettre à jour les dates des pages correspondantes
     sections.forEach((section) => {
-      const typeToUrl = {
-        "SERIGRAPHIE": `/prestations/serigraphie`,
-        "BRODERIE": `/prestations/broderie`,
-        "IMPRESSION_TEXTILE": `/prestations/impression-textile`,
-        "IMPRESSION_TRANSFERT": `/prestations/impression-transfert`,
-        "FLOCAGE": `/prestations/flocage`,
-        "OBJETS_PUBLICITAIRES": `/objets-publicitaires`,
-        "HOME": `/`,
-      };
-
-      const urlPath = typeToUrl[section.type];
+      const urlPath = typeToUrl[section.type as SectionType];
       if (urlPath) {
         const fullUrl = `${baseUrl}${urlPath}`;
         const pageIndex = [...mainPages, ...prestationsPages].findIndex(

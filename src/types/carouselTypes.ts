@@ -1,4 +1,4 @@
-import { PageSectionType } from "./commonTypes";
+import { SectionType } from "@prisma/client";
 
 export interface CarouselSlide {
   id: string;
@@ -8,10 +8,10 @@ export interface CarouselSlide {
   buttonText: string;
   buttonLink: string;
   order: number;
-  type: PageSectionType;
+  type: SectionType;
 }
 
 export interface EditableCarouselProps {
-  pageSection: PageSectionType;
+  pageSection: SectionType;
   isAdmin?: boolean;
 }

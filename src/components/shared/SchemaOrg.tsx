@@ -1,6 +1,6 @@
 "use client";
 
-import { PageSectionType } from "@/types";
+import { SectionType } from "@prisma/client";
 
 interface GeoCoordinates {
   "@type": "GeoCoordinates";
@@ -52,7 +52,7 @@ interface Service {
 }
 
 type SchemaOrgProps = {
-  type?: PageSectionType;
+  type?: SectionType;
   title?: string;
   description?: string;
   url?: string;
@@ -128,35 +128,41 @@ export default function SchemaOrg({
 }
 
 // Fonctions d'aide pour obtenir le titre, la description et le chemin des services
-function getServiceTitle(type: PageSectionType): string {
-  const titles: Record<PageSectionType, string> = {
-    serigraphie: "Service de Sérigraphie Professionnelle à Lyon",
-    broderie: "Service de Broderie Personnalisée à Lyon",
-    impression_textile: "Impression Textile de Qualité à Lyon",
-    impression_transfert: "Service d'Impression par Transfert à Lyon",
-    flocage: "Flocage Textile Professionnel à Lyon",
-    objets_publicitaires: "Objets Publicitaires Personnalisés à Lyon",
-    home: "Lyon Marquage Service | Marquage Textile Professionnel",
+function getServiceTitle(type: SectionType): string {
+  const titles: Record<string, string> = {
+    SERIGRAPHIE: "Service de Sérigraphie Professionnelle à Lyon",
+    BRODERIE: "Service de Broderie Personnalisée à Lyon",
+    IMPRESSION_TEXTILE: "Service d'Impression par Transfert à Lyon",
+    IMPRESSION_TRANSFERT: "Service d'Impression par Transfert à Lyon",
+    FLOCAGE: "Flocage Textile Professionnel à Lyon",
+    OBJETS_PUBLICITAIRES: "Objets Publicitaires Personnalisés à Lyon",
+    HOME: "Lyon Marquage Service | Marquage Textile Professionnel",
+    IMPRIMERIE: "Gammes de vêtements variées imprimé à Lyon ",
+    ENSEIGNES: "Enseignes publicitaire et signalitique imprimé à Lyon",
   };
 
   return titles[type] || "Lyon Marquage Service";
 }
 
-function getServiceDescription(type: PageSectionType): string {
-  const descriptions: Record<PageSectionType, string> = {
-    serigraphie:
+function getServiceDescription(type: SectionType): string {
+  const descriptions: Record<string, string> = {
+    SERIGRAPHIE:
       "Service de sérigraphie textile de haute qualité pour professionnels à Lyon. Grand choix de supports, prix compétitifs et livraison rapide.",
-    broderie:
+    BRODERIE:
       "Broderie personnalisée pour vêtements professionnels à Lyon. Solutions B2B de qualité avec une finition impeccable.",
-    impression_textile:
-      "Impression textile directe sur tous types de vêtements à Lyon. Service rapide et local pour entreprises et professionnels.",
-    impression_transfert:
-      "Service d'impression par transfert pour textiles et objets à Lyon. Solution idéale pour les petites séries et visuels complexes.",
-    flocage:
+    IMPRESSION_TEXTILE:
+      "Service d'impression par transfert et textile pour vêtements et objets à Lyon. Solution idéale pour les petites séries et visuels complexes. Service rapide et local pour entreprises et professionnels",
+    IMPRESSION_TRANSFERT:
+      "Service d'impression par transfert et textile pour vêtements et objets à Lyon. Solution idéale pour les petites séries et visuels complexes. Service rapide et local pour entreprises et professionnels",
+    FLOCAGE:
       "Flocage textile professionnel à Lyon. Idéal pour les entreprises cherchant une finition veloutée de qualité avec une excellente tenue.",
-    objets_publicitaires:
+    OBJETS_PUBLICITAIRES:
       "Personnalisation d'objets publicitaires pour entreprises à Lyon. Mugs, stylos, clés USB et plus avec votre logo.",
-    home: "Entreprise lyonnaise spécialisée en marquage textile et objets publicitaires pour professionnels. Services locaux, prix compétitifs et livraison rapide.",
+    HOME: "Entreprise lyonnaise spécialisée en marquage textile et objets publicitaires pour professionnels. Services locaux, prix compétitifs et livraison rapide.",
+    IMPRIMERIE:
+      "Impression sur différentes gammes de vêtements et produits variées pour différentes industires.",
+    ENSEIGNES:
+      "Impression sur des supports publicitaire destinés à la signalitique et aux vehicules. Solution adapté au B2B.",
   };
 
   return (
@@ -165,15 +171,17 @@ function getServiceDescription(type: PageSectionType): string {
   );
 }
 
-function getServicePath(type: PageSectionType): string {
-  const paths: Record<PageSectionType, string> = {
-    serigraphie: "prestations/serigraphie",
-    broderie: "prestations/broderie",
-    impression_textile: "prestations/impression-textile",
-    impression_transfert: "prestations/impression-transfert",
-    flocage: "prestations/flocage",
-    objets_publicitaires: "objets-publicitaires",
-    home: "",
+function getServicePath(type: SectionType): string {
+  const paths: Record<string, string> = {
+    SERIGRAPHIE: "prestations/serigraphie",
+    BRODERIE: "prestations/broderie",
+    IMPRESSION_TEXTILE: "prestations/impression",
+    IMPRESSION_TRANSFERT: "prestations/impression",
+    FLOCAGE: "prestations/flocage",
+    OBJETS_PUBLICITAIRES: "objets-publicitaires",
+    HOME: "/",
+    IMPRIMERIE: "/imprimerie",
+    ENSEIGNES: "/enseignes",
   };
 
   return paths[type] || "";

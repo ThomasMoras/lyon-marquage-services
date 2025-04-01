@@ -23,16 +23,19 @@ async function main() {
       title: "Embroidery Design 1",
       description: "Beautiful floral pattern with roses and daisies",
       imageUrl: "/images/embroidery1.jpg",
+      type: SectionType.BRODERIE,
     },
     {
       title: "Geometric Pattern",
       description: "Modern geometric design with bold colors",
       imageUrl: "/images/embroidery2.jpg",
+      type: SectionType.BRODERIE,
     },
     {
       title: "Traditional Pattern",
       description: "Classic cross-stitch pattern with folk motifs",
       imageUrl: "/images/embroidery3.jpg",
+      type: SectionType.BRODERIE,
     },
   ];
 

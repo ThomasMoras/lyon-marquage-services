@@ -1,3 +1,5 @@
+import { SectionType } from "@prisma/client";
+
 export type PageSectionType =
   | "home"
   | "serigraphie"
@@ -15,7 +17,7 @@ export type MenuItem = {
 };
 
 export interface PageSectionProps {
-  pageSection: PageSectionType;
+  pageSection: SectionType;
 }
 
 export type CatalogueItem = {

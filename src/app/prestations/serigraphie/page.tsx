@@ -1,10 +1,10 @@
 "use client";
 import { CollectionSection } from "@/components/shared/editable/CollectionSection";
 import { PageLayout } from "@/components/shared/PageLayout";
-import { PageSectionType } from "@/types/commonTypes";
+import { SectionType } from "@prisma/client";
 
 export default function Serigraphie() {
-  const pageSection: PageSectionType = "serigraphie";
+  const pageSection: SectionType = SectionType.SERIGRAPHIE;
 
   return (
     <div className="flex flex-col min-h-screen">
