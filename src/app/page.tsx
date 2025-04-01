@@ -29,7 +29,7 @@ export default function Home() {
       </section>
 
       {/* Nos prestations */}
-      <section className="py-20 px-6 bg-white">
+      <section id="start" className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4">NOS PRESTATIONS</h2>
           <p className="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto">
@@ -212,10 +212,7 @@ export default function Home() {
                   T-shirts, polos, sweats, casquettes et bien plus encore pour vos équipes ou
                   événements
                 </p>
-                <a
-                  href="/catalogue/tshirt"
-                  className="text-sky-600 hover:text-sky-700 font-semibold"
-                >
+                <a href="/imprimerie" className="text-sky-600 hover:text-sky-700 font-semibold">
                   Découvrir →
                 </a>
               </div>

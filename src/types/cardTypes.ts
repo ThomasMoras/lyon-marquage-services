@@ -25,6 +25,7 @@ export interface CardItem {
   title?: string;
   description?: string;
   imageUrl: string;
+  pageSection: string;
   order?: number; // Add order property
   createdAt?: string; // Add createdAt for fallback sorting
   updatedAt?: string;
