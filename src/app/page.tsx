@@ -8,6 +8,7 @@ import { RiMoneyEuroCircleLine } from "react-icons/ri";
 import { IoIosHome } from "react-icons/io";
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { FaClockRotateLeft } from "react-icons/fa6";
+import Image from "next/image";
 
 export default function Home() {
   const { status } = useSession();
@@ -35,13 +36,17 @@ export default function Home() {
             Découvrez nos différentes techniques de marquage pour donner vie à vos projets
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {/* Sérigraphie */}
             <div className="flex flex-col items-center bg-white rounded-lg p-6 shadow border border-gray-200 hover:shadow-md transition-shadow">
-              <div className="w-24 h-24 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-12 h-12 text-sky-600" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M7 5h10v2h2V3H5v4h2V5zm12 8V9h-2v2H7V9H5v4h2v-2h10v2h2zm-2 4H7v-2H5v4h14v-4h-2v2z" />
-                </svg>
+              <div className="relative w-24 h-24 flex items-center justify-center mb-6 transition-transform duration-300 hover:scale-105 shadow-xl rounded-full bg-white overflow-hidden">
+                <Image
+                  src="/images/static/serigraphie_icon.png"
+                  fill
+                  alt="Sérigraphie Logo"
+                  className="object-contain translate-y-1"
+                  priority
+                />
               </div>
               <h3 className="text-2xl font-bold mb-2">Sérigraphie</h3>
               <p className="text-gray-600 text-center mb-4">
@@ -56,11 +61,15 @@ export default function Home() {
             </div>
 
             {/* Broderie */}
-            <div className="flex flex-col items-center bg-white rounded-lg p-6 shadow border border-gray-200 hover:shadow-xl transition-shadow">
-              <div className="w-24 h-24 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-12 h-12 text-sky-600" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M9.5 9.5c.3-.8.8-1.5 1.5-1.9V9h1V7.1c1.9.9 3 2.9 3 5 0 1.9-1 3.7-2.5 4.5L10 15.4v1.1l2.5 1.2c2-1 3.5-3.2 3.5-5.7 0-2.5-1.4-4.7-3.5-5.7L10 7.5V6.4l2.5-1.2c2.9 1.4 5 4.3 5 7.8 0 3.4-2.1 6.4-5 7.8L10 19.5v-1.1l2.5-1.2c2-1 3.5-3.2 3.5-5.7 0-2.1-1.1-4.1-3-5V9h-1v1.1c-.7.4-1.2 1.1-1.5 1.9h1.1c.2-.4.5-.8.9-1v2.7c-.9.2-1.6.8-2 1.5v-1c.3-.4.7-.6 1-.7v-2.7c-.3.1-.6.3-.8.5H9.5z" />
-                </svg>
+            <div className="flex flex-col items-center bg-white rounded-lg p-6 shadow border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="relative w-24 h-24 flex items-center justify-center mb-6 transition-transform duration-300 hover:scale-105 shadow-xl rounded-full bg-white overflow-hidden">
+                <Image
+                  src="/images/static/embroidery_icon.png"
+                  fill
+                  alt="Broderie Logo"
+                  className="object-contain"
+                  priority
+                />
               </div>
               <h3 className="text-2xl font-bold mb-2">Broderie</h3>
               <p className="text-gray-600 text-center mb-4">
@@ -75,11 +84,15 @@ export default function Home() {
             </div>
 
             {/* Flocage */}
-            <div className="flex flex-col items-center bg-white rounded-lg p-6 shadow border border-gray-200 hover:shadow-xl transition-shadow">
-              <div className="w-24 h-24 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-12 h-12 text-sky-600" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h4v4H7V7zm0 6h10v4H7v-4z" />
-                </svg>
+            <div className="flex flex-col items-center bg-white rounded-lg p-6 shadow border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="relative w-24 h-24 flex items-center justify-center mb-6 transition-transform duration-300 hover:scale-105 shadow-xl rounded-full bg-white overflow-hidden">
+                <Image
+                  src="/images/static/flocage_icon.png"
+                  fill
+                  alt="Flocage Logo"
+                  className="object-contain"
+                  priority
+                />
               </div>
               <h3 className="text-2xl font-bold mb-2">Flocage</h3>
               <p className="text-gray-600 text-center mb-4">
@@ -93,12 +106,16 @@ export default function Home() {
               </a>
             </div>
 
-            {/* Impression */}
-            <div className="flex flex-col items-center bg-white rounded-lg p-6 shadow border border-gray-200 hover:shadow-xl transition-shadow">
-              <div className="w-24 h-24 bg-sky-100 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-12 h-12 text-sky-600" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zM7 7h4v4H7V7zm0 6h10v4H7v-4z" />
-                </svg>
+            {/* Impression - centré sous Broderie */}
+            <div className="md:col-start-2 md:col-span-1 lg:col-start-2 lg:col-span-1 flex flex-col items-center bg-white rounded-lg p-6 shadow border border-gray-200 hover:shadow-md transition-shadow">
+              <div className="relative w-24 h-24 flex items-center justify-center mb-6 transition-transform duration-300 hover:scale-105 shadow-xl rounded-full bg-white overflow-hidden">
+                <Image
+                  src="/images/static/impression_icon.jpg"
+                  fill
+                  alt="Impression Logo"
+                  className="object-contain translate-y-1"
+                  priority
+                />
               </div>
               <h3 className="text-2xl font-bold mb-2">Impression</h3>
               <p className="text-gray-600 text-center mb-4">
@@ -125,7 +142,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Prix avantageux */}
-            <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow border border-gray-200 hover:shadow-xl transition-shadow">
+            <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow border border-gray-200 hover:shadow-md transition-shadow">
               <div className="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mb-4">
                 <RiMoneyEuroCircleLine className="w-10 h-10 text-sky-600" />
               </div>
@@ -136,7 +153,7 @@ export default function Home() {
             </div>
 
             {/* Délais rapides */}
-            <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow border border-gray-200 hover:shadow-xl transition-shadow">
+            <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow border border-gray-200 hover:shadow-md transition-shadow">
               <div className="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mb-4">
                 <FaClockRotateLeft className="w-10 h-10 text-sky-600" />
               </div>
@@ -147,7 +164,7 @@ export default function Home() {
             </div>
 
             {/* Pour tous */}
-            <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow border border-gray-200 hover:shadow-xl transition-shadow">
+            <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow border border-gray-200 hover:shadow-md transition-shadow">
               <div className="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mb-4">
                 <BsFillPersonVcardFill className="w-10 h-10 text-sky-600" />
               </div>
@@ -158,7 +175,7 @@ export default function Home() {
             </div>
 
             {/* Production locale */}
-            <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow border border-gray-200 hover:shadow-xl transition-shadow">
+            <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow border border-gray-200 hover:shadow-md transition-shadow">
               <div className="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mb-4">
                 <IoIosHome className="w-10 h-10 text-sky-600" />
               </div>
@@ -184,7 +201,7 @@ export default function Home() {
             <div className="rounded-lg overflow-hidden shadow-md transition-transform hover:scale-[1.02] duration-300">
               <div className="h-64 bg-gray-200">
                 <img
-                  src="/api/placeholder/600/400"
+                  src="images/static/vetement.jpg"
                   alt="Vêtements personnalisés"
                   className="w-full h-full object-cover"
                 />
@@ -208,7 +225,7 @@ export default function Home() {
             <div className="rounded-lg overflow-hidden shadow-md transition-transform hover:scale-[1.02] duration-300">
               <div className="h-64 bg-gray-200">
                 <img
-                  src="/api/placeholder/600/400"
+                  src="/images/static/objet_publictaire.jpg"
                   alt="Objets publicitaires"
                   className="w-full h-full object-cover"
                 />
@@ -232,7 +249,7 @@ export default function Home() {
             <div className="rounded-lg overflow-hidden shadow-md transition-transform hover:scale-[1.02] duration-300">
               <div className="h-64 bg-gray-200">
                 <img
-                  src="/api/placeholder/600/400"
+                  src="images/static/signalitic.jpg"
                   alt="Signalétique et impression"
                   className="w-full h-full object-cover"
                 />
