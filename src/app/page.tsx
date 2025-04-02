@@ -300,7 +300,7 @@ export default function Home() {
             {/* Logo 1 */}
             <div className="w-32 h-16 bg-white p-2 rounded flex items-center justify-center transition-transform duration-300 hover:scale-110">
               <img
-                src="/fruit_of_loom_logo.png"
+                src="/images/static/fruit_of_loom_logo.png"
                 alt="Fruit of the Loom"
                 className="max-w-full max-h-full"
               />
@@ -308,22 +308,38 @@ export default function Home() {
 
             {/* Logo 2 */}
             <div className="w-32 h-16 bg-white p-2 rounded flex items-center justify-center transition-transform duration-300 hover:scale-110">
-              <img src="/gildan_logo.jpg" alt="Gildan" className="max-w-full max-h-full" />
+              <img
+                src="/images/static/gildan_logo.jpg"
+                alt="Gildan"
+                className="max-w-full max-h-full"
+              />
             </div>
 
             {/* Logo 3 */}
             <div className="w-32 h-16 bg-white p-2 rounded flex items-center justify-center transition-transform duration-300 hover:scale-110">
-              <img src="/russell_logo.png" alt="Russell" className="max-w-full max-h-full" />
+              <img
+                src="/images/static/russell_logo.png"
+                alt="Russell"
+                className="max-w-full max-h-full"
+              />
             </div>
 
             {/* Logo 4 */}
             <div className="w-32 h-16 bg-white p-2 rounded flex items-center justify-center transition-transform duration-300 hover:scale-110">
-              <img src="/kariban_logo.jpg" alt="Kariban" className="max-w-full max-h-full" />
+              <img
+                src="/images/static/kariban_logo.jpg"
+                alt="Kariban"
+                className="max-w-full max-h-full"
+              />
             </div>
 
             {/* Logo 5 */}
             <div className="w-32 h-16 bg-white p-2 rounded flex items-center justify-center transition-transform duration-300 hover:scale-110">
-              <img src="/beechfield_logo.png" alt="Beechfield" className="max-w-full max-h-full" />
+              <img
+                src="/images/static/beechfield_logo.png"
+                alt="Beechfield"
+                className="max-w-full max-h-full"
+              />
             </div>
           </div>
         </div>

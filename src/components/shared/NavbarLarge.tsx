@@ -56,7 +56,7 @@ const NavbarLarge = () => {
           >
             <div className="relative w-14 h-14 m-2">
               <Image
-                src="/logo_svg.svg"
+                src="/images/static/logo.svg"
                 fill
                 alt="Logo Lyon Marquage Service"
                 className="object-contain"

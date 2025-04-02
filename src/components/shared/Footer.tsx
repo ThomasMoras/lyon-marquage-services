@@ -65,7 +65,7 @@ const Footer = () => {
               <div className="flex items-center mb-6">
                 <div className="relative h-16 w-16 mr-3 bg-white rounded-full overflow-hidden flex items-center justify-center transition-transform duration-300 hover:scale-110 shadow-lg">
                   <Image
-                    src="/logo_svg.svg"
+                    src="/images/static/logo.svg"
                     fill
                     alt="Logo Lyon Marquage Service"
                     className="p-1"
