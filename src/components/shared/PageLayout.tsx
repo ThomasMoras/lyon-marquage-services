@@ -148,7 +148,7 @@ export function PageLayout({ pageSection }: PageLayoutProps) {
         <EditableCarousel pageSection={pageSection} isAdmin={isAdmin} />
       </section>
 
-      <section id={`start-${pageSection}`} className="container mx-auto py-16">
+      <section id={`start-${pageSection}`.toLocaleLowerCase()} className="container mx-auto py-16">
         <SectionContainer
           sections={sections}
           onSave={handleSaveSection}

@@ -170,6 +170,16 @@ export const CollectionSection = ({ pageSection }: CollectionSectionProps) => {
     }
   };
 
+  // Cette fonction est utilisée pour la visualisation uniquement, sans affecter l'état des cartes
+  const handleCardNavigation = (cardId: string) => {
+    // On se contente de logger sans modifier l'état des cartes ou l'ordre
+    console.log(`Navigation to card: ${cardId} - view only mode, not affecting collection order`);
+
+    // Ne pas modifier l'état cards ici
+    // Ne pas réordonner les cartes ici
+    // Ne pas changer les propriétés des cartes
+  };
+
   return (
     <section id="collection" className="container mx-auto py-16 px-4">
       <div className="flex justify-center items-center mb-12">
@@ -187,9 +197,7 @@ export const CollectionSection = ({ pageSection }: CollectionSectionProps) => {
             isAdmin={isAdmin}
             isNewCard={card.id === newCardId}
             allCards={cards}
-            // onNavigate={(cardId) => {
-            //   console.log(`Navigated to card: ${cardId}`);
-            // }}
+            onNavigate={handleCardNavigation} // Utiliser notre fonction qui ne modifie pas l'ordre
           />
         ))}
       </div>

@@ -34,10 +34,14 @@ export function EditableCard({
 }) {
   const [isEditing, setIsEditing] = useState(isNewCard);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [editedCard, setEditedCard] = useState<CardItem>(card);
+  const [editedCard, setEditedCard] = useState<CardItem>(structuredClone(card));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imageRect, setImageRect] = useState<DOMRect | null>(null);
   const imageRef = React.useRef<HTMLImageElement>(null);
+
+  // Nouvelle variable d'état pour le mode visualisation
+  const [visualCards, setVisualCards] = useState<CardItem[]>([]);
+  const [visualCurrentCard, setVisualCurrentCard] = useState<CardItem | null>(null);
 
   // Gestion des raccourcis clavier
   useEffect(() => {
@@ -58,15 +62,46 @@ export function EditableCard({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isExpanded, currentIndex]);
 
-  // Trouver l'index de la carte actuelle dans la collection
+  // Initialiser l'état visuel quand on ouvre le modal
   useEffect(() => {
-    if (allCards && allCards.length > 0) {
-      const index = allCards.findIndex((c) => c.id === card.id);
-      if (index !== -1) {
-        setCurrentIndex(index);
+    if (isExpanded) {
+      // Créer des copies profondes pour isoler l'état visuel
+      try {
+        const cards = JSON.parse(JSON.stringify(allCards));
+        setVisualCards(cards);
+
+        const index = cards.findIndex((c: CardItem) => c.id === card.id);
+        if (index !== -1) {
+          setCurrentIndex(index);
+          setVisualCurrentCard(cards[index]);
+        }
+      } catch (error) {
+        console.error("Erreur lors de l'initialisation de l'état visuel:", error);
       }
     }
-  }, [card.id, allCards]);
+  }, [isExpanded, card.id, allCards]);
+
+  // Mettre à jour editedCard quand card change (hors du mode visualisation)
+  useEffect(() => {
+    if (!isExpanded) {
+      try {
+        const cardClone = JSON.parse(JSON.stringify(card));
+        setEditedCard(cardClone);
+      } catch (error) {
+        console.error("Erreur lors de la copie de la carte:", error);
+        // Fallback
+        setEditedCard({ ...card });
+      }
+
+      // Trouver l'index correct dans la collection
+      if (allCards && allCards.length > 0) {
+        const index = allCards.findIndex((c) => c.id === card.id);
+        if (index !== -1) {
+          setCurrentIndex(index);
+        }
+      }
+    }
+  }, [card, allCards, isExpanded]);
 
   const handleSave = async () => {
     await onSave(editedCard);
@@ -86,12 +121,28 @@ export function EditableCard({
     if (!isExpanded) {
       document.body.style.overflow = "hidden";
       setIsExpanded(true);
-
-      // Nous initialisons imageRect à null pour qu'il soit recalculé lors de l'ouverture
       setImageRect(null);
+
+      // Initialiser l'état visuel ici aussi par sécurité
+      try {
+        const cards = JSON.parse(JSON.stringify(allCards));
+        setVisualCards(cards);
+
+        const index = cards.findIndex((c: CardItem) => c.id === card.id);
+        if (index !== -1) {
+          setCurrentIndex(index);
+          setVisualCurrentCard(cards[index]);
+        }
+      } catch (error) {
+        console.error("Erreur lors de l'initialisation de l'état visuel:", error);
+      }
     } else {
       document.body.style.overflow = "auto";
       setIsExpanded(false);
+
+      // Réinitialiser l'état visuel
+      setVisualCurrentCard(null);
+      setVisualCards([]);
     }
   };
 
@@ -102,55 +153,43 @@ export function EditableCard({
           if (imageRef.current) {
             const rect = imageRef.current.getBoundingClientRect();
             setImageRect(rect);
-            console.log(
-              "Image dimensions updated:",
-              rect.width,
-              rect.height,
-              "Left:",
-              rect.left,
-              "Right:",
-              rect.right
-            );
           }
         }, 150);
       }
     };
 
     if (isExpanded) {
-      // Mesurer après un court délai pour s'assurer que l'image est rendue
       updateImageRect();
-
-      // Recalculer lors des redimensionnements de fenêtre
       window.addEventListener("resize", updateImageRect);
-
       return () => {
         window.removeEventListener("resize", updateImageRect);
       };
     }
-  }, [isExpanded]);
+  }, [isExpanded, visualCurrentCard]); // Dépendre de visualCurrentCard au lieu de editedCard
 
   const navigateToCard = (direction: "next" | "prev") => {
-    if (!allCards || allCards.length <= 1) return;
+    if (!visualCards || visualCards.length <= 1) return;
 
     let newIndex = currentIndex;
     if (direction === "next") {
-      newIndex = (currentIndex + 1) % allCards.length;
+      newIndex = (currentIndex + 1) % visualCards.length;
     } else {
-      newIndex = (currentIndex - 1 + allCards.length) % allCards.length;
+      newIndex = (currentIndex - 1 + visualCards.length) % visualCards.length;
     }
 
-    // Informer le parent du changement si nécessaire
-    if (allCards[newIndex]) {
-      onNavigate(allCards[newIndex].id);
-
-      // Mettre à jour directement cette carte avec les données de la nouvelle carte
-      // pour que la navigation fonctionne visuellement dans le modal
-      setEditedCard(allCards[newIndex]);
+    // Informer le parent du changement pour le logging uniquement
+    if (visualCards[newIndex]) {
+      onNavigate(visualCards[newIndex].id);
       setCurrentIndex(newIndex);
-
-      console.log(`Navigated to card index: ${newIndex}, id: ${allCards[newIndex].id}`);
+      setVisualCurrentCard(visualCards[newIndex]);
+      console.log(
+        `Navigation visuelle uniquement à la carte: ${visualCards[newIndex].id} (index: ${newIndex})`
+      );
     }
   };
+
+  // Déterminer quelle carte afficher dans le modal
+  const cardToShow = isExpanded && visualCurrentCard ? visualCurrentCard : editedCard;
 
   return (
     <div className="relative">
@@ -276,7 +315,9 @@ export function EditableCard({
 
               <img
                 ref={imageRef}
-                src={editedCard.imageUrl || "/api/placeholder/800/800"}
+                src={
+                  visualCurrentCard?.imageUrl || cardToShow.imageUrl || "/api/placeholder/800/800"
+                }
                 alt="Card image expanded"
                 className="max-w-full max-h-[80vh] object-contain rounded-md shadow-2xl"
                 onLoad={() => {
@@ -285,33 +326,26 @@ export function EditableCard({
                       if (imageRef.current) {
                         const rect = imageRef.current.getBoundingClientRect();
                         setImageRect(rect);
-                        console.log(
-                          "Image loaded - dimensions:",
-                          rect.width,
-                          rect.height,
-                          "Left:",
-                          rect.left,
-                          "Right:",
-                          rect.right
-                        );
                       }
                     }, 50);
                   }
                 }}
               />
 
-              {editedCard.title && (
+              {(visualCurrentCard?.title || cardToShow.title) && (
                 <div className="absolute bottom-4 left-0 right-0 text-center bg-black/50 p-2 text-white rounded-b-md">
-                  <h3 className="font-semibold">{editedCard.title}</h3>
-                  {editedCard.description && (
-                    <p className="text-sm mt-1">{editedCard.description}</p>
+                  <h3 className="font-semibold">{visualCurrentCard?.title || cardToShow.title}</h3>
+                  {(visualCurrentCard?.description || cardToShow.description) && (
+                    <p className="text-sm mt-1">
+                      {visualCurrentCard?.description || cardToShow.description}
+                    </p>
                   )}
                 </div>
               )}
             </div>
 
             {/* Flèches de navigation positionnées relativement à l'image */}
-            {allCards && allCards.length > 1 && (
+            {visualCards && visualCards.length > 1 && (
               <>
                 <Button
                   onClick={(e) => {

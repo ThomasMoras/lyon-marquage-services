@@ -220,13 +220,22 @@ const Footer = () => {
                       Devis gratuit
                     </Link>
                   </li>
-                  <li className="group">
+                  {/* <li className="group">
                     <Link
                       href="/catalogue"
                       className="flex items-center hover:text-sky-300 transition-colors"
                     >
                       <ChevronRight className="h-4 w-4 mr-2 text-sky-400 group-hover:translate-x-1 transition-transform" />
                       Catalogue
+                    </Link>
+                  </li> */}
+                  <li className="group">
+                    <Link
+                      href="/imprimerie"
+                      className="flex items-center hover:text-sky-300 transition-colors"
+                    >
+                      <ChevronRight className="h-4 w-4 mr-2 text-sky-400 group-hover:translate-x-1 transition-transform" />
+                      Nos vêtements & créations
                     </Link>
                   </li>
                   <li className="group">
@@ -240,13 +249,22 @@ const Footer = () => {
                   </li>
                   <li className="group">
                     <Link
+                      href="/enseignes"
+                      className="flex items-center hover:text-sky-300 transition-colors"
+                    >
+                      <ChevronRight className="h-4 w-4 mr-2 text-sky-400 group-hover:translate-x-1 transition-transform" />
+                      Enseignes signalitique
+                    </Link>
+                  </li>
+                  {/* <li className="group">
+                    <Link
                       href="/contact"
                       className="flex items-center hover:text-sky-300 transition-colors"
                     >
                       <ChevronRight className="h-4 w-4 mr-2 text-sky-400 group-hover:translate-x-1 transition-transform" />
                       Contact
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
