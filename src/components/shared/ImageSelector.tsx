@@ -20,7 +20,7 @@ export function ImageSelector({ folder, currentImage, onSelect }: ImageSelectorP
 
   useEffect(() => {
     console.log("Fetching images from folder:", folder);
-    fetch(`/api/file?folder=${folder}`)
+    fetch(`/api/file?folder=${folder.toLocaleLowerCase()}`)
       .then((res) => {
         console.log("Response status:", res.status);
         return res.json();
