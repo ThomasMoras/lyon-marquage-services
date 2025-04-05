@@ -6,8 +6,8 @@ import { CardItem } from "@/types/cardTypes";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { EditableCard } from "@/components/shared/editable/EditableCard";
 import { SectionType } from "@prisma/client";
+import { EditableCard } from "../Card/EditableCard";
 
 interface CollectionSectionProps {
   pageSection: SectionType;

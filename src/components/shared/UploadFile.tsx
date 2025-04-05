@@ -54,11 +54,11 @@ export function UploadFile({ folder, onUploadComplete }: UploadFileProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add an Image</Button>
+        <Button variant="outline">Ajouter une nouvelle image</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Upload Image</DialogTitle>
+          <DialogTitle className="text-center">Sélectionner une image</DialogTitle>
         </DialogHeader>
 
         <div className="grid gap-4">
@@ -73,7 +73,7 @@ export function UploadFile({ folder, onUploadComplete }: UploadFileProps) {
           ) : (
             <label className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-primary">
               <input type="file" className="hidden" accept="image/*" onChange={handleFileSelect} />
-              <p>Click or drag image here</p>
+              <p>Cliquez ou faite glisser une image ici</p>
             </label>
           )}
         </div>

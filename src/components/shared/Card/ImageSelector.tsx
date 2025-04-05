@@ -6,8 +6,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState, useEffect } from "react";
-import { UploadFile } from "./UploadFile";
-import { Trash2, Image } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -20,6 +19,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
+import { ImagePlaceholder } from "./ImagePlaceholder";
+import { UploadFile } from "../UploadFile";
 
 interface ImageSelectorProps {
   folder: string;
@@ -112,16 +113,6 @@ export function ImageSelector({
     }
   };
 
-  // Placeholder component for when there's no image or image fails to load
-  const ImagePlaceholder = () => (
-    <div className="w-full h-48 bg-gray-100 flex items-center justify-center rounded-lg">
-      <div className="text-gray-400 flex flex-col items-center">
-        <Image className="w-8 h-8 mb-2" />
-        <span>Aucune image</span>
-      </div>
-    </div>
-  );
-
   const handleImageError = () => {
     setImageLoadError(true);
   };
@@ -163,16 +154,27 @@ export function ImageSelector({
                       className="w-full h-full object-cover"
                       onClick={() => onSelect(image)}
                       onError={(e) => {
-                        // Replace broken image with placeholder
+                        // Hide the img element
                         const target = e.target as HTMLImageElement;
                         target.style.display = "none";
+
+                        // Find the parent div
                         const parent = target.parentElement;
                         if (parent) {
+                          // Create a placeholder instead
                           const placeholder = document.createElement("div");
-                          placeholder.className =
-                            "w-full h-full bg-gray-100 flex items-center justify-center";
-                          placeholder.innerHTML =
-                            '<span class="text-gray-400">Image non disponible</span>';
+                          placeholder.className = "w-full h-full";
+                          placeholder.onclick = () => onSelect(image);
+
+                          // Add the ImagePlaceholder (in simplified form since we can't use React components directly)
+                          placeholder.innerHTML = `
+                            <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+                              <div class="text-gray-400 flex flex-col items-center">
+                                <span>Image non disponible</span>
+                              </div>
+                            </div>
+                          `;
+
                           parent.appendChild(placeholder);
                         }
                       }}
@@ -196,8 +198,8 @@ export function ImageSelector({
                 </div>
               ))
             ) : (
-              <div className="col-span-3 text-center py-8 text-gray-500">
-                Aucune image disponible dans ce dossier
+              <div className="col-span-3 text-center py-8">
+                <ImagePlaceholder text="Aucune image disponible dans ce dossier" height="h-32" />
               </div>
             )}
           </div>
@@ -209,7 +211,7 @@ export function ImageSelector({
           <AlertDialogHeader>
             <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
             <AlertDialogDescription>
-              Cette action ne peut pas être annulée. L&apos;image sera définitivement supprimée.
+              Cette action ne peut pas être annulée. L`&apos;`image sera définitivement supprimée.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
