@@ -18,25 +18,6 @@ export default function Serigraphie() {
       <SEOMetadata pageSection={pageSection} />
       <SchemaOrg type={pageSection} />
 
-      {/* Contenu textuel optimisé pour le mot-clé "sérigraphie sur textile" */}
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-6">Sérigraphie sur Textile à Lyon</h1>
-
-        <div className="prose max-w-none mb-8">
-          <p className="mb-4">
-            <strong>Lyon Marquage</strong> est votre spécialiste en{" "}
-            <strong>sérigraphie sur textile</strong> à Lyon. Notre équipe d&apos;experts réalise
-            l&apos;impression de vos logos, designs et messages sur tous types de textiles avec une
-            qualité professionnelle et une durabilité exceptionnelle.
-          </p>
-          <p className="mb-4">
-            Notre atelier, situé à Saint Priest, utilise des techniques de sérigraphie avancées pour
-            garantir des résultats parfaits sur vos t-shirts, polos, sweats et autres vêtements
-            professionnels.
-          </p>
-        </div>
-      </div>
-
       {/* Contenu dynamique chargé depuis la DB */}
       <section>
         <PageLayout pageSection={pageSection} />
