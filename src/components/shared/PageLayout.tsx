@@ -158,7 +158,6 @@ export function PageLayout({ pageSection }: PageLayoutProps) {
           isAdmin={isAdmin}
         />
       </section>
-      <SchemaOrg type={pageSection} />
     </div>
   );
 }

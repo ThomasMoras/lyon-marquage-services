@@ -1,11 +1,24 @@
 "use client";
 import FormContact from "@/components/shared/FormContact";
 import Informations from "@/components/shared/Informations";
+import SchemaOrg from "@/components/shared/SchemaOrg";
+import { SEOMetadata } from "@/components/shared/SEOMetadata";
 import React from "react";
 
 const Contact = () => {
   return (
     <div className="mt-28">
+      <SEOMetadata
+        title="Contact | Lyon Marquage Service"
+        description="Contactez Lyon Marquage, votre spécialiste en sérigraphie et marquage textile à Lyon. Demandez un devis gratuit pour vos projets de personnalisation."
+        canonical="/contact"
+      />
+
+      <SchemaOrg
+        title="Contact Lyon Marquage Service"
+        description="Page de contact pour Lyon Marquage, spécialiste en marquage textile et objets publicitaires à Lyon et sa région."
+        url="/contact"
+      />
       {/* Header Section avec design amélioré */}
       <section className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 py-16 mb-16">
         <div className="container mx-auto max-w-4xl text-center px-4">

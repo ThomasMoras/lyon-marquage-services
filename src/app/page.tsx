@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import SchemaOrg from "@/components/shared/SchemaOrg";
+import { SEOMetadata } from "@/components/shared/SEOMetadata";
 import EditableCarousel from "@/components/shared/editable/EditableCarousel";
 import { RiMoneyEuroCircleLine } from "react-icons/ri";
 import { IoIosHome } from "react-icons/io";
@@ -10,6 +11,15 @@ import { BsFillPersonVcardFill } from "react-icons/bs";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import Image from "next/image";
 import { SectionType } from "@prisma/client";
+import Link from "next/link";
+
+// Import des composants Accordion de shadcn/ui
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default function Home() {
   const { status } = useSession();
@@ -24,9 +34,32 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-full">
+      {/* Composants SEO */}
+      <SEOMetadata pageSection={SectionType.HOME} />
+
       {/* Section Hero avec le carousel éditable */}
       <section className="h-screen w-full">
         <EditableCarousel pageSection={SectionType.HOME} isAdmin={isAdmin} />
+      </section>
+
+      {/* Section d'introduction optimisée pour le SEO */}
+      <section className="py-16 px-6 bg-blue-50">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            Marquage Textile et Objets Publicitaires à Lyon
+          </h1>
+          <p className="text-lg text-gray-700 leading-relaxed mb-6">
+            Bienvenue chez <strong>Lyon Marquage</strong>, votre expert en{" "}
+            <strong>sérigraphie</strong>, <strong>flocage textile</strong> et{" "}
+            <strong>marquage publicitaire</strong> à Lyon. Nous proposons des solutions
+            personnalisées de qualité pour les entreprises, associations et particuliers.
+          </p>
+          <p className="text-lg text-gray-700">
+            Notre atelier situé à Saint-Priest réalise tous vos projets de{" "}
+            <strong>personnalisation de t-shirts</strong> et textiles avec des techniques variées
+            adaptées à vos besoins.
+          </p>
+        </div>
       </section>
 
       {/* Nos prestations */}
@@ -49,7 +82,7 @@ export default function Home() {
                   priority
                 />
               </div>
-              <h3 className="text-2xl font-bold mb-2">Sérigraphie</h3>
+              <h3 className="text-2xl font-bold mb-2">Sérigraphie sur textile</h3>
               <p className="text-gray-600 text-center mb-4">
                 Idéale pour les grandes quantités avec un rendu qualitatif et durable
               </p>
@@ -95,7 +128,7 @@ export default function Home() {
                   priority
                 />
               </div>
-              <h3 className="text-2xl font-bold mb-2">Flocage</h3>
+              <h3 className="text-2xl font-bold mb-2">Flocage textile</h3>
               <p className="text-gray-600 text-center mb-4">
                 Parfait pour les noms, numéros et logos sur textiles sportifs
               </p>
@@ -118,9 +151,9 @@ export default function Home() {
                   priority
                 />
               </div>
-              <h3 className="text-2xl font-bold mb-2">Impression</h3>
+              <h3 className="text-2xl font-bold mb-2">Impression textile</h3>
               <p className="text-gray-600 text-center mb-4">
-                Parfait pour les noms, numéros et logos sur textiles sportifs
+                Idéal pour les designs détaillés et les petites séries
               </p>
               <a
                 href="/prestations/impression"
@@ -208,7 +241,7 @@ export default function Home() {
                 />
               </div>
               <div className="p-6 bg-white">
-                <h3 className="text-xl font-bold mb-2">Vêtements</h3>
+                <h3 className="text-xl font-bold mb-2">Personnalisation de t-shirts</h3>
                 <p className="text-gray-600 mb-4">
                   T-shirts, polos, sweats, casquettes et bien plus encore pour vos équipes ou
                   événements
@@ -229,7 +262,7 @@ export default function Home() {
                 />
               </div>
               <div className="p-6 bg-white">
-                <h3 className="text-xl font-bold mb-2">Objets publicitaires</h3>
+                <h3 className="text-xl font-bold mb-2">Marquage publicitaire</h3>
                 <p className="text-gray-600 mb-4">
                   Goodies, cadeaux d&apos;entreprise, objets promotionnels pour valoriser votre
                   marque
@@ -266,6 +299,100 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section FAQ avec Accordion de shadcn/ui */}
+      <section className="py-20 px-6 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12">Questions fréquentes</h2>
+
+          <Accordion type="single" collapsible className="w-full">
+            {/* Question 1 - optimisée pour "sérigraphie sur textile" */}
+            <AccordionItem value="item-1" itemScope itemType="https://schema.org/Question">
+              <AccordionTrigger className="text-xl font-semibold text-left" itemProp="name">
+                Quelle technique choisir entre sérigraphie sur textile et flocage ?
+              </AccordionTrigger>
+              <AccordionContent>
+                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <div itemProp="text" className="text-gray-700">
+                    <p>
+                      La <strong>sérigraphie sur textile</strong> est idéale pour les grandes
+                      quantités et offre une excellente durabilité aux lavages. Les couleurs sont
+                      vives et l'impression est plate, intégrée dans les fibres du tissu. Le{" "}
+                      <strong>flocage textile</strong> crée un effet velours en relief, parfait pour
+                      des designs simples nécessitant un rendu premium. À Lyon, nous vous
+                      conseillons la technique la plus adaptée selon votre projet et vos exigences.
+                    </p>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Question 2 - optimisée pour "marquage publicitaire" */}
+            <AccordionItem value="item-2" itemScope itemType="https://schema.org/Question">
+              <AccordionTrigger className="text-xl font-semibold text-left" itemProp="name">
+                Quels sont les avantages du marquage publicitaire sur objets ?
+              </AccordionTrigger>
+              <AccordionContent>
+                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <div itemProp="text" className="text-gray-700">
+                    <p>
+                      Le <strong>marquage publicitaire</strong> sur objets offre une visibilité
+                      durable de votre marque, contrairement aux publicités éphémères. Les objets
+                      publicitaires personnalisés comme les stylos, mugs ou totems sont utilisés
+                      quotidiennement, multipliant les points de contact avec votre cible. C'est un
+                      excellent rapport qualité-prix en termes d'impact marketing, avec un coût par
+                      impression très avantageux comparé aux médias traditionnels.
+                    </p>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Question 3 - optimisée pour "personnalisation tshirt" */}
+            <AccordionItem value="item-3" itemScope itemType="https://schema.org/Question">
+              <AccordionTrigger className="text-xl font-semibold text-left" itemProp="name">
+                Comment personnaliser des t-shirts pour un événement d'entreprise ?
+              </AccordionTrigger>
+              <AccordionContent>
+                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <div itemProp="text" className="text-gray-700">
+                    <p>
+                      Pour la <strong>personnalisation de t-shirts</strong> d'entreprise, nous vous
+                      proposons plusieurs options. Commencez par choisir un modèle de qualité adapté
+                      à votre budget parmi nos nombreuses références. Ensuite, optez pour la
+                      technique d'impression la plus adaptée : sérigraphie pour les grandes
+                      quantités, flocage pour un effet premium, ou impression numérique pour les
+                      petites séries avec designs complexes. Nous vous accompagnons de la création
+                      graphique jusqu'à la livraison dans les délais impartis.
+                    </p>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Question 4 - optimisée pour la confiance locale */}
+            <AccordionItem value="item-4" itemScope itemType="https://schema.org/Question">
+              <AccordionTrigger className="text-xl font-semibold text-left" itemProp="name">
+                Quels sont vos délais de production à Lyon ?
+              </AccordionTrigger>
+              <AccordionContent>
+                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <div itemProp="text" className="text-gray-700">
+                    <p>
+                      Nos délais de production standards à notre atelier de Saint-Priest (Lyon) sont
+                      de 7 à 10 jours ouvrés après validation de votre BAT (Bon À Tirer). Pour les
+                      projets urgents, nous proposons des options express qui peuvent réduire ce
+                      délai à 3-5 jours selon la technique utilisée et la quantité. La production
+                      locale nous permet d'être particulièrement réactifs et flexibles pour répondre
+                      à vos besoins, avec la possibilité de retrait sur place.
+                    </p>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 px-6 bg-sky-700/90 text-white">
         <div className="max-w-5xl mx-auto text-center">
@@ -274,20 +401,14 @@ export default function Home() {
             Contactez-nous dès aujourd&apos;hui pour un devis gratuit et personnalisé ou pour en
             savoir plus sur nos services
           </p>
-          {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
               href="/contact"
               className="px-8 py-4 bg-white hover:bg-gray-100 text-gray-900 font-bold rounded-md transition-colors duration-300"
             >
               DEMANDER UN DEVIS
-            </a>
-            <a
-              href="/catalogue"
-              className="px-8 py-4 bg-transparent hover:bg-white/10 border-2 border-white text-white font-bold rounded-md transition-colors duration-300"
-            >
-              EXPLORER NOS PRODUITS
-            </a>
-          </div> */}
+            </Link>
+          </div>
         </div>
       </section>
 
