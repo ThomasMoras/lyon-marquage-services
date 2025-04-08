@@ -84,7 +84,7 @@ export function SEOMetadata({
   let title = customTitle || "";
   let description = customDescription || "";
   let keywords = customKeywords || "";
-  let canonicalUrl = customCanonical ? `${baseUrl}${customCanonical}` : `${baseUrl}${pathname}`;
+  const canonicalUrl = customCanonical ? `${baseUrl}${customCanonical}` : `${baseUrl}${pathname}`;
 
   // Si un pageSection est fourni, utiliser les métadonnées prédéfinies
   if (pageSection && sectionMetadata[pageSection]) {

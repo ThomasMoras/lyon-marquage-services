@@ -5,10 +5,8 @@ import EditableCarousel from "@/components/shared/editable/EditableCarousel";
 import { Section } from "@/types";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
-import SchemaOrg from "./SchemaOrg";
 import { SectionType } from "@prisma/client";
 
-// Correction de l'interface
 interface PageLayoutProps {
   pageSection: SectionType;
 }

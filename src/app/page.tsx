@@ -12,14 +12,8 @@ import { FaClockRotateLeft } from "react-icons/fa6";
 import Image from "next/image";
 import { SectionType } from "@prisma/client";
 import Link from "next/link";
-
-// Import des composants Accordion de shadcn/ui
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { homeFAQItems } from "@/constants/faqData";
+import FAQ from "@/components/shared/FAQ";
 
 export default function Home() {
   const { status } = useSession();
@@ -299,99 +293,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Section FAQ avec Accordion de shadcn/ui */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Questions fréquentes</h2>
-
-          <Accordion type="single" collapsible className="w-full">
-            {/* Question 1 - optimisée pour "sérigraphie sur textile" */}
-            <AccordionItem value="item-1" itemScope itemType="https://schema.org/Question">
-              <AccordionTrigger className="text-xl font-semibold text-left" itemProp="name">
-                Quelle technique choisir entre sérigraphie sur textile et flocage ?
-              </AccordionTrigger>
-              <AccordionContent>
-                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                  <div itemProp="text" className="text-gray-700">
-                    <p>
-                      La <strong>sérigraphie sur textile</strong> est idéale pour les grandes
-                      quantités et offre une excellente durabilité aux lavages. Les couleurs sont
-                      vives et l'impression est plate, intégrée dans les fibres du tissu. Le{" "}
-                      <strong>flocage textile</strong> crée un effet velours en relief, parfait pour
-                      des designs simples nécessitant un rendu premium. À Lyon, nous vous
-                      conseillons la technique la plus adaptée selon votre projet et vos exigences.
-                    </p>
-                  </div>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Question 2 - optimisée pour "marquage publicitaire" */}
-            <AccordionItem value="item-2" itemScope itemType="https://schema.org/Question">
-              <AccordionTrigger className="text-xl font-semibold text-left" itemProp="name">
-                Quels sont les avantages du marquage publicitaire sur objets ?
-              </AccordionTrigger>
-              <AccordionContent>
-                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                  <div itemProp="text" className="text-gray-700">
-                    <p>
-                      Le <strong>marquage publicitaire</strong> sur objets offre une visibilité
-                      durable de votre marque, contrairement aux publicités éphémères. Les objets
-                      publicitaires personnalisés comme les stylos, mugs ou totems sont utilisés
-                      quotidiennement, multipliant les points de contact avec votre cible. C'est un
-                      excellent rapport qualité-prix en termes d'impact marketing, avec un coût par
-                      impression très avantageux comparé aux médias traditionnels.
-                    </p>
-                  </div>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Question 3 - optimisée pour "personnalisation tshirt" */}
-            <AccordionItem value="item-3" itemScope itemType="https://schema.org/Question">
-              <AccordionTrigger className="text-xl font-semibold text-left" itemProp="name">
-                Comment personnaliser des t-shirts pour un événement d'entreprise ?
-              </AccordionTrigger>
-              <AccordionContent>
-                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                  <div itemProp="text" className="text-gray-700">
-                    <p>
-                      Pour la <strong>personnalisation de t-shirts</strong> d'entreprise, nous vous
-                      proposons plusieurs options. Commencez par choisir un modèle de qualité adapté
-                      à votre budget parmi nos nombreuses références. Ensuite, optez pour la
-                      technique d'impression la plus adaptée : sérigraphie pour les grandes
-                      quantités, flocage pour un effet premium, ou impression numérique pour les
-                      petites séries avec designs complexes. Nous vous accompagnons de la création
-                      graphique jusqu'à la livraison dans les délais impartis.
-                    </p>
-                  </div>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Question 4 - optimisée pour la confiance locale */}
-            <AccordionItem value="item-4" itemScope itemType="https://schema.org/Question">
-              <AccordionTrigger className="text-xl font-semibold text-left" itemProp="name">
-                Quels sont vos délais de production à Lyon ?
-              </AccordionTrigger>
-              <AccordionContent>
-                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                  <div itemProp="text" className="text-gray-700">
-                    <p>
-                      Nos délais de production standards à notre atelier de Saint-Priest (Lyon) sont
-                      de 7 à 10 jours ouvrés après validation de votre BAT (Bon À Tirer). Pour les
-                      projets urgents, nous proposons des options express qui peuvent réduire ce
-                      délai à 3-5 jours selon la technique utilisée et la quantité. La production
-                      locale nous permet d'être particulièrement réactifs et flexibles pour répondre
-                      à vos besoins, avec la possibilité de retrait sur place.
-                    </p>
-                  </div>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-      </section>
+      <FAQ title="Questions fréquentes" items={homeFAQItems} />
 
       {/* CTA */}
       <section className="py-20 px-6 bg-sky-700/90 text-white">
