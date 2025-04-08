@@ -134,7 +134,7 @@ export default function Home() {
       </section>
 
       {/* Avantages */}
-      <section className="py-20 px-6 bg-gray-50">
+      <section id="avantages" className="py-20 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4">NOS AVANTAGES</h2>
           <p className="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto">
@@ -190,7 +190,7 @@ export default function Home() {
       </section>
 
       {/* Diversité de produits */}
-      <section className="py-20 px-6 bg-white">
+      <section id="produits" className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4">DIVERSITÉ DE PRODUITS</h2>
           <p className="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto">

@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "@/components/providers/SessionProvider";
 import CookieBanner from "@/components/cookie/CookieBanner";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
+import { headers } from "next/headers";
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 
@@ -59,9 +60,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  alternates: {
-    canonical: "https://lyonmarquageservice.fr",
-  },
 };
 
 export default function RootLayout({
@@ -69,8 +67,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Récupérer le pathname depuis les headers (défini dans le middleware)
+  const headersList = headers();
+  const pathname = headersList.get("x-pathname") || "";
+
+  // Construire l'URL canonique complète
+  const canonicalUrl = `https://www.lyonmarquage.fr${pathname}`;
+
   return (
     <html lang="fr" suppressHydrationWarning>
+      <head>
+        {/* Balise canonique définie dynamiquement */}
+        <link rel="canonical" href={canonicalUrl} />
+      </head>
       <body
         className={`${robotoMono.className} ${inter.className} antialiased min-h-screen bg-background font-sans`}
       >

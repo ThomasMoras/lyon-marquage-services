@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 import prisma from "../lib/prisma";
-import { SectionType } from "@prisma/client"; // Importation du type depuis Prisma
+import { SectionType } from "@prisma/client";
 
 type ChangeFrequency = "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
 
@@ -32,27 +32,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/presentation`,
-      lastModified: new Date(),
-      changeFrequency: MONTHLY,
-      priority: 0.9,
-    },
-    {
       url: `${baseUrl}/objets-publicitaires`,
       lastModified: new Date(),
       changeFrequency: WEEKLY,
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/imprimerie`,
+      lastModified: new Date(),
+      changeFrequency: MONTHLY,
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/enseignes`,
       lastModified: new Date(),
       changeFrequency: MONTHLY,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/catalogue`,
-      lastModified: new Date(),
-      changeFrequency: WEEKLY,
       priority: 0.8,
     },
   ];
@@ -72,13 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/prestations/impression-textile`,
-      lastModified: new Date(),
-      changeFrequency: WEEKLY,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/prestations/impression-transfert`,
+      url: `${baseUrl}/prestations/impression`,
       lastModified: new Date(),
       changeFrequency: WEEKLY,
       priority: 0.9,
@@ -92,31 +80,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // Pages de marques
-  const marques = ["bc", "beechfield", "fruit-of-the-loom", "gildan", "kariban", "russell"];
-  const marquesPages: SitemapEntry[] = marques.map((marque) => ({
-    url: `${baseUrl}/marques/${marque}`,
-    lastModified: new Date(),
-    changeFrequency: MONTHLY,
-    priority: 0.7,
-  }));
+  // const marques = ["bc", "beechfield", "fruit-of-the-loom", "gildan", "kariban", "russell"];
+  // const marquesPages: SitemapEntry[] = marques.map((marque) => ({
+  //   url: `${baseUrl}/marques/${marque}`,
+  //   lastModified: new Date(),
+  //   changeFrequency: MONTHLY,
+  //   priority: 0.7,
+  // }));
 
   // Principales catégories de catalogue
-  const categoriesPrincipales = [
-    "tshirt",
-    "polo",
-    "sweat",
-    "casquette",
-    "veste",
-    "pantalon",
-    "tablier",
-  ];
+  // const categoriesPrincipales = [
+  //   "tshirt",
+  //   "polo",
+  //   "sweat",
+  //   "casquette",
+  //   "veste",
+  //   "pantalon",
+  //   "tablier",
+  // ];
 
-  const categoriesPages: SitemapEntry[] = categoriesPrincipales.map((categorie) => ({
-    url: `${baseUrl}/catalogue/${categorie}`,
-    lastModified: new Date(),
-    changeFrequency: WEEKLY,
-    priority: 0.8,
-  }));
+  // const categoriesPages: SitemapEntry[] = categoriesPrincipales.map((categorie) => ({
+  //   url: `${baseUrl}/catalogue/${categorie}`,
+  //   lastModified: new Date(),
+  //   changeFrequency: WEEKLY,
+  //   priority: 0.8,
+  // }));
 
   // Essayer de récupérer les dates de dernière modification depuis la base de données
   try {
@@ -161,5 +149,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Combiner toutes les pages
-  return [...mainPages, ...prestationsPages, ...marquesPages, ...categoriesPages];
+  return [...mainPages, ...prestationsPages];
 }

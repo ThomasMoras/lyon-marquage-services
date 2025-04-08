@@ -664,21 +664,10 @@
         "type": "directory"
       },
       {
-        "path": "/prestations/impression-textile",
+        "path": "/prestations/impression",
         "children": [
           {
-            "path": "/prestations/impression-textile/page",
-            "file": "page.tsx",
-            "type": "file"
-          }
-        ],
-        "type": "directory"
-      },
-      {
-        "path": "/prestations/impression-transfert",
-        "children": [
-          {
-            "path": "/prestations/impression-transfert/page",
+            "path": "/prestations/impression/page",
             "file": "page.tsx",
             "type": "file"
           }
