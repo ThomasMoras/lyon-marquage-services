@@ -1,4 +1,3 @@
-// lib/supabase.ts
 import { createClient } from "@supabase/supabase-js";
 
 // For client-side operations (browser)
