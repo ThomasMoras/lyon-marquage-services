@@ -50,10 +50,34 @@ export default function Informations() {
               <Clock className="w-5 h-5" />
             </div>
             <div className="ml-4">
-              <h3 className="font-semibold text-gray-900 mb-1">Horaires</h3>
-              <div className="text-gray-600 text-sm">
-                <p>Lundi - Vendredi</p>
-                <p>9h00 - 18h00</p>
+              <h3 className="font-semibold text-gray-900 mb-2">Horaires</h3>
+              <div className="text-gray-600 space-y-2">
+                {/* Lundi à Jeudi */}
+                <div className="border-l-2 border-blue-200 pl-3">
+                  <p className="font-medium text-blue-600">Lundi à Jeudi</p>
+                  <div className="space-y-1 mt-1">
+                    <p>
+                      Matin :{" "}
+                      <span className="font-semibold text-gray-800">Fermé (sauf livraison)</span>
+                    </p>
+                    <p>
+                      Après-midi : <span className="font-semibold text-gray-800">14h - 18h</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Vendredi */}
+                <div className="border-l-2 border-red-200 pl-3 mt-2">
+                  <p className="font-medium text-red-500">Vendredi</p>
+                  <div className="space-y-1 mt-1">
+                    <p>
+                      Matin : <span className="font-semibold text-gray-800">9h - 12h</span>
+                    </p>
+                    <p>
+                      Après-midi : <span className="font-semibold text-gray-800">Fermé</span>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
