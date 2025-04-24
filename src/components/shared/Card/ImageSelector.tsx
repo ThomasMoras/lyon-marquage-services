@@ -227,7 +227,9 @@ export function ImageSelector({
         </AlertDialogContent>
       </AlertDialog>
 
-      {!disabled && <UploadFile folder={folder} onUploadComplete={onSelect} />}
+      {!disabled && (
+        <UploadFile folder={folder} onUploadComplete={(fileData) => onSelect(fileData.fileUrl)} />
+      )}
     </div>
   );
 }

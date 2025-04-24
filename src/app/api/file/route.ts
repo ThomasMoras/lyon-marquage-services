@@ -1,34 +1,49 @@
-import { writeFile, mkdir, readdir, unlink } from "fs/promises";
 import { NextResponse } from "next/server";
-import path from "path";
-import { join } from "path";
-import { existsSync } from "fs";
+import { createServerSideSupabaseClient, STORAGE_BUCKET } from "@/lib/supabase";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
   const file = formData.get("file") as File;
-  const folder = (formData.get("folder") as string).toLocaleLowerCase();
+  const folder = (formData.get("folder") as string).toLowerCase();
 
   if (!file) {
     return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
   }
 
   try {
+    const supabase = createServerSideSupabaseClient();
+
+    // Convert file to buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const uploadDir = path.join(process.cwd(), "public", folder);
-    await mkdir(uploadDir, { recursive: true });
+    // Create a unique file name to avoid conflicts
+    const fileName = `${Date.now()}-${file.name.replace(/\s+/g, "-")}`;
+    const filePath = `${folder}/${fileName}`;
 
-    const fileName = `${Date.now()}-${file.name}`;
-    const filePath = path.join(uploadDir, fileName);
-    await writeFile(filePath, buffer);
+    // Upload file to Supabase Storage
+    const { error } = await supabase.storage.from(STORAGE_BUCKET).upload(filePath, buffer, {
+      contentType: file.type,
+      cacheControl: "3600",
+      upsert: false,
+    });
+
+    if (error) {
+      console.error("Supabase upload error:", error);
+      return NextResponse.json({ error: `Upload failed: ${error.message}` }, { status: 500 });
+    }
+
+    // Get the public URL
+    const { data: publicUrlData } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filePath);
 
     return NextResponse.json({
-      fileUrl: `/${folder}/${fileName}`,
+      fileUrl: publicUrlData.publicUrl,
+      path: filePath, // Store the path for later reference (delete, update)
     });
-  } catch (error) {
-    return NextResponse.json({ error: "Upload failed : " + error }, { status: 500 });
+  } catch (error: unknown) {
+    console.error("Upload failed:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: `Upload failed: ${errorMessage}` }, { status: 500 });
   }
 }
 
@@ -41,15 +56,46 @@ export async function GET(request: Request) {
   }
 
   try {
-    const dirPath = join(process.cwd(), "public", folder);
-    const files = await readdir(dirPath);
-    const images = files
-      .filter((file) => /\.(jpg|jpeg|png|gif)$/i.test(file))
-      .map((file) => `/${folder}/${file}`);
+    // Get Supabase client
+    const supabase = createServerSideSupabaseClient();
+
+    // List files from a folder
+    const { data, error } = await supabase.storage.from(STORAGE_BUCKET).list(folder, {
+      sortBy: { column: "created_at", order: "desc" },
+    });
+
+    if (error) {
+      console.error("Supabase list error:", error);
+      return NextResponse.json(
+        { error: `Failed to list files: ${error.message}` },
+        { status: 500 }
+      );
+    }
+
+    // Filter only image files and get their public URLs
+    const fileList = data || [];
+    const images = await Promise.all(
+      fileList
+        .filter((file: { name: string }) => /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name))
+        .map(async (file: { name: string }) => {
+          const filePath = `${folder}/${file.name}`;
+          const { data: publicUrlData } = supabase.storage
+            .from(STORAGE_BUCKET)
+            .getPublicUrl(filePath);
+
+          return {
+            url: publicUrlData.publicUrl,
+            path: filePath,
+            name: file.name,
+          };
+        })
+    );
 
     return NextResponse.json({ images });
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to read directory : " + error }, { status: 500 });
+  } catch (error: unknown) {
+    console.error("Failed to list files:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: `Failed to list files: ${errorMessage}` }, { status: 500 });
   }
 }
 
@@ -61,26 +107,25 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: "File path required" }, { status: 400 });
   }
 
-  // Sécuriser le chemin pour éviter les attaques par traversée de répertoire
-  const normalizedPath = path.normalize(filePath);
-  if (normalizedPath.includes("..")) {
-    return NextResponse.json({ error: "Invalid file path" }, { status: 400 });
-  }
-
   try {
-    // Chemin complet du fichier
-    const fullPath = join(process.cwd(), "public", normalizedPath);
+    // Get Supabase client
+    const supabase = createServerSideSupabaseClient();
 
-    // Vérifier si le fichier existe
-    if (!existsSync(fullPath)) {
-      return NextResponse.json({ error: "File not found" }, { status: 404 });
+    // Delete file from Supabase Storage
+    const { error } = await supabase.storage.from(STORAGE_BUCKET).remove([filePath]);
+
+    if (error) {
+      console.error("Supabase delete error:", error);
+      return NextResponse.json(
+        { error: `Failed to delete file: ${error.message}` },
+        { status: 500 }
+      );
     }
 
-    // Supprimer le fichier
-    await unlink(fullPath);
-
     return NextResponse.json({ success: true, message: "File deleted successfully" });
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to delete file: " + error }, { status: 500 });
+  } catch (error: unknown) {
+    console.error("Failed to delete file:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: `Failed to delete file: ${errorMessage}` }, { status: 500 });
   }
 }

@@ -21,10 +21,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 
+// Define the image type returned from the API
+interface ImageItem {
+  url: string;
+  path: string;
+  name: string;
+}
+
 interface ImageSelectorProps {
   folder: string;
   currentImage: string;
-  onSelect: (imagePath: string) => void;
+  onSelect: (imageUrl: string) => void;
   disabled?: boolean;
 }
 
@@ -34,9 +41,9 @@ export function ImageSelector({
   onSelect,
   disabled = false,
 }: ImageSelectorProps) {
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<ImageItem[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [imageToDelete, setImageToDelete] = useState<string | null>(null);
+  const [imageToDelete, setImageToDelete] = useState<ImageItem | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [imageLoadError, setImageLoadError] = useState(false);
   const { toast } = useToast();
@@ -48,14 +55,14 @@ export function ImageSelector({
 
   const fetchImages = () => {
     console.log("Fetching images from folder:", folder);
-    fetch(`/api/file?folder=${folder.toLocaleLowerCase()}`)
+    fetch(`/api/file?folder=${folder.toLowerCase()}`)
       .then((res) => {
         console.log("Response status:", res.status);
         return res.json();
       })
       .then((data) => {
         console.log("Received data:", data);
-        setImages(data.images);
+        setImages(data.images || []);
       })
       .catch((error) => console.error("Fetch error:", error));
   };
@@ -66,27 +73,26 @@ export function ImageSelector({
     }
   }, [folder, isDialogOpen]);
 
-  const handleDelete = async (image: string) => {
+  const handleDelete = async (image: ImageItem) => {
     setIsDeleting(true);
     try {
-      // Extraction du chemin relatif du fichier, en supprimant le "/" initial
-      const filePath = image.startsWith("/") ? image.substring(1) : image;
-
-      const response = await fetch(`/api/file?filePath=${filePath}`, {
+      const response = await fetch(`/api/file?filePath=${encodeURIComponent(image.path)}`, {
         method: "DELETE",
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        // Si l'image supprimée est l'image courante, sélectionner une nouvelle image
-        if (image === currentImage && images.length > 1) {
-          const newCurrentImage = images.find((img) => img !== image) || "";
-          onSelect(newCurrentImage);
+        // If the deleted image is the current image, select a new image
+        if (image.url === currentImage && images.length > 1) {
+          const newCurrentImage = images.find((img) => img.url !== image.url);
+          if (newCurrentImage) {
+            onSelect(newCurrentImage.url);
+          }
         }
 
-        // Mettre à jour la liste des images
-        setImages(images.filter((img) => img !== image));
+        // Update the image list
+        setImages(images.filter((img) => img.path !== image.path));
 
         toast({
           title: "Image supprimée",
@@ -126,6 +132,20 @@ export function ImageSelector({
     setImageLoadError(true);
   };
 
+  const handleUploadComplete = (fileData: { fileUrl: string; path: string }) => {
+    // Add the new image to the list
+    const newImage: ImageItem = {
+      url: fileData.fileUrl,
+      path: fileData.path,
+      name: fileData.path.split("/").pop() || "",
+    };
+
+    setImages([newImage, ...images]);
+
+    // Select the new image
+    onSelect(fileData.fileUrl);
+  };
+
   return (
     <div className="space-y-4 text-center">
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -151,17 +171,17 @@ export function ImageSelector({
             {images && images.length > 0 ? (
               images.map((image) => (
                 <div
-                  key={image}
+                  key={image.path}
                   className={`cursor-pointer rounded-lg overflow-hidden border-2 relative group ${
-                    currentImage === image ? "border-primary" : "border-transparent"
+                    currentImage === image.url ? "border-primary" : "border-transparent"
                   }`}
                 >
                   <div className="relative h-32">
                     <img
-                      src={image}
-                      alt=""
+                      src={image.url}
+                      alt={image.name}
                       className="w-full h-full object-cover"
-                      onClick={() => onSelect(image)}
+                      onClick={() => onSelect(image.url)}
                       onError={(e) => {
                         // Replace broken image with placeholder
                         const target = e.target as HTMLImageElement;
@@ -225,7 +245,7 @@ export function ImageSelector({
         </AlertDialogContent>
       </AlertDialog>
 
-      {!disabled && <UploadFile folder={folder} onUploadComplete={onSelect} />}
+      {!disabled && <UploadFile folder={folder} onUploadComplete={handleUploadComplete} />}
     </div>
   );
 }

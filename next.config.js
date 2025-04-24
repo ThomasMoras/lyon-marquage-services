@@ -1,10 +1,25 @@
-// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["media.europeancatalog.com", "cdn.toptex.com", "api.toptex.io"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "media.europeancatalog.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.toptex.com",
+      },
+      {
+        protocol: "https",
+        hostname: "api.toptex.io",
+      },
+      {
+        protocol: "https",
+        hostname: "idpdoknycqsflntwtsjo.supabase.co",
+      },
+    ],
   },
-  // Autres configurations existantes...
 };
 
 export default nextConfig;

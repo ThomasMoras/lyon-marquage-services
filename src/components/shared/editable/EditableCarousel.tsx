@@ -92,21 +92,6 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
   const plugin = React.useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
   const editMenuRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   function handleClickOutside(event: MouseEvent) {
-  //     if (
-  //       editMenuRef.current &&
-  //       !editMenuRef.current.contains(event.target as Node) &&
-  //       !(event.target as Element).closest('[role="dialog"]')
-  //     ) {
-  //       setIsEditing(false);
-  //     }
-  //   }
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, []);
-
   useEffect(() => {
     fetch(`/api/carousel?type=${pageSection}`)
       .then((res) => res.json())

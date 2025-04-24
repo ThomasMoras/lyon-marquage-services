@@ -11,13 +11,14 @@ import { useState } from "react";
 
 interface UploadFileProps {
   folder: string;
-  onUploadComplete: (fileUrl: string) => void;
+  onUploadComplete: (fileData: { fileUrl: string; path: string }) => void;
 }
 
 export function UploadFile({ folder, onUploadComplete }: UploadFileProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -40,21 +41,43 @@ export function UploadFile({ folder, onUploadComplete }: UploadFileProps) {
         method: "POST",
         body: formData,
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Upload failed");
+      }
+
       const data = await response.json();
-      onUploadComplete(data.fileUrl);
+      onUploadComplete(data);
+      setIsOpen(false);
     } catch (error) {
       console.error("Upload failed:", error);
+      alert("Upload failed. Please try again.");
     } finally {
       setIsUploading(false);
-      setSelectedFile(null);
-      setPreviewUrl(null);
     }
   };
 
+  const resetForm = () => {
+    setSelectedFile(null);
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    setPreviewUrl(null);
+  };
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Ajouter une nouvelle image</Button>
+        <Button
+          variant="outline"
+          onClick={() => {
+            resetForm();
+            setIsOpen(true);
+          }}
+        >
+          Ajouter une nouvelle image
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -73,7 +96,7 @@ export function UploadFile({ folder, onUploadComplete }: UploadFileProps) {
           ) : (
             <label className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-primary">
               <input type="file" className="hidden" accept="image/*" onChange={handleFileSelect} />
-              <p>Cliquez ou faite glisser une image ici</p>
+              <p>Cliquez ou faites glisser une image ici</p>
             </label>
           )}
         </div>
@@ -81,17 +104,11 @@ export function UploadFile({ folder, onUploadComplete }: UploadFileProps) {
         <DialogFooter>
           {previewUrl && (
             <>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSelectedFile(null);
-                  setPreviewUrl(null);
-                }}
-              >
-                Cancel
+              <Button variant="outline" onClick={resetForm}>
+                Annuler
               </Button>
               <Button onClick={handleUpload} disabled={isUploading}>
-                {isUploading ? "Uploading..." : "Upload"}
+                {isUploading ? "Envoi en cours..." : "Envoyer"}
               </Button>
             </>
           )}
