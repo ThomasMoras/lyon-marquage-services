@@ -5,11 +5,13 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
+import { Eye, EyeOff } from "lucide-react"; // Importez les icônes d'œil
 
 export default function LoginPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // État pour gérer l'affichage du mot de passe
 
   // Rediriger si déjà connecté
   useEffect(() => {
@@ -17,6 +19,11 @@ export default function LoginPage() {
       // router.push("/");
     }
   }, [status, router]);
+
+  // Fonction pour basculer l'affichage du mot de passe
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -143,13 +150,27 @@ export default function LoginPage() {
             <label htmlFor="password" className="block text-sm font-medium">
               Mot de passe
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              className="mt-1 block w-full rounded border border-gray-300 px-3 py-2"
-            />
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                required
+                className="mt-1 block w-full rounded border border-gray-300 px-3 py-2 pr-10"
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 flex items-center pr-3 mt-1"
+                onClick={togglePasswordVisibility}
+                aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5 text-gray-500" />
+                ) : (
+                  <Eye className="h-5 w-5 text-gray-500" />
+                )}
+              </button>
+            </div>
           </div>
 
           <button
