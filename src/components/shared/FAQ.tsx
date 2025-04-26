@@ -1,4 +1,3 @@
-// components/shared/FAQ.tsx
 "use client";
 
 import {
@@ -7,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useEffect, useState } from "react";
 
 export interface FAQItem {
   id: string;
@@ -18,11 +18,42 @@ interface FAQProps {
   title?: string;
   items: FAQItem[];
   className?: string;
+  sectionKeywords?: string;
 }
 
-export default function FAQ({ title = "Questions fréquentes", items, className = "" }: FAQProps) {
+export default function FAQ({
+  title = "Questions fréquentes",
+  items,
+  className = "",
+  sectionKeywords = "",
+}: FAQProps) {
+  // État pour stocker l'URL de la page
+  const [pageUrl, setPageUrl] = useState<string>("");
+
+  // Effet pour récupérer l'URL actuelle côté client
+  useEffect(() => {
+    setPageUrl(window.location.href);
+  }, []);
+
+  // Préparer les données pour le schema.org FAQPage
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": items.map((item) => ({
+      "@type": "Question",
+      "name": item.question,
+      "id": item.id,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer.replace(/<[^>]*>?/gm, ""), // Supprimer les balises HTML pour le schema
+      },
+    })),
+    "url": pageUrl,
+    "keywords": sectionKeywords || title,
+  };
+
   return (
-    <section className={`py-16 px-6 bg-gray-50 ${className}`}>
+    <section className={`py-16 px-6 bg-gray-50 ${className}`} id="faq-section">
       <div className="max-w-4xl mx-auto">
         {title && <h2 className="text-3xl font-bold text-center mb-12">{title}</h2>}
 
@@ -48,6 +79,12 @@ export default function FAQ({ title = "Questions fréquentes", items, className 
           ))}
         </Accordion>
       </div>
+
+      {/* Schéma JSON-LD pour le SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
     </section>
   );
 }

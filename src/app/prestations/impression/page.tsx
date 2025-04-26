@@ -21,7 +21,11 @@ export default function Impression() {
 
       <CollectionSection pageSection={pageSection} />
 
-      <FAQ title="Tout savoir sur l'impression" items={impressionFAQItems} />
+      <FAQ
+        title="Tout savoir sur l'impression"
+        items={impressionFAQItems}
+        sectionKeywords="impression textile, impression sur tee-shirt, impression directe, lettre adhésive, impression numérique, impression lyon, impression saint priest"
+      />
 
       <section className="container mx-auto py-8 px-4 mb-12">
         <h2 className="text-xl font-semibold mb-4">Nos autres techniques de marquage textile</h2>

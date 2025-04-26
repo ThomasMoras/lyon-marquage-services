@@ -26,7 +26,11 @@ export default function Serigraphie() {
       <CollectionSection pageSection={pageSection} />
 
       {/* Intégration du composant FAQ avec les données spécifiques à la sérigraphie */}
-      <FAQ title="Tout savoir sur la sérigraphie textile" items={serigraphieFAQItems} />
+      <FAQ
+        title="Tout savoir sur la sérigraphie textile"
+        items={serigraphieFAQItems}
+        sectionKeywords="sérigraphie sur textile, sérigraphie publicitaire, sérigraphie tee-shirt, transfert sérigraphique, sérigraphie lyon, sérigraphie saint priest"
+      />
 
       {/* Section de liens internes pour le maillage SEO */}
       <section className="container mx-auto py-8 px-4 mb-12">

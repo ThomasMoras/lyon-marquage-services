@@ -1,8 +1,10 @@
 "use client";
 import { CollectionSection } from "@/components/shared/editable/CollectionSection";
+import FAQ from "@/components/shared/FAQ";
 import { PageLayout } from "@/components/shared/PageLayout";
 import SchemaOrg from "@/components/shared/SchemaOrg";
 import { SEOMetadata } from "@/components/shared/SEOMetadata";
+import { objetsPublicitairesFAQItems } from "@/constants/faqData";
 import { SectionType } from "@prisma/client";
 
 export default function ObjetsPublicitaires() {
@@ -17,6 +19,12 @@ export default function ObjetsPublicitaires() {
       </section>
 
       <CollectionSection pageSection={pageSection} />
+
+      <FAQ
+        title="Tout savoir sur la sérigraphie textile"
+        items={objetsPublicitairesFAQItems}
+        sectionKeywords="objets publicitaires, marquage publicitaire, goodies entreprise, kakemono, totem, objets promotionnels, objets publicitaires lyon, objets publicitaires saint priest"
+      />
     </div>
   );
 }

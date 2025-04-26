@@ -19,14 +19,18 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="" />
+      {/* Div de remplacement pour éviter le saut de contenu */}
+      <div className="h-16" />
+
       <div
         className={`fixed top-0 left-0 right-0 w-full bg-background z-50 transition-all duration-200 ${
           isScrolled ? "shadow-md" : ""
         }`}
       >
-        <NavbarLarge />
-        <NavbarMobile />
+        <div className={`transition-all duration-200 ${isScrolled ? "py-0" : "py-0"}`}>
+          <NavbarLarge isScrolled={isScrolled} />
+          <NavbarMobile isScrolled={isScrolled} />
+        </div>
       </div>
     </>
   );

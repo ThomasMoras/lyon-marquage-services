@@ -466,3 +466,133 @@ export const objetsPublicitairesFAQItems: FAQItem[] = [
     `,
   },
 ];
+
+// FAQ pour la page Enseignes & Signalétique
+export const enseignesFAQItems: FAQItem[] = [
+  {
+    id: "faq-enseignes-1",
+    question: "Quels types d'enseignes et de signalétique proposez-vous ?",
+    answer: `
+      <p>
+        Notre offre d'<strong>enseignes et signalétique à Lyon</strong> est très complète :
+      </p>
+      <ul>
+        <li>Enseignes lumineuses (LED, néons) et non lumineuses</li>
+        <li><strong>Lettrage adhésif</strong> pour vitrines et façades</li>
+        <li><strong>Totems</strong> extérieurs et intérieurs</li>
+        <li>Panneaux et plaques professionnelles</li>
+        <li>Supports d'affichage</li>
+        <li><strong>Marquage de véhicule</strong> partiel ou total</li>
+        <li>Solutions d'<strong>habillage de façade</strong> complète</li>
+        <li>Signalétique intérieure directionnelle</li>
+      </ul>
+      <p>
+        Tous nos produits sont fabriqués sur mesure à Lyon selon vos besoins spécifiques et votre charte graphique.
+      </p>
+    `,
+  },
+  {
+    id: "faq-enseignes-2",
+    question: "Comment choisir entre les différents types d'enseignes pour mon commerce ?",
+    answer: `
+      <p>
+        Le choix d'une <strong>enseigne</strong> dépend de plusieurs facteurs :
+      </p>
+      <p>
+        <strong>L'environnement</strong> : en zone commerciale très fréquentée, une enseigne lumineuse ou un <strong>totem</strong> 
+        garantit une visibilité maximale. En centre-ville, le <strong>lettrage adhésif</strong> ou une enseigne respectant 
+        le caractère architectural peut être plus approprié.
+      </p>
+      <p>
+        <strong>Votre budget</strong> : les enseignes non lumineuses et le lettrage sont généralement plus économiques 
+        que les enseignes lumineuses, mais offrent moins de visibilité nocturne.
+      </p>
+      <p>
+        <strong>Les réglementations locales</strong> : certaines zones ont des restrictions spécifiques (taille, éclairage, etc.). 
+        Notre équipe à Lyon vous conseille sur les options conformes à la réglementation de votre emplacement.
+      </p>
+      <p>
+        Nous réalisons une étude personnalisée pour vous recommander la solution optimale selon ces critères.
+      </p>
+    `,
+  },
+  {
+    id: "faq-enseignes-3",
+    question: "Quelles sont les options pour le marquage de véhicule professionnel ?",
+    answer: `
+      <p>
+        Notre service de <strong>marquage de véhicule</strong> à Lyon propose plusieurs niveaux de personnalisation :
+      </p>
+      <p>
+        <strong>Le marquage partiel</strong> : application de visuels sur certaines zones du véhicule (portières, capot, hayon) 
+        avec des adhésifs découpés ou imprimés. C'est une solution économique et efficace pour une visibilité professionnelle.
+      </p>
+      <p>
+        <strong>Le covering semi-intégral</strong> : habillage d'une grande partie du véhicule, permettant des visuels plus créatifs 
+        et impactants tout en conservant certaines parties dans la couleur d'origine.
+      </p>
+      <p>
+        <strong>Le covering intégral</strong> : transformation complète du véhicule avec un habillage total, offrant un impact 
+        visuel maximal et une surface publicitaire optimisée.
+      </p>
+      <p>
+        Tous nos marquages utilisent des vinyles de haute qualité, résistants aux intempéries et aux lavages, 
+        avec une garantie de 3 à 5 ans selon l'utilisation.
+      </p>
+    `,
+  },
+  {
+    id: "faq-enseignes-4",
+    question: "Quels sont les avantages du lettrage adhésif pour vitrines et façades ?",
+    answer: `
+      <p>
+        Le <strong>lettrage adhésif</strong> présente de nombreux avantages pour la communication visuelle :
+      </p>
+      <p>
+        <strong>Flexibilité</strong> : s'adapte à toutes les surfaces (vitrines, façades, murs, véhicules) et se découpe 
+        dans des formes précises pour reproduire fidèlement votre logo et vos messages.
+      </p>
+      <p>
+        <strong>Excellent rapport qualité-prix</strong> : solution économique pour une communication efficace, 
+        sans les coûts d'installation d'une enseigne traditionnelle.
+      </p>
+      <p>
+        <strong>Installation simple et rapide</strong> : mise en place en quelques heures, sans travaux lourds 
+        ni autorisations complexes dans la plupart des cas.
+      </p>
+      <p>
+        <strong>Durabilité</strong> : nos adhésifs professionnels résistent plusieurs années aux UV et aux intempéries 
+        pour l'extérieur, et se retirent proprement sans endommager le support.
+      </p>
+      <p>
+        À Lyon, nous proposons également des lettrages dépolis pour filtrer la lumière tout en préservant l'intimité, 
+        ou des lettrages microperforés permettant la vision depuis l'intérieur.
+      </p>
+    `,
+  },
+  {
+    id: "faq-enseignes-5",
+    question: "Proposez-vous l'installation des enseignes et de la signalétique ?",
+    answer: `
+      <p>
+        Oui, notre service d'<strong>enseignes à Lyon</strong> est complet, de la conception à l'installation :
+      </p>
+      <p>
+        Nous disposons d'une équipe d'installateurs professionnels qui intervient sur toute la région lyonnaise 
+        pour garantir la pose parfaite de vos enseignes, totems, lettrages et signalétique.
+      </p>
+      <p>
+        Pour les enseignes lumineuses et certains supports extérieurs, nous nous chargeons également des branchements 
+        électriques et nous assurons que l'installation respecte toutes les normes de sécurité en vigueur.
+      </p>
+      <p>
+        Notre service inclut les démarches administratives nécessaires pour les autorisations d'enseignes 
+        et l'<strong>habillage de façade</strong> auprès des autorités locales lorsque cela est requis.
+      </p>
+      <p>
+        Après l'installation, nous proposons également des contrats de maintenance pour assurer la longévité 
+        et le bon fonctionnement de vos installations, particulièrement pour les enseignes lumineuses.
+      </p>
+    `,
+  },
+];

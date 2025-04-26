@@ -35,7 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/objets-publicitaires`,
       lastModified: new Date(),
       changeFrequency: WEEKLY,
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/imprimerie`,
@@ -79,32 +79,100 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Pages de marques
-  // const marques = ["bc", "beechfield", "fruit-of-the-loom", "gildan", "kariban", "russell"];
-  // const marquesPages: SitemapEntry[] = marques.map((marque) => ({
-  //   url: `${baseUrl}/marques/${marque}`,
-  //   lastModified: new Date(),
-  //   changeFrequency: MONTHLY,
-  //   priority: 0.7,
-  // }));
-
-  // Principales catégories de catalogue
-  // const categoriesPrincipales = [
-  //   "tshirt",
-  //   "polo",
-  //   "sweat",
-  //   "casquette",
-  //   "veste",
-  //   "pantalon",
-  //   "tablier",
-  // ];
-
-  // const categoriesPages: SitemapEntry[] = categoriesPrincipales.map((categorie) => ({
-  //   url: `${baseUrl}/catalogue/${categorie}`,
-  //   lastModified: new Date(),
-  //   changeFrequency: WEEKLY,
-  //   priority: 0.8,
-  // }));
+  // Pages de services (pour les mots-clés - ces URLs seront redirigées)
+  const servicePages: SitemapEntry[] = [
+    // Mot-clé "sérigraphie"
+    {
+      url: `${baseUrl}/services/serigraphie`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "sérigraphie publicitaire"
+    {
+      url: `${baseUrl}/services/serigraphie-publicitaire`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "sérigraphie tee-shirt"
+    {
+      url: `${baseUrl}/services/serigraphie-tee-shirt`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "flocage textile"
+    {
+      url: `${baseUrl}/services/flocage-textile`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "kakemono"
+    {
+      url: `${baseUrl}/services/kakemono`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "marquage publicitaire"
+    {
+      url: `${baseUrl}/services/marquage-publicitaire`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "personnalisation de tee-shirt"
+    {
+      url: `${baseUrl}/services/personnalisation-tee-shirt`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "totem"
+    {
+      url: `${baseUrl}/services/totem`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "marquage de véhicule"
+    {
+      url: `${baseUrl}/services/marquage-vehicule`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "marquage industriel"
+    {
+      url: `${baseUrl}/services/marquage-industriel`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "lettrage adhésif"
+    {
+      url: `${baseUrl}/services/lettrage-adhesif`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "habillage de façade"
+    {
+      url: `${baseUrl}/services/vetement-personnalise`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+    // Mot-clé "impression directe"
+    {
+      url: `${baseUrl}/services/impression-directe`,
+      lastModified: new Date(),
+      changeFrequency: WEEKLY,
+      priority: 0.8,
+    },
+  ];
 
   // Essayer de récupérer les dates de dernière modification depuis la base de données
   try {
@@ -149,5 +217,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Combiner toutes les pages
-  return [...mainPages, ...prestationsPages];
+  return [...mainPages, ...prestationsPages, ...servicePages];
 }

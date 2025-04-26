@@ -293,7 +293,11 @@ export default function Home() {
         </div>
       </section>
 
-      <FAQ title="Questions fréquentes" items={homeFAQItems} />
+      <FAQ
+        title="Questions fréquentes"
+        items={homeFAQItems}
+        sectionKeywords="marquage saint priest, marquage textile lyon, sérigraphie, flocage textile, personnalisation de tee-shirt, impression textile, marquage publicitaire"
+      />
 
       {/* CTA */}
       <section className="py-20 px-6 bg-sky-700/90 text-white">

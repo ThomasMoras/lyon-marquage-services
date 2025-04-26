@@ -21,7 +21,11 @@ export default function Broderie() {
 
       <CollectionSection pageSection={pageSection} />
 
-      <FAQ title="Tout savoir sur la broderie" items={broderieFAQItems} />
+      <FAQ
+        title="Tout savoir sur la broderie"
+        items={broderieFAQItems}
+        sectionKeywords="broderie personnalisée, broderie textile, broderie vêtements, broderie lyon, broderie saint priest,broderie logo"
+      />
 
       <section className="container mx-auto py-8 px-4 mb-12">
         <h2 className="text-xl font-semibold mb-4">Nos autres techniques de marquage textile</h2>

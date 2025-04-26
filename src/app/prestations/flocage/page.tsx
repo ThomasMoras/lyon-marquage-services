@@ -21,7 +21,11 @@ export default function Flocage() {
 
       <CollectionSection pageSection={pageSection} />
 
-      <FAQ title="Tout savoir sur le flocage" items={flocageFAQItems} />
+      <FAQ
+        title="Tout savoir sur le flocage"
+        items={flocageFAQItems}
+        sectionKeywords="flocage textile, flocage vêtement, flocage personnalisé, marquage textile, flocage lyon, flocage saint priest"
+      />
 
       <section className="container mx-auto py-8 px-4 mb-12">
         <h2 className="text-xl font-semibold mb-4">Nos autres techniques de marquage textile</h2>
