@@ -278,15 +278,15 @@ const Footer = () => {
               </div>
 
               <div className="flex flex-wrap gap-6 text-sm text-gray-400">
-                <Link href="/mentions-legales" className="hover:text-sky-300 transition-colors">
+                {/* <Link href="/mentions-legales" className="hover:text-sky-300 transition-colors">
                   Mentions légales
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   href="/politique-confidentialite"
                   className="hover:text-sky-300 transition-colors"
                 >
                   Politique de confidentialité
-                </Link>
+                </Link> */}
                 <Link href="/politique-cookies" className="hover:text-sky-300 transition-colors">
                   Politique de cookies
                 </Link>

@@ -79,14 +79,6 @@ export default function CookiePolicyPage() {
             </thead>
             <tbody>
               <tr>
-                <td className="py-2 px-4 border-b">next-auth.session-token</td>
-                <td className="py-2 px-4 border-b">
-                  Gestion des sessions administrateur uniquement
-                </td>
-                <td className="py-2 px-4 border-b">Session</td>
-                <td className="py-2 px-4 border-b">Nécessaire (zone admin)</td>
-              </tr>
-              <tr>
                 <td className="py-2 px-4 border-b">theme</td>
                 <td className="py-2 px-4 border-b">Préférence de thème (clair/sombre)</td>
                 <td className="py-2 px-4 border-b">1 an</td>
@@ -117,7 +109,7 @@ export default function CookiePolicyPage() {
         <h2 className="text-2xl font-semibold mb-4">Contact</h2>
         <p>
           Si vous avez des questions concernant notre politique de cookies, veuillez nous contacter
-          à l&apos;adresse suivante : [VOTRE ADRESSE EMAIL].
+          à l&apos;adresse suivante : info@lyonmarquage.fr.
         </p>
       </section>
     </div>
