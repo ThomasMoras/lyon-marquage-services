@@ -29,6 +29,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/prestations/impression-transfert",
+        destination: "/prestations/impression",
+        permanent: true,
+      },
+      {
         source: "/flocage/sport",
         destination: "/prestations/flocage",
         permanent: true,
