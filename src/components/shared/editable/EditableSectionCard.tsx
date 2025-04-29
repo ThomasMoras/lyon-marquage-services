@@ -70,14 +70,14 @@ export function EditableSectionCard({
     <div className="flex flex-col gap-8 w-full overflow-hidden px-2 py-4 md:p-6">
       {/* Title with decorative accent */}
       <div className="relative">
-        <h2 className="text-3xl md:text-4xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-gray-50 overflow-hidden text-ellipsis break-words">
+        <h2 className="text-3xl md:text-3xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-gray-50 overflow-hidden text-ellipsis break-words">
           {editedSection.title}
         </h2>
         <div className="absolute -bottom-3 left-0 w-16 h-1 bg-blue-500 rounded-full"></div>
       </div>
 
       {/* Description with improved typography */}
-      <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed overflow-hidden text-ellipsis break-words max-w-prose">
+      <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed overflow-hidden text-ellipsis break-words">
         {editedSection.description}
       </p>
     </div>
