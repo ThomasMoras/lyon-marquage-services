@@ -366,8 +366,7 @@ export const homeFAQItems: FAQItem[] = [
       <p>
         Nous proposons une large gamme de vêtements et textiles de qualité provenant de fournisseurs reconnus (Fruit of the Loom, Gildan, Kariban, Russell, etc.). 
         Vous bénéficiez ainsi de prix avantageux et d'un service clé en main. Si vous préférez, vous pouvez également nous fournir vos propres textiles 
-        que nous personnaliserons avec la technique de votre choix. Dans ce cas, nous effectuons systématiquement un test pour vérifier la compatibilité 
-        avec la technique d'impression souhaitée.
+        que nous personnaliserons avec la technique de votre choix. Dans ce cas, nous ne somme pas responsable de la qualité des textiles et ainsi des éventuels problèmes de qualité d'impression liée à ce textile.
       </p>
     `,
   },
