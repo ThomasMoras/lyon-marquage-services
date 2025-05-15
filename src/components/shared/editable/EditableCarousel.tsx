@@ -224,7 +224,6 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
                 ref={editMenuRef}
                 className="max-w-4xl w-full p-6 space-y-5 bg-white dark:bg-gray-900 my-4 rounded-xl shadow-2xl animate-in fade-in-100 zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto"
               >
-                {/* Enhanced header */}
                 <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-4">
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-gray-50">

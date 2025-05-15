@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/dialog";
 import { AutoResizeTextarea } from "../AutoResizeTextarea";
 
-// Mise à jour de l'interface avec SectionType de Prisma
 interface EditableSectionCardProps {
   section: Section;
   onSave: (section: Section) => Promise<void>;
