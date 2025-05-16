@@ -16,7 +16,7 @@ export interface CardBase {
   description: string;
   imageUrl: string;
   type: SectionType;
-  order?: number;
+  order: number;
   fileId?: string | null;
   cropData?: CropData;
 }

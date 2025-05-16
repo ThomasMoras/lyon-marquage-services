@@ -119,7 +119,7 @@ export function EditableCard({
     } catch (error) {
       toast({
         title: "Erreur",
-        description: "Une erreur est survenue lors de l'enregistrement de la carte.",
+        description: `Une erreur est survenue lors de l'enregistrement de la carte. Message : ${error}`,
         variant: "destructive",
       });
     } finally {
@@ -131,19 +131,14 @@ export function EditableCard({
     if (onDelete) {
       try {
         await onDelete(card.id);
-
-        // Show success toast
         toast({
           title: "Succès",
           description: "La carte a été supprimée avec succès.",
         });
       } catch (error) {
-        console.error("Error deleting card:", error);
-
-        // Show error toast
         toast({
           title: "Erreur",
-          description: "Une erreur est survenue lors de la suppression de la carte.",
+          description: `Une erreur est survenue lors de la suppression de la carte. Message : ${error}`,
           variant: "destructive",
         });
       }

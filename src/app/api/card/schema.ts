@@ -35,7 +35,6 @@ export const createCardSchema = z.object({
   order: z.number().optional().default(0),
   fileId: z.string().nullable().optional(),
   cropData: cropDataSchema.optional(),
-  cropOptions: cropOptionsSchema.optional(),
 });
 
 // Update card schema (requires ID)
