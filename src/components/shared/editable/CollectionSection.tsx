@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { CardItem } from "@/types/cardTypes";
+import { CardItem } from "@/types/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -139,7 +139,7 @@ export const CollectionSection = ({ pageSection }: CollectionSectionProps) => {
         title: "",
         description: "",
         imageUrl: "/api/placeholder/400/400",
-        pageSection: pageSection,
+        type: pageSection,
         order: maxOrder + 1, // Set order to be at the end
       };
 

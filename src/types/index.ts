@@ -1,14 +1,12 @@
 // This file re-exports all types from other files
 // This creates a centralized import location
 
-// Re-export everything from commonTypes
-export * from "./commonTypes";
+export * from "./common";
 
-// Re-export everything from sectionTypes
-export * from "./sectionTypes";
+export * from "./section";
 
-// Re-export everything from cardTypes
-export * from "./cardTypes";
+export * from "./card";
 
-// Re-export everything from carouselTypes
-export * from "./carouselTypes";
+export * from "./carousel";
+
+export * from "./image";

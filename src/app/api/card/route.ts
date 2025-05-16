@@ -1,27 +1,63 @@
 import { NextResponse } from "next/server";
 import { getCards, createCard, updateCard, deleteCard } from "./service";
-import { CreateCardInput, UpdateCardInput } from "@/types/cardTypes";
+import { createCardSchema, updateCardSchema, deleteCardSchema } from "./schema";
+import { CreateCardDTO, UpdateCardDTO } from "@/types/card";
+import { handleError, validateRequest } from "@/lib/api-utils";
 
-export async function GET() {
-  const cards = await getCards();
-  return NextResponse.json(cards);
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const type = searchParams.get("type");
+    const cards = await getCards(type);
+    return NextResponse.json(cards);
+  } catch (error) {
+    return handleError(error);
+  }
 }
 
 export async function POST(request: Request) {
-  const data: CreateCardInput = await request.json();
-  console.log("data post reception : ", data);
-  const card = await createCard(data);
-  return NextResponse.json(card);
+  const validation = await validateRequest(request, createCardSchema);
+  if (!validation.success) {
+    return validation.response;
+  }
+
+  try {
+    const cardData = validation.data as CreateCardDTO;
+    const card = await createCard(cardData);
+    return NextResponse.json(card);
+  } catch (error) {
+    return handleError(error);
+  }
 }
 
 export async function PUT(request: Request) {
-  const data: UpdateCardInput = await request.json();
-  const card = await updateCard(data);
-  return NextResponse.json(card);
+  const validation = await validateRequest(request, updateCardSchema);
+
+  if (!validation.success) {
+    return validation.response;
+  }
+
+  try {
+    const cardData = validation.data as UpdateCardDTO;
+    const card = await updateCard(cardData);
+    return NextResponse.json(card);
+  } catch (error) {
+    return handleError(error);
+  }
 }
 
 export async function DELETE(request: Request) {
-  const { id } = await request.json();
-  const card = await deleteCard(id);
-  return NextResponse.json(card);
+  const validation = await validateRequest(request, deleteCardSchema);
+
+  if (!validation.success) {
+    return validation.response;
+  }
+
+  try {
+    const cardData = validation.data as UpdateCardDTO;
+    const card = await deleteCard(cardData.id);
+    return NextResponse.json(card);
+  } catch (error) {
+    return handleError(error);
+  }
 }

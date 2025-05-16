@@ -1,22 +1,48 @@
 import { NextResponse } from "next/server";
 import { getSections, createSection, updateSection } from "./service";
+import { createSectionSchema, updateSectionSchema } from "./schema";
+import { handleError, validateRequest } from "@/lib/api-utils";
+import { CreateSectionDTO, UpdateSectionDTO } from "@/types";
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  console.log("params : ", searchParams);
-  const type = searchParams.get("type") || undefined;
-  const sections = await getSections(type);
-  return NextResponse.json(sections);
+  try {
+    const { searchParams } = new URL(request.url);
+    const type = searchParams.get("type");
+    const sections = await getSections(type || undefined);
+    return NextResponse.json(sections);
+  } catch (error) {
+    return handleError(error);
+  }
 }
+
 export async function POST(request: Request) {
-  const data = await request.json();
-  const section = await createSection(data);
-  return NextResponse.json(section);
+  const validation = await validateRequest(request, createSectionSchema);
+
+  if (!validation.success) {
+    return validation.response;
+  }
+
+  try {
+    const data = validation.data as CreateSectionDTO;
+    const section = await createSection(data);
+    return NextResponse.json(section);
+  } catch (error) {
+    return handleError(error);
+  }
 }
 
 export async function PUT(request: Request) {
-  const data = await request.json();
-  const { id, ...updateData } = data;
-  const section = await updateSection(id, updateData);
-  return NextResponse.json(section);
+  const validation = await validateRequest(request, updateSectionSchema);
+
+  if (!validation.success) {
+    return validation.response;
+  }
+
+  try {
+    const data = validation.data as UpdateSectionDTO;
+    const section = await updateSection(data);
+    return NextResponse.json(section);
+  } catch (error) {
+    return handleError(error);
+  }
 }

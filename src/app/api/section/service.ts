@@ -1,44 +1,118 @@
-import prisma from "@/lib/prisma";
-import { SectionType } from "@prisma/client";
-import { Section } from "@prisma/client";
+import { PrismaClient, SectionType, Prisma } from "@prisma/client";
+import { CreateSectionInput, UpdateSectionInput } from "./schema";
 
-export async function getSections(type?: string) {
-  console.log(type);
-  const sections = await prisma.section.findMany({
-    where: type
-      ? {
-          type: type.toUpperCase() as SectionType,
-        }
-      : undefined,
+const prisma = new PrismaClient();
+
+// Get sections, optionally filtered by type
+export async function getSections(type?: string | undefined) {
+  const whereClause = type ? { type: type.toUpperCase() as SectionType } : {};
+
+  return prisma.section.findMany({
+    where: whereClause,
     orderBy: {
-      createdAt: "asc",
+      order: "asc",
+    },
+    include: {
+      file: true,
     },
   });
-  console.log("Sections retrieved:", sections);
-  return sections;
 }
 
+// Get a single section by ID
 export async function getSection(id: string) {
-  return await prisma.section.findUnique({
+  return prisma.section.findUnique({
     where: { id },
+    include: {
+      file: true,
+    },
   });
 }
 
-export async function createSection(data: Omit<Section, "id" | "createdAt" | "updatedAt">) {
-  return await prisma.section.create({
-    data,
+// Create a new section
+export async function createSection(data: CreateSectionInput) {
+  // Prepare data for Prisma
+  const createData: Prisma.SectionCreateInput = {
+    title: data.title,
+    description: data.description,
+    imageUrl: data.imageUrl,
+    imageLeft: data.imageLeft ?? true,
+    type: data.type,
+    order: data.order || 0,
+  };
+
+  // Handle JSON data
+  if (data.cropData) {
+    createData.cropData = JSON.parse(JSON.stringify(data.cropData)) as Prisma.InputJsonValue;
+  }
+
+  // Handle file relation
+  if (data.fileId) {
+    createData.file = {
+      connect: { id: data.fileId },
+    };
+  }
+
+  return prisma.section.create({
+    data: createData,
+    include: {
+      file: true,
+    },
   });
 }
 
-export async function updateSection(id: string, data: Partial<Section>) {
-  return await prisma.section.update({
+// Update an existing section
+export async function updateSection(data: UpdateSectionInput) {
+  const { id, ...updateFields } = data;
+
+  // Prepare update data
+  const updateData: Prisma.SectionUpdateInput = {};
+
+  // Only include fields that are defined
+  if (updateFields.title !== undefined) updateData.title = updateFields.title;
+  if (updateFields.description !== undefined) updateData.description = updateFields.description;
+  if (updateFields.imageUrl !== undefined) updateData.imageUrl = updateFields.imageUrl;
+  if (updateFields.imageLeft !== undefined) updateData.imageLeft = updateFields.imageLeft;
+  if (updateFields.type !== undefined) updateData.type = updateFields.type;
+  if (updateFields.order !== undefined) updateData.order = updateFields.order;
+
+  // Handle cropData
+  if (updateFields.cropData !== undefined) {
+    if (updateFields.cropData === null) {
+      updateData.cropData = Prisma.DbNull;
+    } else {
+      updateData.cropData = JSON.parse(
+        JSON.stringify(updateFields.cropData)
+      ) as Prisma.InputJsonValue;
+    }
+  }
+
+  // Handle file relation
+  if (updateFields.fileId !== undefined) {
+    if (updateFields.fileId) {
+      updateData.file = { connect: { id: updateFields.fileId } };
+    } else {
+      updateData.file = { disconnect: true };
+    }
+  }
+
+  return prisma.section.update({
     where: { id },
-    data,
+    data: updateData,
+    include: {
+      file: true,
+    },
   });
 }
 
+// Delete a section
 export async function deleteSection(id: string) {
-  return await prisma.section.delete({
+  return prisma.section.delete({
     where: { id },
+    include: {
+      file: true,
+    },
   });
 }
+
+// Re-export the types from schema.ts for convenience
+export type { CreateSectionInput, UpdateSectionInput };

@@ -1,4 +1,4 @@
-import { CatalogueItem } from "@/types/commonTypes";
+import { CatalogueItem } from "@/types/common";
 
 export const menuCatalogue: CatalogueItem[] = [
   {

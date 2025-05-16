@@ -1,41 +1,48 @@
 import { NextResponse } from "next/server";
-import { getCarousels, updateCarousel, createCarousel } from "./service";
+import { getCarousels, createCarousel, updateCarousel } from "./service";
+import { createCarouselSchema, updateCarouselSchema } from "./schema";
+import { handleError, validateRequest } from "@/lib/api-utils";
+import { CreateCarouselDTO, UpdateCarouselDTO } from "@/types/carousel";
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const type = searchParams.get("type") || undefined;
-  const carousels = await getCarousels(type);
-  return NextResponse.json(carousels);
-}
-
-export async function PUT(request: Request) {
-  const data = await request.json();
-  const carousel = await updateCarousel(data.id, data);
-  return NextResponse.json(carousel);
+  try {
+    const { searchParams } = new URL(request.url);
+    const type = searchParams.get("type");
+    const carousels = await getCarousels(type);
+    return NextResponse.json(carousels);
+  } catch (error) {
+    return handleError(error);
+  }
 }
 
 export async function POST(request: Request) {
+  const validation = await validateRequest(request, createCarouselSchema);
+
+  if (!validation.success) {
+    return validation.response;
+  }
+
   try {
-    const data = await request.json();
-    // Convertir le type en majuscules avant de créer
-    const carouselData = {
-      ...data,
-      type: data.type.toUpperCase(),
-    };
+    const carouselData = validation.data as CreateCarouselDTO;
     const carousel = await createCarousel(carouselData);
     return NextResponse.json(carousel);
-  } catch (error: unknown) {
-    console.error("ERROR IN POST:", error);
-    let errorMessage = "An unknown error occurred";
+  } catch (error) {
+    return handleError(error);
+  }
+}
 
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    } else if (typeof error === "string") {
-      errorMessage = error;
-    } else if (error && typeof error === "object" && "message" in error) {
-      errorMessage = (error as { message: string }).message;
-    }
+export async function PUT(request: Request) {
+  const validation = await validateRequest(request, updateCarouselSchema);
 
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+  if (!validation.success) {
+    return validation.response;
+  }
+
+  try {
+    const carouselData = validation.data as UpdateCarouselDTO;
+    const carousel = await updateCarousel(carouselData);
+    return NextResponse.json(carousel);
+  } catch (error) {
+    return handleError(error);
   }
 }

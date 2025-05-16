@@ -27,7 +27,7 @@ model Session {
 }
 
 model Carousel {
-  id          String      @id @default(cuid())
+  id          String        @id @default(cuid())
   title       String
   description String
   image       String
@@ -35,31 +35,59 @@ model Carousel {
   buttonLink  String
   type        SectionType
   order       Int
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  cropData    Json?
+  fileId      String?
+  file        FileMetadata? @relation(fields: [fileId], references: [id])
 }
 
 model Card {
-  id          String      @id @default(cuid())
+  id          String        @id @default(cuid())
   title       String
   description String
   imageUrl    String
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  order       Int         @default(0)
-  type        SectionType @default(HOME)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  order       Int           @default(0)
+  type        SectionType   @default(HOME)
+  cropData    Json?
+  fileId      String?
+  file        FileMetadata? @relation(fields: [fileId], references: [id])
 }
 
 model Section {
-  id          String      @id @default(cuid())
+  id          String        @id @default(cuid())
   title       String
   description String
   imageUrl    String
-  imageLeft   Boolean     @default(true)
-  type        SectionType @default(HOME)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  order       Int         @default(0)
+  imageLeft   Boolean       @default(true)
+  type        SectionType   @default(HOME)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  order       Int           @default(0)
+  cropData    Json?
+  fileId      String?
+  file        FileMetadata? @relation(fields: [fileId], references: [id])
+}
+
+model FileMetadata {
+  id           String     @id @default(cuid())
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int
+  width        Int?
+  height       Int?
+  path         String     @unique
+  url          String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  cards        Card[]
+  carousels    Carousel[]
+  sections     Section[]
+
+  @@index([path])
 }
 
 model Content {

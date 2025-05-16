@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import {
   Carousel,
@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import { Pencil, Plus, Trash2, X, ChevronLeft, ChevronRight } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 import { cn } from "@/lib/utils";
-import { ImageSelector } from "../ImageSelector";
 import Link from "next/link";
 import {
   Dialog,
@@ -26,9 +25,10 @@ import {
   DialogTrigger,
 } from "../../ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { CarouselSlide } from "@/types";
+import { CarouselSlide, CropData } from "@/types";
 import { AutoResizeTextarea } from "../AutoResizeTextarea";
 import { SectionType } from "@prisma/client";
+import { EnhancedImageSelector } from "../EnhancedImageSelector";
 
 // Mise à jour pour utiliser SectionType de Prisma
 interface EditableCarouselProps {
@@ -37,18 +37,44 @@ interface EditableCarouselProps {
 }
 
 const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
+  // Generate a unique ID for this slide's keyframes
+  const animationId = useMemo(() => `zoom-${Math.random().toString(36).substr(2, 9)}`, []);
+
+  // Get crop values with fallbacks
+  const scale = slide.cropData?.scale || 1;
+  const translateX = slide.cropData?.position?.x || 0;
+  const translateY = slide.cropData?.position?.y || 0;
+  const rotation = slide.cropData?.rotation || 0;
+
   return (
     <div className="relative h-screen">
-      {/* Background image with subtle zoom effect */}
       <div className="absolute inset-0 overflow-hidden">
-        <Image
-          src={slide.image}
-          alt={slide.title}
-          fill
-          priority
-          className="object-cover scale-105 transition-transform duration-10000 animate-slow-zoom"
-          sizes="100vw"
-        />
+        <div className="relative w-full h-full">
+          <style jsx>{`
+            @keyframes ${animationId} {
+              0% {
+                transform: scale(${scale}) translate(${translateX}px, ${translateY}px)
+                  rotate(${rotation}deg);
+              }
+              100% {
+                transform: scale(${scale * 1.1}) translate(${translateX}px, ${translateY}px)
+                  rotate(${rotation}deg);
+              }
+            }
+          `}</style>
+
+          <Image
+            src={slide.image}
+            alt={slide.title}
+            fill
+            priority
+            sizes="100vw"
+            style={{
+              objectFit: "cover",
+              animation: `${animationId} 10s infinite alternate ease-in-out`,
+            }}
+          />
+        </div>
       </div>
 
       {/* Enhanced gradient overlay */}
@@ -95,9 +121,11 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
   useEffect(() => {
     fetch(`/api/carousel?type=${pageSection}`)
       .then((res) => res.json())
-      .then((data) =>
-        setSlides(data.sort((a: CarouselSlide, b: CarouselSlide) => a.order - b.order))
-      );
+      .then((data) => {
+        console.log("Fetched slides:", data);
+        setSlides(data.sort((a: CarouselSlide, b: CarouselSlide) => a.order - b.order));
+      })
+      .catch((err) => console.error("Error fetching slides:", err));
   }, [pageSection]);
 
   const paginatedSlides = () => {
@@ -109,6 +137,7 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
   const totalPages = Math.ceil(slides.length / slidesPerPage);
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
+  // Generic field change handler for simple text fields
   const handleFieldChange = (index: number, field: keyof CarouselSlide, value: string) => {
     const newSlides = [...slides];
     const updatedSlide = { ...newSlides[index], [field]: value };
@@ -117,15 +146,46 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
     handleSaveSlide(updatedSlide);
   };
 
+  // Specific handler for image selection that handles both image URL and crop data
+  const handleImageSelection = (index: number, imagePath: string, cropData: CropData) => {
+    console.log("handleImageSelection called with:", { index, imagePath, cropData });
+
+    const newSlides = [...slides];
+    const updatedSlide = {
+      ...newSlides[index],
+      image: imagePath,
+      cropData: cropData,
+    };
+
+    console.log("Updated slide:", updatedSlide);
+    newSlides[index] = updatedSlide;
+    setSlides(newSlides);
+    handleSaveSlide(updatedSlide);
+  };
+
   const handleSaveSlide = async (slide: CarouselSlide) => {
     try {
-      await fetch("/api/carousel", {
+      console.log("Saving slide:", slide);
+      const response = await fetch("/api/carousel", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(slide),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to save slide");
+      }
+
+      const savedData = await response.json();
+      console.log("Slide saved successfully:", savedData);
     } catch (error) {
-      console.error("Error saving:", error);
+      console.error("Error saving slide:", error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'enregistrement",
+        variant: "destructive",
+      });
     }
   };
 
@@ -139,6 +199,11 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
       buttonLink: "#",
       order: maxOrder + 1,
       type: pageSection,
+      cropData: {
+        scale: 1,
+        position: { x: 0, y: 0 },
+        rotation: 0,
+      },
     };
 
     try {
@@ -244,7 +309,6 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
                     </Button>
                   </div>
                 </div>
-
                 {/* Content */}
                 {paginatedSlides().map((slide, localIndex) => {
                   const globalIndex = (currentPage - 1) * slidesPerPage + localIndex;
@@ -362,11 +426,14 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
                           <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
                             Image d&ldquo;arrière-plan
                           </label>
-                          <ImageSelector
+
+                          <EnhancedImageSelector
                             folder={`images/${pageSection}`}
                             currentImage={slide.image}
-                            onSelect={(imagePath) => {
-                              handleFieldChange(globalIndex, "image", imagePath);
+                            currentCropData={slide.cropData}
+                            onSelect={(imagePath, cropData) => {
+                              // Use the specialized handler for image selection
+                              handleImageSelection(globalIndex, imagePath, cropData);
                             }}
                             disabled={false}
                           />

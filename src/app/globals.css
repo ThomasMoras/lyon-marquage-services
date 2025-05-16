@@ -128,24 +128,3 @@ html {
     text-shadow: none;
   }
 }
-
-@keyframes slow-zoom {
-  0% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1.15);
-  }
-}
-
-.animate-slow-zoom {
-  animation: slow-zoom 15s ease-in-out infinite alternate;
-}
-
-/* Ajoutez ce code à votre fichier globals.css */
-
-/* Centre le dropdown du menu Prestations */
-[data-prestations-menu] > div > [data-radix-navigation-menu-viewport] {
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-}

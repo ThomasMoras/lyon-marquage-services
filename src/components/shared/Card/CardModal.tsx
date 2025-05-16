@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, X as Close } from "lucide-react";
-import { CardModalProps } from "@/types/cardTypes";
+import { CardModalProps } from "@/types/card";
 
 export function CardModal({
   cardToShow,

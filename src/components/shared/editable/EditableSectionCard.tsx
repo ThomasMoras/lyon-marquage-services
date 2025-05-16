@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Pencil, Check, X, Trash2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ImageSelector } from "../ImageSelector";
-import { Section } from "@/types";
+import { Section, CropData } from "@/types";
 import { SectionType } from "@prisma/client";
 import {
   Dialog,
@@ -19,6 +18,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { AutoResizeTextarea } from "../AutoResizeTextarea";
+import { EnhancedImageSelector } from "../EnhancedImageSelector";
 
 interface EditableSectionCardProps {
   section: Section;
@@ -39,9 +39,24 @@ export function EditableSectionCard({
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // Specialized image selection handler
+  const handleImageSelection = (imagePath: string, cropData: CropData) => {
+    console.log("EditableSectionCard - handleImageSelection:", { imagePath, cropData });
+
+    const updatedSection = {
+      ...editedSection,
+      imageUrl: imagePath,
+      cropData: cropData,
+    };
+
+    console.log("Updated section:", updatedSection);
+    setEditedSection(updatedSection);
+  };
+
   const handleSave = async () => {
     try {
       setIsSaving(true);
+      console.log("Saving section:", editedSection);
       await onSave(editedSection);
       setIsEditing(false);
     } catch (error) {
@@ -100,14 +115,21 @@ export function EditableSectionCard({
         className="text-base border-2 focus-visible:ring-blue-500"
         disabled={isSaving}
       />
-      <ImageSelector
-        folder={`images/${pageSection}`}
-        currentImage={editedSection.imageUrl || ""}
-        onSelect={(imagePath) => {
-          setEditedSection({ ...editedSection, imageUrl: imagePath });
-        }}
-        disabled={isSaving}
-      />
+
+      {/* Enhanced image selector with crop support */}
+      <div>
+        <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          Section Image
+        </label>
+        <EnhancedImageSelector
+          folder={`images/${pageSection}`}
+          currentImage={editedSection.imageUrl || ""}
+          currentCropData={editedSection.cropData}
+          onSelect={handleImageSelection}
+          disabled={isSaving}
+        />
+      </div>
+
       <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
         <Switch
           checked={!!editedSection.imageLeft}
@@ -166,15 +188,26 @@ export function EditableSectionCard({
           editedSection.imageLeft ? "flex-row" : "flex-row-reverse"
         )}
       >
-        {/* Image container with improved styling */}
+        {/* Image container with improved styling and crop support */}
         <div className="w-full md:w-2/5 relative overflow-hidden rounded-xl shadow-lg aspect-square transition-transform duration-300 hover:scale-102 group">
-          <Image
-            src={editedSection.imageUrl || "/api/placeholder/400/400"}
-            alt={editedSection.title || "Section image"}
-            fill
-            className="object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative w-full h-full">
+            <Image
+              src={editedSection.imageUrl || "/api/placeholder/400/400"}
+              alt={editedSection.title || "Section image"}
+              fill
+              className="object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+              style={
+                editedSection.cropData
+                  ? {
+                      objectFit: "cover",
+                      transform: `scale(${editedSection.cropData.scale || 1}) translate(${editedSection.cropData.position.x || 0}px, ${editedSection.cropData.position.y || 0}px) rotate(${editedSection.cropData.rotation || 0}deg)`,
+                      transformOrigin: "center",
+                    }
+                  : {}
+              }
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
         </div>
 
         {/* Content container */}
