@@ -197,7 +197,7 @@ export const CollectionSection = ({ pageSection }: CollectionSectionProps) => {
             isAdmin={isAdmin}
             isNewCard={card.id === newCardId}
             allCards={cards}
-            onNavigate={handleCardNavigation} // Utiliser notre fonction qui ne modifie pas l'ordre
+            onNavigate={handleCardNavigation}
           />
         ))}
       </div>

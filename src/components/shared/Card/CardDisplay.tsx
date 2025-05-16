@@ -19,20 +19,14 @@ export function CardDisplay({
   // Determine if we have title or description to show
   const hasTitle = !!editedCard.title?.trim();
   const hasDescription = !!editedCard.description?.trim();
-  const hasContent = hasTitle || hasDescription;
-
-  // Set aspect ratio based on content presence
-  const aspectRatio = hasContent ? "aspect-[4/3]" : "aspect-square";
 
   return (
     <div
       className="relative group rounded-lg overflow-hidden h-full flex flex-col cursor-pointer"
       onClick={toggleExpand}
     >
-      {/* Card container with dynamic sizing */}
-      <div
-        className={`w-full relative ${hasContent ? "flex-1" : "h-full"} rounded-lg overflow-hidden`}
-      >
+      {/* Fixed aspect ratio wrapper - same size for all cards */}
+      <div className="w-full h-0 pb-[100%] relative rounded-lg overflow-hidden">
         {/* Title overlay at the top */}
         {hasTitle && (
           <div className="absolute top-0 inset-x-0 z-10 bg-gradient-to-b from-black/60 to-transparent pt-2 pb-4 px-3">
@@ -42,8 +36,8 @@ export function CardDisplay({
           </div>
         )}
 
-        {/* Image with crop transformations */}
-        <div className={`relative w-full ${aspectRatio} overflow-hidden`}>
+        {/* Image container */}
+        <div className="absolute inset-0">
           <Image
             src={editedCard.imageUrl || "/api/placeholder/400/300"}
             alt={editedCard.title || "Card image"}
@@ -64,74 +58,74 @@ export function CardDisplay({
           {/* Hover effect overlay */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200"></div>
         </div>
-      </div>
 
-      {/* Description below the image */}
-      {hasDescription && (
-        <div className="px-3 py-2 bg-white dark:bg-gray-800">
-          <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3 text-center">
-            {editedCard.description}
-          </p>
-        </div>
-      )}
+        {/* Description overlay at the bottom */}
+        {hasDescription && (
+          <div className="absolute bottom-0 inset-x-0 z-10 bg-white dark:bg-gray-800 px-3 py-2">
+            <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3 text-center">
+              {editedCard.description}
+            </p>
+          </div>
+        )}
 
-      {/* Admin controls - only shown in admin mode */}
-      {isAdmin && setIsEditing && handleDelete && (
-        <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20">
-          {/* Edit button */}
-          <Button
-            variant="outline"
-            size="sm"
-            className="bg-white/90 hover:bg-white rounded-full h-8 w-8 p-0"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsEditing(true);
-            }}
-          >
-            <Pencil className="w-4 h-4" />
-          </Button>
-
-          {/* Delete button/confirmation */}
-          {isConfirmingDelete ? (
-            <>
-              <Button
-                variant="destructive"
-                size="sm"
-                className="rounded-full h-8 w-8 p-0"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDelete();
-                }}
-              >
-                <Check className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="bg-white/90 hover:bg-white rounded-full h-8 w-8 p-0"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsConfirmingDelete(false);
-                }}
-              >
-                <X className="w-4 h-4" />
-              </Button>
-            </>
-          ) : (
+        {/* Admin controls - only shown in admin mode */}
+        {isAdmin && setIsEditing && handleDelete && (
+          <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20">
+            {/* Edit button */}
             <Button
               variant="outline"
               size="sm"
-              className="bg-white/90 hover:bg-white text-red-500 hover:text-red-600 rounded-full h-8 w-8 p-0"
+              className="bg-white/90 hover:bg-white rounded-full h-8 w-8 p-0"
               onClick={(e) => {
                 e.stopPropagation();
-                setIsConfirmingDelete(true);
+                setIsEditing(true);
               }}
             >
-              <Trash2 className="w-4 h-4" />
+              <Pencil className="w-4 h-4" />
             </Button>
-          )}
-        </div>
-      )}
+
+            {/* Delete button/confirmation */}
+            {isConfirmingDelete ? (
+              <>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  className="rounded-full h-8 w-8 p-0"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete();
+                  }}
+                >
+                  <Check className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="bg-white/90 hover:bg-white rounded-full h-8 w-8 p-0"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsConfirmingDelete(false);
+                  }}
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-white/90 hover:bg-white text-red-500 hover:text-red-600 rounded-full h-8 w-8 p-0"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsConfirmingDelete(true);
+                }}
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

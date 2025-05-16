@@ -19,6 +19,7 @@
     "db:local:update": "dotenv -e .env.local -- tsx prisma/update.ts",
     "db:prod:migrate": "NODE_ENV=production prisma migrate deploy",
     "db:prod:migrate:debug": "NODE_ENV=production DEBUG=\"prisma:*\" prisma migrate deploy",
+    "db:prod:migrateFile": "NODE_ENV=production tsx scripts//migrateImageRelationships.ts",
     "db:prod:clear": "NODE_ENV=production tsx prisma/clearData.ts",
     "db:prod:seed": "NODE_ENV=production prisma db seed",
     "db:prod:update": "NODE_ENV=production tsx prisma/update.ts",
