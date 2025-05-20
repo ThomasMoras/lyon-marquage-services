@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { SectionContainer } from "@/components/shared/editable/EditableSectionCard";
-import EditableCarousel from "@/components/shared/editable/EditableCarousel";
 import { Section } from "@/types";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { SectionType } from "@prisma/client";
+import EditableCarousel from "./Carousel/EditableCarousel";
 
 interface PageLayoutProps {
   pageSection: SectionType;

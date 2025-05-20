@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import SchemaOrg from "@/components/shared/SchemaOrg";
 import { SEOMetadata } from "@/components/shared/SEOMetadata";
-import EditableCarousel from "@/components/shared/editable/EditableCarousel";
 import { RiMoneyEuroCircleLine } from "react-icons/ri";
 import { IoIosHome } from "react-icons/io";
 import { BsFillPersonVcardFill } from "react-icons/bs";
@@ -14,6 +13,7 @@ import { SectionType } from "@prisma/client";
 import Link from "next/link";
 import { homeFAQItems } from "@/constants/faqData";
 import FAQ from "@/components/shared/FAQ";
+import EditableCarousel from "@/components/shared/Carousel/EditableCarousel";
 
 export default function Home() {
   const { status } = useSession();
