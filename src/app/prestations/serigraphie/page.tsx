@@ -1,6 +1,6 @@
 "use client";
 
-import { CollectionSection } from "@/components/shared/editable/CollectionSection";
+import { CollectionSection } from "@/components/shared/Card/CollectionSection";
 import { PageLayout } from "@/components/shared/PageLayout";
 import { SectionType } from "@prisma/client";
 import { SEOMetadata } from "@/components/shared/SEOMetadata";

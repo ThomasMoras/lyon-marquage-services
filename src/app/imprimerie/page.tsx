@@ -1,5 +1,5 @@
 "use client";
-import { CollectionSection } from "@/components/shared/editable/CollectionSection";
+import { CollectionSection } from "@/components/shared/Card/CollectionSection";
 import { PageLayout } from "@/components/shared/PageLayout";
 import SchemaOrg from "@/components/shared/SchemaOrg";
 import { SEOMetadata } from "@/components/shared/SEOMetadata";

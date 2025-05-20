@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -6,7 +6,10 @@ import { CarouselSlide } from "@/types";
 
 export const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
   // Generate a unique ID for this slide's keyframes
-  const idRef = useRef<string>(`zoom-${slide.id || Date.now().toString(36)}`);
+  const animationId = useMemo(
+    () => `zoom-${slide.id || Math.random().toString(36).substring(2, 9)}`,
+    [slide.id]
+  );
 
   // Get crop values with fallbacks
   const scale = slide.cropData?.scale || 1;
@@ -19,7 +22,7 @@ export const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
       <div className="absolute inset-0 overflow-hidden">
         <div className="relative w-full h-full">
           <style jsx>{`
-            @keyframes ${idRef} {
+            @keyframes ${animationId} {
               0% {
                 transform: scale(${scale}) translate(${translateX}px, ${translateY}px)
                   rotate(${rotation}deg);
@@ -39,7 +42,7 @@ export const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
             sizes="100vw"
             style={{
               objectFit: "cover",
-              animation: `${idRef} 10s infinite alternate ease-in-out`,
+              animation: `${animationId} 10s infinite alternate ease-in-out`,
             }}
           />
         </div>

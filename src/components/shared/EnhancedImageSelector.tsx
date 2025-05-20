@@ -163,7 +163,6 @@ export function EnhancedImageSelector({
   };
 
   const handleImageSelect = (imageUrl: string) => {
-    console.log("handleImageSelect : ", imageUrl);
     setSelectedImage(imageUrl);
     setCropData({
       scale: 1,
