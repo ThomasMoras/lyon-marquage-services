@@ -46,7 +46,7 @@ export const createCarouselSchema = z.object({
     .transform((val) => sectionTypeMap[val]), // Safer transformation to enum
   order: z.number().default(0),
   fileId: z.string().nullable().optional(),
-  cropData: cropDataSchema.optional(),
+  cropData: cropDataSchema.nullable().optional(),
 });
 
 // Update carousel schema
@@ -67,7 +67,7 @@ export const updateCarouselSchema = z.object({
     .transform((val) => (val ? sectionTypeMap[val as string] : undefined)), // Safer transformation to enum
   order: z.number().optional(),
   fileId: z.string().nullable().optional(),
-  cropData: cropDataSchema.optional(),
+  cropData: cropDataSchema.nullable().optional(),
 });
 
 // Delete carousel schema

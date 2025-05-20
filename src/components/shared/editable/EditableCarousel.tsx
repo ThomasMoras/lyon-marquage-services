@@ -81,16 +81,19 @@ const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20 flex items-center">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-12 overflow-hidden">
-            <div className="relative">
-              <h2 className="text-3xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight text-ellipsis break-words drop-shadow-lg whitespace-pre-line">
-                {slide.title}
-              </h2>
-              <div className="h-1 w-24 bg-blue-500 mx-auto mt-6 rounded-full"></div>
-            </div>
-
-            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed text-ellipsis break-words drop-shadow-md whitespace-pre-line">
-              {slide.description}
-            </p>
+            {slide.title && (
+              <div className="relative">
+                <h2 className="text-3xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight text-ellipsis break-words drop-shadow-lg whitespace-pre-line">
+                  {slide.title}
+                </h2>
+                <div className="h-1 w-24 bg-blue-500 mx-auto mt-6 rounded-full"></div>
+              </div>
+            )}
+            {slide.description && (
+              <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed text-ellipsis break-words drop-shadow-md whitespace-pre-line">
+                {slide.description}
+              </p>
+            )}
 
             <Button
               size="lg"
