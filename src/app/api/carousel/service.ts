@@ -54,7 +54,7 @@ export async function createCarousel(data: CreateCarouselInput) {
 // Update an existing carousel
 export async function updateCarousel(data: UpdateCarouselInput) {
   const { id, ...updateFields } = data;
-
+  console.log(updateFields);
   // Prepare update data
   const updateData: Prisma.CarouselUpdateInput = {};
 
@@ -66,6 +66,7 @@ export async function updateCarousel(data: UpdateCarouselInput) {
   if (updateFields.buttonLink !== undefined) updateData.buttonLink = updateFields.buttonLink;
   if (updateFields.type !== undefined) updateData.type = updateFields.type;
   if (updateFields.order !== undefined) updateData.order = updateFields.order;
+  if (updateFields.showButtons !== undefined) updateData.showButtons = updateFields.showButtons;
 
   // Handle cropData
   if (updateFields.cropData !== undefined) {
