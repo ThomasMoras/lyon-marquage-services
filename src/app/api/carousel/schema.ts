@@ -45,6 +45,7 @@ export const createCarouselSchema = z.object({
     })
     .transform((val) => sectionTypeMap[val]), // Safer transformation to enum
   order: z.number().default(0),
+  showButtons: z.boolean().default(true),
   fileId: z.string().nullable().optional(),
   cropData: cropDataSchema.nullable().optional(),
 });
@@ -66,6 +67,7 @@ export const updateCarouselSchema = z.object({
     })
     .transform((val) => (val ? sectionTypeMap[val as string] : undefined)), // Safer transformation to enum
   order: z.number().optional(),
+  showButtons: z.boolean().optional(),
   fileId: z.string().nullable().optional(),
   cropData: cropDataSchema.nullable().optional(),
 });

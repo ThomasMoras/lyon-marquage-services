@@ -19,6 +19,7 @@ export interface CarouselBase {
   buttonLink: string;
   type: SectionType;
   order: number;
+  showButtons: boolean;
   fileId?: string | null;
   cropData?: CropData;
 }
@@ -63,6 +64,7 @@ export interface CarouselSlide {
   buttonLink: string;
   order: number;
   type: SectionType;
+  showButtons: boolean;
   cropData?: CropData;
   fileId?: string | null;
   createdAt?: string;

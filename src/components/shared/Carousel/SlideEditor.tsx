@@ -13,7 +13,7 @@ interface SlideEditorProps {
   paginatedSlides: CarouselSlide[];
   slidesPerPage: number;
   onPageChange: (page: number) => void;
-  onFieldChange: (index: number, field: keyof CarouselSlide, value: string) => void;
+  onFieldChange: (index: number, field: keyof CarouselSlide, value: string | boolean) => void;
   onImageSelection: (index: number, imagePath: string, cropData: CropData) => void;
   onAddSlide: () => void;
   onDeleteSlide: (slideId: string) => void;

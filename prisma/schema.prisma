@@ -35,6 +35,7 @@ model Carousel {
   buttonLink  String
   type        SectionType
   order       Int
+  showButtons Boolean       @default(true)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   cropData    Json?

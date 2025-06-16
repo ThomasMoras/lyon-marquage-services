@@ -34,7 +34,11 @@ export const useCarouselData = (pageSection: SectionType) => {
   }, [pageSection, toast]);
 
   // Generic field change handler for simple text fields
-  const handleFieldChange = async (index: number, field: keyof CarouselSlide, value: string) => {
+  const handleFieldChange = async (
+    index: number,
+    field: keyof CarouselSlide,
+    value: string | boolean
+  ) => {
     const newSlides = [...slides];
     const updatedSlide = { ...newSlides[index], [field]: value };
     newSlides[index] = updatedSlide;
@@ -93,6 +97,7 @@ export const useCarouselData = (pageSection: SectionType) => {
         position: { x: 0, y: 0 },
         rotation: 0,
       },
+      showButtons: true,
     };
 
     try {

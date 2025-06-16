@@ -15,11 +15,12 @@ import {
   DialogTrigger,
 } from "../../ui/dialog";
 import { SectionType } from "@prisma/client";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface SlideEditFormProps {
   slide: CarouselSlide;
   index: number;
-  onFieldChange: (index: number, field: keyof CarouselSlide, value: string) => void;
+  onFieldChange: (index: number, field: keyof CarouselSlide, value: string | boolean) => void;
   onImageSelection: (index: number, imagePath: string, cropData: CropData) => void;
   onDelete: (slideId: string) => void;
   pageSection: SectionType;
@@ -75,9 +76,6 @@ export const SlideEditForm = ({
             minHeight={60}
             className="border-2 focus-visible:ring-blue-500"
           />
-          <p className="text-xs text-gray-500 mt-1">
-            Utilisez la touche Entrée pour créer des sauts de ligne
-          </p>
         </div>
 
         <div>
@@ -92,9 +90,17 @@ export const SlideEditForm = ({
             minHeight={120}
             className="border-2 focus-visible:ring-blue-500"
           />
-          <p className="text-xs text-gray-500 mt-1">
-            Utilisez la touche Entrée pour créer des sauts de ligne
-          </p>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id={`show-buttons-${index}`}
+            checked={slide.showButtons}
+            onCheckedChange={(checked) => onFieldChange(index, "showButtons", checked)}
+          />
+          <label htmlFor={`show-buttons-${index}`} className="text-sm font-medium">
+            Afficher le bouton
+          </label>
         </div>
 
         <div>
@@ -110,7 +116,6 @@ export const SlideEditForm = ({
                 placeholder="Texte du bouton"
                 className="border-2 focus-visible:ring-blue-500"
               />
-              <p className="text-xs text-gray-500 mt-1">Texte affiché</p>
             </div>
             <div>
               <Input
@@ -120,7 +125,6 @@ export const SlideEditForm = ({
                 placeholder="Lien du bouton"
                 className="border-2 focus-visible:ring-blue-500"
               />
-              <p className="text-xs text-gray-500 mt-1">URL de destination</p>
             </div>
           </div>
         </div>
