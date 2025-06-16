@@ -16,6 +16,7 @@ export const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
   const translateX = slide.cropData?.position?.x || 0;
   const translateY = slide.cropData?.position?.y || 0;
   const rotation = slide.cropData?.rotation || 0;
+  const showButtons = true;
 
   return (
     <div className="relative h-screen">
@@ -66,15 +67,17 @@ export const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
               </p>
             )}
 
-            <Button
-              size="lg"
-              asChild
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 h-auto rounded-3xl text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <Link href={slide.buttonLink} scroll>
-                {slide.buttonText}
-              </Link>
-            </Button>
+            {showButtons && (
+              <Button
+                size="lg"
+                asChild
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 h-auto rounded-3xl text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <Link href={slide.buttonLink} scroll>
+                  {slide.buttonText}
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
       </div>

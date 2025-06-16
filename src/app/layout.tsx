@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     other: [
       {
         rel: "manifest",
-        url: "/site.webmanifest", // Uniquement si vous avez les PNG 192/512
+        url: "/site.webmanifest", // Si PNG 192/512
       },
     ],
   },
