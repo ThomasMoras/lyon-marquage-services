@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react"; // ADD useState import
 import { Button } from "@/components/ui/button";
-import { X, Plus } from "lucide-react";
+import { X, Plus, ArrowUpDown } from "lucide-react"; // ADD ArrowUpDown import
 import { CarouselSlide, CropData } from "@/types";
 import { SectionType } from "@prisma/client";
 import { SlideEditForm } from "./SlideEditForm";
 import { CarouselPagination } from "./CarouselPagination";
+import { SlideReorderModal } from "./SlideReorderModal";
 
 interface SlideEditorProps {
   pageSection: SectionType;
@@ -12,11 +13,13 @@ interface SlideEditorProps {
   totalPages: number;
   paginatedSlides: CarouselSlide[];
   slidesPerPage: number;
+  allSlides: CarouselSlide[]; // ADD this prop
   onPageChange: (page: number) => void;
   onFieldChange: (index: number, field: keyof CarouselSlide, value: string | boolean) => void;
   onImageSelection: (index: number, imagePath: string, cropData: CropData) => void;
   onAddSlide: () => void;
   onDeleteSlide: (slideId: string) => void;
+  onReorderSlides: (reorderedSlides: CarouselSlide[]) => void; // ADD this prop
   onClose: () => void;
 }
 
@@ -26,14 +29,25 @@ export const SlideEditor = ({
   totalPages,
   paginatedSlides,
   slidesPerPage,
+  allSlides, // ADD this
   onPageChange,
   onFieldChange,
   onImageSelection,
   onAddSlide,
   onDeleteSlide,
+  onReorderSlides, // ADD this
   onClose,
 }: SlideEditorProps) => {
   const editMenuRef = useRef<HTMLDivElement>(null);
+  const [showReorderModal, setShowReorderModal] = useState(false);
+
+  const handleEditSlide = (slide: CarouselSlide) => {
+    // Find the page that contains this slide and navigate to it
+    const slideIndex = allSlides.findIndex((s) => s.id === slide.id);
+    const targetPage = Math.floor(slideIndex / slidesPerPage) + 1;
+    onPageChange(targetPage);
+    setShowReorderModal(false);
+  };
 
   return (
     <>
@@ -61,19 +75,30 @@ export const SlideEditor = ({
                 Personnalisez les slides du carrousel
               </p>
             </div>
-            <div className="flex flex-row justify-center text-center">
+            {/* REPLACE the existing button div with this */}
+            <div className="flex flex-row gap-2 justify-center text-center">
+              <Button
+                onClick={() => setShowReorderModal(true)}
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                disabled={allSlides.length <= 1}
+              >
+                <ArrowUpDown className="w-4 h-4" />
+                Réorganiser
+              </Button>
               <Button
                 onClick={onAddSlide}
-                className="bg-green-600 hover:bg-green-700 text-white hover:text-white"
+                className="bg-green-600 hover:bg-green-700 text-white hover:text-white gap-2"
                 size="sm"
               >
-                <Plus className="w-4 h-4 mr-2" />
-                Ajouter une slide
+                <Plus className="w-4 h-4" />
+                Ajouter
               </Button>
             </div>
           </div>
 
-          {/* Content */}
+          {/* Content - NO CHANGES */}
           {paginatedSlides.map((slide, localIndex) => {
             const globalIndex = (currentPage - 1) * slidesPerPage + localIndex;
 
@@ -90,7 +115,7 @@ export const SlideEditor = ({
             );
           })}
 
-          {/* Pagination */}
+          {/* Pagination - NO CHANGES */}
           <CarouselPagination
             currentPage={currentPage}
             totalPages={totalPages}
@@ -98,6 +123,16 @@ export const SlideEditor = ({
           />
         </div>
       </div>
+
+      {/* ADD this new component at the end */}
+      <SlideReorderModal
+        slides={allSlides}
+        isOpen={showReorderModal}
+        onClose={() => setShowReorderModal(false)}
+        onSave={onReorderSlides}
+        onEditSlide={handleEditSlide}
+        onDeleteSlide={onDeleteSlide}
+      />
     </>
   );
 };

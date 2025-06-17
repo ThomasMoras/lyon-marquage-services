@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState, useEffect } from "react";
 import { UploadFile } from "./UploadFile";
-import { Trash2, Image } from "lucide-react";
+import { Trash2, ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
+import Image from "next/image";
 
 // Define the image type returned from the API
 interface ImageItem {
@@ -122,7 +123,7 @@ export function ImageSelector({
   const ImagePlaceholder = () => (
     <div className="w-full h-48 bg-gray-100 flex items-center justify-center rounded-lg">
       <div className="text-gray-400 flex flex-col items-center">
-        <Image className="w-8 h-8 mb-2" />
+        <ImageIcon className="w-8 h-8 mb-2" />
         <span>Aucune image</span>
       </div>
     </div>
@@ -177,7 +178,7 @@ export function ImageSelector({
                   }`}
                 >
                   <div className="relative h-32">
-                    <img
+                    <Image
                       src={image.url}
                       alt={image.name}
                       className="w-full h-full object-cover"

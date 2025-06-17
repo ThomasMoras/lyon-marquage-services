@@ -10,29 +10,28 @@ export const useCarouselData = (pageSection: SectionType) => {
 
   // Fetch slides data
   useEffect(() => {
-    const fetchSlides = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`/api/carousel?type=${pageSection}`);
-        if (!response.ok) throw new Error("Failed to fetch slides");
-
-        const data = await response.json();
-        setSlides(data.sort((a: CarouselSlide, b: CarouselSlide) => a.order - b.order));
-      } catch (err) {
-        console.error("Error fetching slides:", err);
-        toast({
-          title: "Erreur",
-          description: "Impossible de charger les données du carousel",
-          variant: "destructive",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchSlides();
   }, [pageSection, toast]);
 
+  const fetchSlides = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`/api/carousel?type=${pageSection}`);
+      if (!response.ok) throw new Error("Failed to fetch slides");
+
+      const data = await response.json();
+      setSlides(data.sort((a: CarouselSlide, b: CarouselSlide) => a.order - b.order));
+    } catch (err) {
+      console.error("Error fetching slides:", err);
+      toast({
+        title: "Erreur",
+        description: "Impossible de charger les données du carousel",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
   // Generic field change handler for simple text fields
   const handleFieldChange = async (
     index: number,
@@ -158,6 +157,28 @@ export const useCarouselData = (pageSection: SectionType) => {
     }
   };
 
+  const handleReorderSlides = async (reorderedSlides: CarouselSlide[]) => {
+    try {
+      // Update the order property for each slide
+      const updates = reorderedSlides.map((slide, index) => ({
+        id: slide.id,
+        order: index + 1,
+      }));
+
+      // Make API call to update slide orders
+      await fetch("/api/carousel/reorder", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ updates, pageSection }),
+      });
+
+      // Refresh the slides data
+      fetchSlides();
+    } catch (error) {
+      console.error("Error reordering slides:", error);
+    }
+  };
+
   return {
     slides,
     isLoading,
@@ -165,5 +186,6 @@ export const useCarouselData = (pageSection: SectionType) => {
     handleImageSelection,
     handleAddSlide,
     handleDeleteSlide,
+    handleReorderSlides,
   };
 };

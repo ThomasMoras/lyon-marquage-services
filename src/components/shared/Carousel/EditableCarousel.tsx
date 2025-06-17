@@ -23,6 +23,7 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
     handleImageSelection,
     handleAddSlide,
     handleDeleteSlide,
+    handleReorderSlides,
   } = useCarouselData(pageSection);
 
   // Handle adding a slide and update pagination
@@ -69,6 +70,8 @@ export default function EditableCarousel({ pageSection, isAdmin = false }: Edita
           onAddSlide={handleAddSlideAndUpdatePage}
           onDeleteSlide={handleDeleteSlideAndUpdatePage}
           onClose={() => setIsEditing(false)}
+          onReorderSlides={handleReorderSlides}
+          allSlides={slides}
         />
       )}
 

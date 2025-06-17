@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Upload, Image as ImageIcon, X } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import Image from "next/image";
 
 interface FileUploadResult {
   fileUrl: string;
@@ -214,7 +215,7 @@ export function UploadFile({
         <div className="grid gap-4 py-4">
           {previewUrl ? (
             <div className="relative aspect-video bg-gray-50 rounded-lg overflow-hidden">
-              <img src={previewUrl} alt="Preview" className="object-contain w-full h-full" />
+              <Image src={previewUrl} alt="Preview" className="object-contain w-full h-full" />
               <Button
                 variant="outline"
                 size="icon"

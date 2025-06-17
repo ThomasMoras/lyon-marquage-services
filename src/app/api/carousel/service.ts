@@ -1,5 +1,5 @@
 import { PrismaClient, SectionType, Prisma } from "@prisma/client";
-import { CreateCarouselInput, UpdateCarouselInput } from "./schema";
+import { CreateCarouselInput, ReorderCarouselInput, UpdateCarouselInput } from "./schema";
 
 const prisma = new PrismaClient();
 
@@ -107,5 +107,25 @@ export async function deleteCarousel(id: string) {
   });
 }
 
+// Add this function to your service.ts file
+export async function reorderCarousels(data: ReorderCarouselInput) {
+  const { updates, pageSection } = data;
+
+  return prisma.$transaction(async (tx) => {
+    const updatePromises = updates.map((update) =>
+      tx.carousel.update({
+        where: {
+          id: update.id,
+          type: pageSection,
+        },
+        data: { order: update.order },
+      })
+    );
+
+    const updatedCarousels = await Promise.all(updatePromises);
+    return updatedCarousels.sort((a, b) => a.order - b.order);
+  });
+}
+
 // Re-export the types from schema.ts for convenience
-export type { CreateCarouselInput, UpdateCarouselInput };
+export type { CreateCarouselInput, UpdateCarouselInput, ReorderCarouselInput };

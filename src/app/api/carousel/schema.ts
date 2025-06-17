@@ -77,7 +77,26 @@ export const deleteCarouselSchema = z.object({
   id: z.string(),
 });
 
+export const reorderCarouselSchema = z.object({
+  updates: z
+    .array(
+      z.object({
+        id: z.string().min(1, "ID is required"),
+        order: z.number().min(1, "Order must be at least 1"),
+      })
+    )
+    .min(1, "At least one update is required"),
+  pageSection: z
+    .string()
+    .transform((val) => val.toUpperCase())
+    .refine((val) => sectionTypeKeys.includes(val), {
+      message: `Type must be one of: ${sectionTypeKeys.join(", ")}`,
+    })
+    .transform((val) => sectionTypeMap[val]),
+});
+
 // Export type helpers for use in service file
 export type CreateCarouselInput = z.infer<typeof createCarouselSchema>;
 export type UpdateCarouselInput = z.infer<typeof updateCarouselSchema>;
 export type DeleteCarouselInput = z.infer<typeof deleteCarouselSchema>;
+export type ReorderCarouselInput = z.infer<typeof reorderCarouselSchema>;
