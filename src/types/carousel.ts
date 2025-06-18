@@ -67,6 +67,7 @@ export interface CarouselSlide {
   showButtons: boolean;
   cropData?: CropData;
   fileId?: string | null;
+  contentPosition?: ContentPosition;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -78,3 +79,5 @@ export interface EditableCarouselProps {
   pageSection: SectionType;
   isAdmin?: boolean;
 }
+
+export type ContentPosition = "center" | "top-left" | "top-right" | "bottom-left" | "bottom-right";

@@ -27,20 +27,21 @@ model Session {
 }
 
 model Carousel {
-  id          String        @id @default(cuid())
-  title       String
-  description String
-  image       String
-  buttonText  String
-  buttonLink  String
-  type        SectionType
-  order       Int
-  showButtons Boolean       @default(true)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  cropData    Json?
-  fileId      String?
-  file        FileMetadata? @relation(fields: [fileId], references: [id])
+  id              String        @id @default(cuid())
+  title           String
+  description     String
+  image           String
+  buttonText      String
+  buttonLink      String
+  type            SectionType
+  order           Int
+  showButtons     Boolean       @default(true)
+  contentPosition String        @default("center")
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  cropData        Json?
+  fileId          String?
+  file            FileMetadata? @relation(fields: [fileId], references: [id])
 }
 
 model Card {

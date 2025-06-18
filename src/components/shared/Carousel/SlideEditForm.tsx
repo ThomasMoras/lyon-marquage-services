@@ -16,6 +16,7 @@ import {
 } from "../../ui/dialog";
 import { SectionType } from "@prisma/client";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ContentPositionSelector } from "./ContentPositionSelector";
 
 interface SlideEditFormProps {
   slide: CarouselSlide;
@@ -92,15 +93,11 @@ export const SlideEditForm = ({
           />
         </div>
 
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id={`show-buttons-${index}`}
-            checked={slide.showButtons}
-            onCheckedChange={(checked) => onFieldChange(index, "showButtons", checked)}
+        <div>
+          <ContentPositionSelector
+            value={slide.contentPosition || "center"}
+            onChange={(position) => onFieldChange(index, "contentPosition", position)}
           />
-          <label htmlFor={`show-buttons-${index}`} className="text-sm font-medium">
-            Afficher le bouton
-          </label>
         </div>
 
         <div>
@@ -128,7 +125,16 @@ export const SlideEditForm = ({
             </div>
           </div>
         </div>
-
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id={`show-buttons-${index}`}
+            checked={slide.showButtons}
+            onCheckedChange={(checked) => onFieldChange(index, "showButtons", checked)}
+          />
+          <label htmlFor={`show-buttons-${index}`} className="text-sm font-medium">
+            Afficher le bouton
+          </label>
+        </div>
         <div>
           <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
             Image d&ldquo;arrière-plan

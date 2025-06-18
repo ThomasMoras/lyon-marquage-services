@@ -47,6 +47,7 @@ export const createCarouselSchema = z.object({
   order: z.number().default(0),
   showButtons: z.boolean().default(true),
   fileId: z.string().nullable().optional(),
+  contentPosition: z.string().optional(),
   cropData: cropDataSchema.nullable().optional(),
 });
 
@@ -69,6 +70,7 @@ export const updateCarouselSchema = z.object({
   order: z.number().optional(),
   showButtons: z.boolean().optional(),
   fileId: z.string().nullable().optional(),
+  contentPosition: z.string().optional(),
   cropData: cropDataSchema.nullable().optional(),
 });
 
