@@ -32,7 +32,6 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  console.log(request.body);
   const validation = await validateRequest(request, updateCarouselSchema);
 
   if (!validation.success) {

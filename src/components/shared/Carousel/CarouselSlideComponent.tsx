@@ -72,7 +72,7 @@ export const CarouselSlideComponent = ({ slide }: { slide: CarouselSlide }) => {
 
       {/* Enhanced gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20">
-        <div className={getContentPositionClasses()}>
+        <div className={getContentPositionClasses(slide.contentPosition)}>
           <div className={getContentClasses()}>
             {slide.title && (
               <div className="relative">

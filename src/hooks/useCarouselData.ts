@@ -20,6 +20,7 @@ export const useCarouselData = (pageSection: SectionType) => {
       if (!response.ok) throw new Error("Failed to fetch slides");
 
       const data = await response.json();
+      console.log(data);
       setSlides(data.sort((a: CarouselSlide, b: CarouselSlide) => a.order - b.order));
     } catch (err) {
       console.error("Error fetching slides:", err);
@@ -90,6 +91,7 @@ export const useCarouselData = (pageSection: SectionType) => {
       buttonLink: "#",
       order: maxOrder + 1,
       type: pageSection,
+      contentPosition: "center",
       cropData: {
         scale: 1,
         position: { x: 0, y: 0 },

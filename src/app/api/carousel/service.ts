@@ -29,6 +29,8 @@ export async function createCarousel(data: CreateCarouselInput) {
     buttonLink: data.buttonLink,
     type: data.type,
     order: data.order,
+    contentPosition: data.contentPosition,
+    showButtons: data.showButtons,
   };
 
   // Handle JSON data
